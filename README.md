@@ -224,30 +224,17 @@ If that folder already exists, the installer backs it up with a timestamp before
 
 ## Use
 
-Use this skill in small passes. Teach only the project area needed for the current task, then use that focused map for real work.
+Use this skill in small passes. One short Teach command creates a structure index and focused maps, then later tasks read only the map they need.
 
-### 1. Teach Only The Needed Area
+### 1. Teach Once
 
-Start with a narrow structure pass. Do not scan every category unless the task truly needs it.
+Run this in a Unity repo:
 
 ```text
-Use $unity-agent-workflows.
-Teach only the UI/runtime-owner structure needed for this HUD task.
-Create or refresh the relevant UNITY_STRUCTURE.md section.
-Do not inspect unrelated gameplay, content, build, or asset systems.
+$unity-agent-workflows. Teach
 ```
 
-Pick the area from the task:
-
-| Task area | Inspect only |
-|---|---|
-| UI/runtime bug | scene/prefab path, presenter/controller, Canvas/TMP/safe-area code |
-| Gameplay feature | owning gameplay module, related data/config, event/contract path |
-| Content/balance | ScriptableObjects/config/localization that own the values |
-| Assembly/refactor | folders, namespaces, `.asmdef`, graph edges for touched modules |
-| Cleanup | code refs, YAML/GUID refs, Resources/addressable paths |
-
-Keep `UNITY_STRUCTURE.md` as a short index. Put large or domain-specific notes in focused files such as:
+The skill will create/refresh `UNITY_STRUCTURE.md` as a short index and split details by category automatically:
 
 ```text
 UNITY_STRUCTURE.md
@@ -255,15 +242,30 @@ UNITY_STRUCTURE.ui.md
 UNITY_STRUCTURE.gameplay.md
 UNITY_STRUCTURE.content.md
 UNITY_STRUCTURE.assemblies.md
+UNITY_STRUCTURE.cleanup.md
 ```
 
-### 2. Use The Structure Map
+It should create only useful category files. It must not scan unrelated systems just to fill every template.
 
-Ask the agent to read only the relevant map before editing:
+### 2. Auto File Routing
+
+After Teach, agents should read only the index plus the matching focused map:
+
+| Task | Read |
+|---|---|
+| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
+| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+
+### 3. Use The Structure Map
+
+For real work:
 
 ```text
 Use $unity-agent-workflows.
-Read only UNITY_STRUCTURE.md and UNITY_STRUCTURE.ui.md first.
+Use the matching UNITY_STRUCTURE map for this task.
 Implement this change using the repo's existing structure.
 Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
@@ -273,18 +275,18 @@ For visible/runtime bugs, keep it narrow:
 
 ```text
 Use $unity-agent-workflows.
-Read only the relevant UNITY_STRUCTURE files first.
+Use the matching UNITY_STRUCTURE map for this task.
 Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
 
-### 3. Refresh Only What Is Stale
+### 4. Refresh Only What Is Stale
 
-If the structure map is stale, refresh only the relevant section:
+If a focused map is missing or stale, refresh only that map:
 
 ```text
 Use $unity-agent-workflows.
-Refresh only the UI/runtime-owner map, then fix this HUD issue.
+Refresh only UNITY_STRUCTURE.ui.md, then fix this HUD issue.
 ```
 
 ## What Is Inside

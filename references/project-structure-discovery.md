@@ -21,6 +21,59 @@ Read only what exists and only what the task needs:
 Do not invent folders or layer names that are not visible in the repo.
 Do not scan unrelated categories just to fill a template.
 
+## Teach Command Contract
+
+The short command is:
+
+```text
+$unity-agent-workflows. Teach
+```
+
+This means:
+
+1. Create or refresh a short `UNITY_STRUCTURE.md` index.
+2. Auto-split detailed structure into focused files by category.
+3. Create a focused file only when the category is present, useful, or requested.
+4. Never dump every folder, scene, graph node, or raw search result into one file.
+
+Default files:
+
+```text
+UNITY_STRUCTURE.md
+UNITY_STRUCTURE.ui.md
+UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.content.md
+UNITY_STRUCTURE.assemblies.md
+UNITY_STRUCTURE.cleanup.md
+```
+
+Each focused file must include:
+
+```text
+When to read:
+Primary paths:
+Runtime/source owners:
+Data/config owners:
+Cross-module routes:
+Validation hints:
+Do-not-touch:
+Open gaps:
+```
+
+## File Router
+
+Use this router after Teach:
+
+| Task | Read |
+|---|---|
+| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
+| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+
+If a requested task spans multiple categories, read the index first, then the smallest set of focused maps needed.
+
 ## Structure Map
 
 Capture this before structural edits:

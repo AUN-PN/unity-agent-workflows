@@ -11,10 +11,11 @@ Use this skill as the AI operating system for Unity game work. It turns project-
 
 1. Read the live project instructions first: `AGENTS.md`, `README.md`, architecture docs, or any repo-local agent file.
 2. Check `git status --short` and preserve unrelated dirty files.
-3. Derive the live project structure before architecture claims. Read existing folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs. Do not impose this skill's sample structure on the user's repo.
-4. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
-5. If a graph exists, read it before architecture claims: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
-6. Classify the task before touching files:
+3. If the user says `$unity-agent-workflows. Teach`, run the Teach command: create/refresh `UNITY_STRUCTURE.md` as a short index and split focused maps by category. Do not make one huge all-project document.
+4. Derive only the relevant live project structure before architecture claims. Read existing folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs only when they are relevant to the requested category. Do not impose this skill's sample structure on the user's repo.
+5. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
+6. If a graph exists, read it before architecture claims only when dependency/routing proof needs graph data: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
+7. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
    - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, or "do not guess" -> runtime visible target lock.
    - New or expanded C# responsibility -> project-derived routing.
@@ -24,8 +25,43 @@ Use this skill as the AI operating system for Unity game work. It turns project-
    - Compile/runtime doubt -> validation workflow.
    - Cleanup/deletion -> cleanup proof.
    - Rule/session mining -> durable-rule workflow.
-7. Edit the smallest safe file set.
-8. Close with changed files, validation, scope boundary, and residual risk.
+8. Edit the smallest safe file set.
+9. Close with changed files, validation, scope boundary, and residual risk.
+
+## Teach Command
+
+When the user writes only:
+
+```text
+$unity-agent-workflows. Teach
+```
+
+Do this automatically:
+
+1. Read minimal repo entry docs: `AGENTS.md`, `README.md`, and existing `UNITY_STRUCTURE*.md`.
+2. Create or refresh `UNITY_STRUCTURE.md` as a short index.
+3. Split details into focused files only when that category exists or is needed:
+   - `UNITY_STRUCTURE.ui.md`
+   - `UNITY_STRUCTURE.gameplay.md`
+   - `UNITY_STRUCTURE.content.md`
+   - `UNITY_STRUCTURE.assemblies.md`
+   - `UNITY_STRUCTURE.cleanup.md`
+4. Do not scan unrelated categories just to fill every file.
+5. Each focused file must include exact paths, owner patterns, when to read this file, and what not to touch.
+
+## Structure Map File Router
+
+When a later task starts, read only `UNITY_STRUCTURE.md` plus the focused map that matches the task.
+
+| Task | Read |
+|---|---|
+| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
+| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+
+If the needed focused map is missing, refresh only that map before editing.
 
 ## Reference Map
 

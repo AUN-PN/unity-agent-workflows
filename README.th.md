@@ -166,30 +166,17 @@ npx unity-agent-workflows --dry-run
 
 ## วิธีใช้
 
-ใช้เป็นรอบเล็กๆ: สอนเฉพาะหมวดที่งานนี้ต้องใช้ แล้วค่อยใช้ map นั้นทำงานจริง
+ใช้เป็นรอบเล็กๆ: คำสั่ง Teach สั้นๆ จะสร้าง index และแยกเอกสารตามหมวดอัตโนมัติ จากนั้นงานจริงอ่านเฉพาะ map ที่ต้องใช้
 
-### 1. สอนเฉพาะหมวดที่ต้องใช้
+### 1. Teach ครั้งเดียว
 
-เริ่มจาก scope แคบ ห้าม scan ทุกหมวดถ้างานไม่ได้ต้องใช้:
+รันใน Unity repo:
 
 ```text
-Use $unity-agent-workflows.
-Teach only the UI/runtime-owner structure needed for this HUD task.
-Create or refresh the relevant UNITY_STRUCTURE.md section.
-Do not inspect unrelated gameplay, content, build, or asset systems.
+$unity-agent-workflows. Teach
 ```
 
-เลือกหมวดจากงาน:
-
-| หมวดงาน | อ่านเฉพาะ |
-|---|---|
-| UI/runtime bug | scene/prefab path, presenter/controller, Canvas/TMP/safe-area code |
-| Gameplay feature | owning gameplay module, data/config ที่เกี่ยวข้อง, event/contract path |
-| Content/balance | ScriptableObjects/config/localization ที่เป็นเจ้าของค่า |
-| Assembly/refactor | folders, namespaces, `.asmdef`, graph edges ของ module ที่แตะ |
-| Cleanup | code refs, YAML/GUID refs, Resources/addressable paths |
-
-ให้ `UNITY_STRUCTURE.md` เป็น index สั้นๆ ถ้าเนื้อหาเยอะให้แยกไฟล์ตามหมวด:
+skill จะสร้าง/refresh `UNITY_STRUCTURE.md` เป็น index สั้นๆ และแยกรายละเอียดตามหมวดอัตโนมัติ:
 
 ```text
 UNITY_STRUCTURE.md
@@ -197,15 +184,30 @@ UNITY_STRUCTURE.ui.md
 UNITY_STRUCTURE.gameplay.md
 UNITY_STRUCTURE.content.md
 UNITY_STRUCTURE.assemblies.md
+UNITY_STRUCTURE.cleanup.md
 ```
 
-### 2. ใช้ Structure Map ทำงานจริง
+สร้างเฉพาะหมวดที่มีประโยชน์จริง ห้าม scan ระบบไม่เกี่ยวข้องเพื่อกรอก template ให้ครบ
 
-ให้ agent อ่านเฉพาะ map ที่เกี่ยวข้องก่อนแก้:
+### 2. เลือกไฟล์อ่านอัตโนมัติ
+
+หลัง Teach แล้ว agent ควรอ่านเฉพาะ index + focused map ที่ตรงกับงาน:
+
+| งาน | อ่าน |
+|---|---|
+| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
+| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+
+### 3. ใช้ Structure Map ทำงานจริง
+
+สำหรับงานจริง:
 
 ```text
 Use $unity-agent-workflows.
-Read only UNITY_STRUCTURE.md and UNITY_STRUCTURE.ui.md first.
+Use the matching UNITY_STRUCTURE map for this task.
 Implement this change using the repo's existing structure.
 Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
@@ -215,18 +217,18 @@ Show the runtime owner, files touched, and validation command.
 
 ```text
 Use $unity-agent-workflows.
-Read only the relevant UNITY_STRUCTURE files first.
+Use the matching UNITY_STRUCTURE map for this task.
 Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
 
-### 3. Refresh เฉพาะส่วนที่ stale
+### 4. Refresh เฉพาะส่วนที่ stale
 
-ถ้า `UNITY_STRUCTURE.md` stale ให้ refresh เฉพาะส่วน:
+ถ้า focused map ไม่มีหรือ stale ให้ refresh เฉพาะไฟล์นั้น:
 
 ```text
 Use $unity-agent-workflows.
-Refresh only the UI/runtime-owner map, then fix this HUD issue.
+Refresh only UNITY_STRUCTURE.ui.md, then fix this HUD issue.
 ```
 
 ## ไฟล์ข้างใน
