@@ -57,7 +57,39 @@ For structural code changes, the agent fills the Routing Card in [SKILL.md](SKIL
 
 ## Quick Start
 
-Install as a personal Codex skill:
+Install with `npx` from the private GitHub repo now:
+
+```bash
+npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git
+```
+
+If the GitHub repo is public, the shorthand also works:
+
+```bash
+npx github:Aun-Phuwanan/unity-game-ai-workflows
+```
+
+After the package is published to npm, install with:
+
+```bash
+npx unity-game-ai-workflows
+```
+
+Install for both Codex and Claude-style skill folders:
+
+```bash
+npx unity-game-ai-workflows --target both
+```
+
+Preview without writing files:
+
+```bash
+npx unity-game-ai-workflows --dry-run
+```
+
+The installer writes to `~/.codex/skills/unity-game-ai-workflows` by default. If a previous install exists, it creates a timestamped backup before replacing it.
+
+Manual Git install also works:
 
 ```bash
 git clone git@github.com:Aun-Phuwanan/unity-game-ai-workflows.git ~/.codex/skills/unity-game-ai-workflows
@@ -81,8 +113,11 @@ bash scripts/validate_skill.sh
 unity-game-ai-workflows/
 ├── SKILL.md
 ├── README.md
+├── package.json
 ├── agents/
 │   └── openai.yaml
+├── bin/
+│   └── unity-game-ai-workflows.js
 ├── references/
 │   ├── ai-workflows.md
 │   ├── cleanup-and-git.md
@@ -145,6 +180,7 @@ The README structure follows public documentation patterns:
 - GitHub READMEs should explain what the project does, why it is useful, how to get started, where to get help, and who maintains it: [GitHub Docs - About READMEs](https://docs.github.com/articles/about-readmes/).
 - Open Source Guides recommends a root README that answers what the project does, why it matters, how to start, and how to get help: [Starting an Open Source Project - Writing a README](https://opensource.guide/starting-a-project/#writing-a-readme).
 - Skill packages should keep `SKILL.md` as the required agent entrypoint, with optional references and scripts for supporting material: [OpenAI skill-creator](https://github.com/openai/skills/blob/main/skills/.system/skill-creator/SKILL.md) and [Claude Code skills](https://code.claude.com/docs/en/skills).
+- `npx` runs commands from local or remote npm packages, and npm uses the `bin` field in `package.json` to expose executables: [npm exec](https://docs.npmjs.com/cli/v11/commands/npm-exec/) and [package.json bin](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bin).
 
 ## License
 
