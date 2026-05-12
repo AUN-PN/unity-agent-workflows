@@ -9,6 +9,7 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
 1. Load live repo context.
    - Read repo instructions and architecture docs.
    - Check dirty files.
+   - Derive the user's actual project structure before routing.
    - Load only the relevant detailed reference.
 
 2. Read graph and architecture context.
@@ -22,15 +23,17 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
    - Compile bugs: exact error -> file -> assembly -> dependency edge -> smallest fix.
 
 4. Classify placement before editing.
-   - Feature behavior -> `Assets/Scripts/Features/<ModuleName>`.
-   - Reusable runtime service -> `Assets/Scripts/Systems/<SystemName>`.
-   - Cross-feature API/event/interface -> `Assets/Scripts/Systems/<SystemName>/Contracts`.
-   - Project primitive -> `Assets/Scripts/Core`.
+   - Use `references/project-structure-discovery.md` to map the repo's real folders, namespaces, assemblies, scenes, prefabs, and content paths.
+   - Feature/module behavior -> the existing repo-local owner for that feature/module.
+   - Reusable runtime service -> the existing repo-local service/system/runtime owner path.
+   - Cross-module API/event/interface -> the repo's existing contract/event/gateway boundary.
+   - Project primitive -> the repo's existing primitive/shared foundation path.
    - Content/tuning/unlock/balance data -> ScriptableObjects, content definitions, config, or serialized fields.
    - Source visual asset -> asset generation/replacement workflow before integration code.
 
 5. Apply stop gates.
-   - No new scripts in legacy broad folders.
+   - No fixed sample layout unless the repo already uses it or the user requests migration.
+   - No new scripts in broad folders when a more specific live owner exists.
    - No direct sibling feature imports.
    - No system-to-feature dependency.
    - No hub growth when a collaborator can own the work.
@@ -62,8 +65,9 @@ Use when placement or ownership is unclear.
 1. Search exact screen text, method names, Unity object names, GUIDs, and gameplay terms with `rg`.
 2. Read likely owners and callsites.
 3. Read graph output if present.
-4. Fill the Routing Card.
-5. Ask only if two live owners are equally plausible and the choice changes user-visible behavior.
+4. Fill the structure map from `references/project-structure-discovery.md` when placement matters.
+5. Fill the Routing Card.
+6. Ask only if two live owners are equally plausible and the choice changes user-visible behavior.
 
 ### WF-1 Narrow Bug Fix
 
@@ -76,14 +80,14 @@ Use when placement or ownership is unclear.
 
 1. Decide data-first vs code-first.
 2. Prefer definitions/config for tuning and identity.
-3. Put code-first feature behavior in the owning feature module.
+3. Put code-first feature behavior in the repo's owning feature/module/runtime path.
 4. Route cross-module facts through contracts/events/bridges.
 5. Extract a collaborator if a controller would gain a new responsibility group.
 
 ### WF-3 Cross-Module Communication
 
 1. Treat sibling feature imports as blocked.
-2. Find an existing gateway/event/contract.
+2. Find the repo's existing gateway/event/contract boundary.
 3. If none exists, create the smallest implementation-free contract.
 4. Register implementation from the owner.
 5. Update asmdefs/docs only when dependency structure changes.

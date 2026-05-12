@@ -41,8 +41,8 @@ Do not add all of these blindly. Mark a phase complete only when a live owner ex
 
 For a missing foundation, add the smallest useful owner:
 
-1. Contract/gateway in `Systems/<SystemName>/Contracts`.
-2. Runtime service in `Systems/<SystemName>`.
+1. Contract/gateway in the repo's existing contract/event/gateway boundary.
+2. Runtime service in the repo's existing service/system/runtime owner path.
 3. Thin feature hook beside the feature that already knows the runtime fact.
 4. Event or bridge route instead of a direct feature reference.
 5. Architecture docs/asmdef sync if dependency structure changes.

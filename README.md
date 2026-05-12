@@ -1,10 +1,10 @@
 # Unity Agent Workflows
 
-A Codex skill and npx installer for safer Unity AI agent workflows, Unity game development automation, runtime owner proof, and AI-assisted Unity refactoring.
+A Codex skill and npx installer for safer Unity AI agent workflows, Unity game development automation, project-derived structure discovery, runtime owner proof, and AI-assisted Unity refactoring.
 
-Use it when an AI coding agent is editing a Unity game and you need proof before patching: which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
+Use it when an AI coding agent is editing a Unity game and you need proof before patching: what structure this specific project uses, which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
 
-I made this after running into the same Unity-agent problems over and over: the agent edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
+I made this after running into the same Unity-agent problems over and over: the agent assumes a fixed architecture, edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
 
 This skill is the guardrail set I wish every Unity coding agent, Codex agent, Claude Code agent, or Unity MCP workflow had loaded before touching a game project.
 
@@ -14,6 +14,7 @@ Search phrases this README is meant to answer naturally:
 - Codex skill for Unity
 - Unity game development automation
 - Unity runtime owner proof
+- Unity project structure discovery
 - AI-assisted Unity refactoring
 - Unity MCP workflow guardrails
 - npx Codex skill installer
@@ -28,7 +29,7 @@ It is especially useful for:
 - UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
 - focus rings, tutorial spotlights, modal dimming, or visible target binding for buttons, icons, cards, HUD slots, markers, colliders, units, props, and VFX anchors where the agent must use the real runtime object instead of guessed coordinates
 - duplicate Unity object names where `GameObject.Find(name)` or first-match search can select the wrong target
-- modular C# work where new responsibility needs the right folder, namespace, and dependency direction
+- modular C# work where new responsibility needs the repo's actual folder, namespace, assembly, and dependency direction
 - gameplay content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
 - repeated "still not fixed" passes where the agent needs to stop changing random constants
@@ -61,11 +62,16 @@ mindmap
       Script or component owner
       Mutating method
       Runtime override
+    Structure discovery
+      Live folders
+      Namespaces
+      Assemblies
+      Scenes and prefabs
+      Content paths
     Code routing
-      Core
-      Contracts
-      Systems
-      Features
+      Project-derived layers
+      Existing owners
+      Contracts and gateways
       Data first content
     UI and assets
       Parent hierarchy
@@ -88,15 +94,16 @@ The mindmap is not just a list of topics. Each branch feeds a specific step, and
 
 ```mermaid
 flowchart TD
-    A["Request<br/>what the user wants changed"] --> C["3. Classify the task"]
+    A["Request<br/>what the user wants changed"] --> D["3. Derive project structure"]
     B["Local rules<br/>AGENTS.md / README / architecture notes"] --> R["1. Read local rules"]
     S["Repo state<br/>git status --short / dirty files"] --> G["2. Check repo state"]
-    M["Graph and source context<br/>Graphify / code search / references"] --> C
+    M["Graph and source context<br/>Graphify / code search / references"] --> D
 
     R --> R1["Output:<br/>hard constraints, project rules, out-of-scope areas"]
     G --> G1["Output:<br/>dirty-file boundary and files to preserve"]
-    R1 --> C
-    G1 --> C
+    R1 --> D
+    G1 --> D
+    D --> C["4. Classify the task"]
 
     C --> C1{"Route"}
     C1 --> RP["Runtime proof route"]
@@ -106,9 +113,9 @@ flowchart TD
     C1 --> CL["Cleanup route"]
 
     RP --> RP1["Input:<br/>visible object, scene/prefab reference, script/component owner, mutating method, runtime override"]
-    RP1 --> O["4. Prove the owner"]
+    RP1 --> O["5. Prove the owner"]
 
-    CR --> CR1["Input:<br/>Core / Contracts / Systems / Features, data-first content, dependency direction, hub risk"]
+    CR --> CR1["Input:<br/>repo-local folders / namespaces / asmdefs / scenes / prefabs, data-first content, dependency direction, hub risk"]
     CR1 --> O
 
     UI --> UI1["Input:<br/>parent hierarchy, anchors, safe area, CanvasScaler, TMP refresh path, source asset gate"]
@@ -120,26 +127,27 @@ flowchart TD
     O --> P{"Proof complete?"}
     P -- "No" --> X["Inspect deeper<br/>read the missing owner/source data"]
     X --> O
-    P -- "Yes" --> F["5. Name file boundary<br/>allowed files, not-touched files, out-of-scope systems"]
+    P -- "Yes" --> F["6. Name file boundary<br/>allowed files, not-touched files, out-of-scope systems"]
 
-    F --> H["6. Patch smallest file set<br/>change only the proven owner"]
+    F --> H["7. Patch smallest file set<br/>change only the proven owner"]
     VA --> V1["Input:<br/>syntax, compile, Play Mode, graph, package dry-run, exact command output"]
-    H --> V["7. Run useful validation"]
+    H --> V["8. Run useful validation"]
     V1 --> V
-    V --> Z["8. Close out<br/>changed files, proof, validation result, residual risk"]
+    V --> Z["9. Close out<br/>changed files, proof, validation result, residual risk"]
 ```
 
 Here is the same flow in a more practical table:
 
 | Mindmap branch | Enters step | What it carries | Required output before moving on |
 |---|---:|---|---|
-| Runtime proof | Step 4 | visible object, scene/prefab link, script/component, mutating method, runtime override | owner chain that proves where the live behavior is controlled |
-| Code routing | Step 3-5 | Core/Contracts/Systems/Features, data source, dependency direction, hub risk | route choice, Routing Card when structural work is needed, and a file boundary |
-| UI and assets | Step 3-6 | hierarchy, anchors, safe area, CanvasScaler, TMP, asset gate | layout owner or asset decision; PixelLab only when a new/replaced source visual asset is required |
-| Validation | Step 7-8 | smallest useful check, exact command output, known gaps | validation result and residual risk that can be reported honestly |
-| Cleanup | Step 3-8 | YAML/GUID refs, `Resources.Load` paths, generated-file status, git status | deletion/keep proof, safe cleanup scope, and clean Git explanation |
+| Runtime proof | Step 5 | visible object, scene/prefab link, script/component, mutating method, runtime override | owner chain that proves where the live behavior is controlled |
+| Structure discovery | Step 1-4 | repo docs, folders, namespaces, asmdefs, scenes, prefabs, graph/source proof | project-derived structure map before routing |
+| Code routing | Step 4-6 | repo-local owners/layers, data source, dependency direction, hub risk | route choice, Routing Card when structural work is needed, and a file boundary |
+| UI and assets | Step 4-7 | hierarchy, anchors, safe area, CanvasScaler, TMP, asset gate | layout owner or asset decision; PixelLab only when a new/replaced source visual asset is required |
+| Validation | Step 8-9 | smallest useful check, exact command output, known gaps | validation result and residual risk that can be reported honestly |
+| Cleanup | Step 4-9 | YAML/GUID refs, `Resources.Load` paths, generated-file status, git status | deletion/keep proof, safe cleanup scope, and clean Git explanation |
 
-The important bit: data does not jump straight from "I found a file" to "I edited it." It has to pass through classification, owner proof, file boundary, patch, validation, and closeout.
+The important bit: data does not jump straight from "I found a file" to "I edited it." It has to pass through live structure discovery, classification, owner proof, file boundary, patch, validation, and closeout.
 
 ## Install
 
@@ -185,7 +193,15 @@ Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
 
-For structural work, the skill makes the agent fill a Routing Card before editing. That card forces it to name the owner, layer, cross-module communication path, graph/source proof, validation plan, and files it will not touch.
+For structural work, the skill makes the agent derive the user's actual project structure, then fill a Routing Card before editing. That card forces it to name the owner, repo-local layer/category, cross-module communication path, graph/source proof, validation plan, and files it will not touch.
+
+For Impeccable-style context, ask:
+
+```text
+Use $unity-agent-workflows.
+Teach/document this Unity project structure first.
+Create or refresh UNITY_STRUCTURE.md from the live repo.
+```
 
 ## What Is Inside
 
@@ -203,6 +219,7 @@ unity-agent-workflows/
 │   ├── cleanup-and-git.md
 │   ├── content-and-systems.md
 │   ├── modular-architecture.md
+│   ├── project-structure-discovery.md
 │   ├── runtime-owner-proof.md
 │   ├── session-mining.md
 │   ├── ui-and-visual-assets.md
@@ -216,8 +233,9 @@ unity-agent-workflows/
 ## Reference Files
 
 - [ai-workflows.md](references/ai-workflows.md): the general workflow, Routing Card, task recipes, and closeout shape
+- [project-structure-discovery.md](references/project-structure-discovery.md): how to learn the user's actual Unity folders, namespaces, assemblies, scenes, prefabs, and optional `UNITY_STRUCTURE.md`
 - [runtime-owner-proof.md](references/runtime-owner-proof.md): how to prove the real owner of visible/runtime behavior
-- [modular-architecture.md](references/modular-architecture.md): Core, Contracts, Systems, Features, asmdef boundaries, and hub gates
+- [modular-architecture.md](references/modular-architecture.md): project-derived module boundaries, asmdef rules, and hub gates; Core/Systems/Features is only a sample fallback
 - [unity-validation.md](references/unity-validation.md): compile checks, stale response files, Roslyn/Bee notes, and validation levels
 - [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe areas, localization, and visual asset gates
 - [content-and-systems.md](references/content-and-systems.md): gameplay data, progression, stages, waves, and system readiness
@@ -251,7 +269,7 @@ unity-agent-workflows
 
 This is not a replacement for Unity Play Mode, device testing, code review, or a project's own `AGENTS.md`.
 
-It also will not magically know your project structure. It forces the agent to read the live repo, prove the owner chain, and explain what it changed. That is the point.
+It also will not assume your project structure. It forces the agent to read the live repo, derive the current structure, prove the owner chain, and explain what it changed. That is the point.
 
 ## License
 

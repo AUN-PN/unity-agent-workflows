@@ -1,8 +1,14 @@
 # Modular Architecture
 
-## Target Shape
+## Project-Derived Shape
 
-Use this pattern when a Unity project has grown beyond a few scripts:
+Do not force a fixed `Core/Systems/Features` layout onto every Unity repo. First read `references/project-structure-discovery.md` and derive the user's live folders, namespaces, assemblies, scenes, prefabs, bootstraps, and content paths.
+
+Use the repo's own structure as the target shape. If the repo already has architecture docs or `.asmdef` boundaries, those are the initial routing map unless live code proves they are stale.
+
+## Sample Shape
+
+This pattern is only a fallback/example for projects that already resemble it or when the user explicitly wants a migration target:
 
 ```text
 Assets/Scripts
@@ -14,7 +20,7 @@ Assets/Scripts
     └── <ModuleName>
 ```
 
-Dependency direction:
+Sample dependency direction:
 
 ```text
 Core
@@ -23,7 +29,7 @@ Core
   <- Feature Modules
 ```
 
-Rules:
+Sample rules:
 
 - `Core` references no Systems, Features, or `Assembly-CSharp`.
 - Contracts are implementation-free.
@@ -35,11 +41,13 @@ Rules:
 
 ## Placement Matrix
 
+Translate this matrix into the repo's own names. For example, "feature" may be `Modules`, `Gameplay`, `Screens`, `Presentation`, or another project-local boundary.
+
 | Change | Place | Avoid |
 | --- | --- | --- |
 | One module's gameplay behavior | `Features/<ModuleName>` | `Core`, unrelated systems, sibling features |
-| Reusable runtime service | `Systems/<SystemName>` | Feature folders |
-| Cross-feature interface/event/DTO | `Systems/<SystemName>/Contracts` | Feature folders |
+| Reusable runtime service | Repo-local service/system/runtime owner path | Unrelated feature/module folders |
+| Cross-feature interface/event/DTO | Repo-local contract/event/gateway boundary | Feature/module implementation folders |
 | Generic primitive/utility | `Core` | Feature/system folders with gameplay knowledge |
 | Stage/skill/enemy/boss/balance data | ScriptableObject, content definition, config | Hardcoded branches inside hubs |
 | Home/menu UI construction | Owning UI feature | Gameplay systems |
@@ -87,6 +95,7 @@ Stop and split unless the user approves temporary debt when:
 
 Before adding or tightening asmdefs:
 
+- Match real `.asmdef` names and references from the repo.
 - No direct sibling feature imports.
 - No dependency on `Assembly-CSharp`.
 - No system-to-feature reference.
