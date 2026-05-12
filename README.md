@@ -67,26 +67,6 @@ mindmap
       Git status clarity
 ```
 
-## Working Steps
-
-When I use this skill, this is the working path I expect:
-
-```mermaid
-flowchart TD
-    A["1. Read local rules<br/>AGENTS.md / README / architecture notes"] --> B["2. Check repo state<br/>git status --short"]
-    B --> C["3. Classify the task<br/>runtime / UI / C# / asset / content / validation / cleanup"]
-    C --> D["4. Prove the owner<br/>runtime chain or Routing Card"]
-    D --> E{"Owner proven?"}
-    E -- "No" --> F["Inspect deeper<br/>do not try a value"]
-    F --> D
-    E -- "Yes" --> G["5. Name file boundary<br/>allowed / not touched / out of scope"]
-    G --> H["6. Patch the smallest file set<br/>fix the proven owner"]
-    H --> I["7. Run useful validation<br/>syntax / compile / Play Mode / graph / package dry-run"]
-    I --> J["8. Close out<br/>changed files / proof / validation / risk"]
-```
-
-If the owner is not proven, the agent loops back into investigation instead of changing a random value.
-
 ## Data Flow by Step
 
 The mindmap is not just a list of topics. Each branch feeds a specific step, and each step must produce something useful before the agent moves on.
