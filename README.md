@@ -87,6 +87,65 @@ flowchart TD
 
 If the owner is not proven, the agent loops back into investigation instead of changing a random value.
 
+## Data Flow by Step
+
+The mindmap is not just a list of topics. Each branch feeds a specific step, and each step must produce something useful before the agent moves on.
+
+```mermaid
+flowchart TD
+    A["Request<br/>what the user wants changed"] --> C["3. Classify the task"]
+    B["Local rules<br/>AGENTS.md / README / architecture notes"] --> R["1. Read local rules"]
+    S["Repo state<br/>git status --short / dirty files"] --> G["2. Check repo state"]
+    M["Graph and source context<br/>Graphify / code search / references"] --> C
+
+    R --> R1["Output:<br/>hard constraints, project rules, out-of-scope areas"]
+    G --> G1["Output:<br/>dirty-file boundary and files to preserve"]
+    R1 --> C
+    G1 --> C
+
+    C --> C1{"Route"}
+    C1 --> RP["Runtime proof route"]
+    C1 --> CR["Code routing route"]
+    C1 --> UI["UI and asset route"]
+    C1 --> VA["Validation route"]
+    C1 --> CL["Cleanup route"]
+
+    RP --> RP1["Input:<br/>visible object, scene/prefab reference, script/component owner, mutating method, runtime override"]
+    RP1 --> O["4. Prove the owner"]
+
+    CR --> CR1["Input:<br/>Core / Contracts / Systems / Features, data-first content, dependency direction, hub risk"]
+    CR1 --> O
+
+    UI --> UI1["Input:<br/>parent hierarchy, anchors, safe area, CanvasScaler, TMP refresh path, source asset gate"]
+    UI1 --> O
+
+    CL --> CL1["Input:<br/>YAML/GUID references, Resources paths, generated-file status, git status clarity"]
+    CL1 --> O
+
+    O --> P{"Proof complete?"}
+    P -- "No" --> X["Inspect deeper<br/>read the missing owner/source data"]
+    X --> O
+    P -- "Yes" --> F["5. Name file boundary<br/>allowed files, not-touched files, out-of-scope systems"]
+
+    F --> H["6. Patch smallest file set<br/>change only the proven owner"]
+    VA --> V1["Input:<br/>syntax, compile, Play Mode, graph, package dry-run, exact command output"]
+    H --> V["7. Run useful validation"]
+    V1 --> V
+    V --> Z["8. Close out<br/>changed files, proof, validation result, residual risk"]
+```
+
+Here is the same flow in a more practical table:
+
+| Mindmap branch | Enters step | What it carries | Required output before moving on |
+|---|---:|---|---|
+| Runtime proof | Step 4 | visible object, scene/prefab link, script/component, mutating method, runtime override | owner chain that proves where the live behavior is controlled |
+| Code routing | Step 3-5 | Core/Contracts/Systems/Features, data source, dependency direction, hub risk | route choice, Routing Card when structural work is needed, and a file boundary |
+| UI and assets | Step 3-6 | hierarchy, anchors, safe area, CanvasScaler, TMP, asset gate | layout owner or asset decision; PixelLab only when a new/replaced source visual asset is required |
+| Validation | Step 7-8 | smallest useful check, exact command output, known gaps | validation result and residual risk that can be reported honestly |
+| Cleanup | Step 3-8 | YAML/GUID refs, `Resources.Load` paths, generated-file status, git status | deletion/keep proof, safe cleanup scope, and clean Git explanation |
+
+The important bit: data does not jump straight from "I found a file" to "I edited it." It has to pass through classification, owner proof, file boundary, patch, validation, and closeout.
+
 ## Install
 
 From the private GitHub repo:
