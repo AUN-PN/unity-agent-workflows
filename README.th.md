@@ -1,6 +1,7 @@
 # Unity 2D Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
+[![skills.sh](https://skills.sh/b/AUN-PN/unity-agent-workflows)](https://skills.sh/AUN-PN/unity-agent-workflows)
 
 [English](README.md)
 
