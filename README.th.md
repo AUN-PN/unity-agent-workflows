@@ -1,5 +1,7 @@
 # Unity Agent Workflows
 
+[![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
+
 [English](README.md)
 
 Codex skill และ `npx` installer สำหรับทำงาน Unity กับ AI agent ให้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คจริงก่อน, พิสูจน์ runtime owner ก่อนแก้, route โค้ดเข้าที่ที่ถูกต้อง, validate ด้วย command ที่ตรวจซ้ำได้
