@@ -28,6 +28,7 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 - UI ที่ขึ้นกับ parent hierarchy, anchors, safe area, CanvasScaler, TMP refresh
 - focus ring, tutorial spotlight, modal dimming, visible target binding
 - object ชื่อซ้ำที่ `GameObject.Find(name)` หรือ first-match search อาจจับผิดตัว
+- เกม Unity 2D ที่มี sprite, tile, pooled enemy, `Collider2D`, หรือ runtime clone ซ้ำชื่อกัน แต่ target จริงคนละตัว
 - งาน C# structural/refactor ที่ต้องใช้ folder, namespace, assembly, dependency direction ของ repo จริง
 - gameplay content ที่ควรผ่าน data/config แทน hardcoded branch
 - cleanup ที่ต้องพิสูจน์ reference ก่อนลบ

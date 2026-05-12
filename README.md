@@ -19,6 +19,7 @@ Search phrases this README is meant to answer naturally:
 - Unity game development automation
 - Unity runtime owner proof
 - Unity project structure discovery
+- Unity 2D duplicate object debugging
 - AI-assisted Unity refactoring
 - Unity MCP workflow guardrails
 - npx Codex skill installer
@@ -33,6 +34,7 @@ It is especially useful for:
 - UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
 - focus rings, tutorial spotlights, modal dimming, or visible target binding for buttons, icons, cards, HUD slots, markers, colliders, units, props, and VFX anchors where the agent must use the real runtime object instead of guessed coordinates
 - duplicate Unity object names where `GameObject.Find(name)` or first-match search can select the wrong target
+- Unity 2D games with repeated sprites, tiles, pooled enemies, `Collider2D` objects, or runtime clones that share the same visible name but are different live targets
 - modular C# work where new responsibility needs the repo's actual folder, namespace, assembly, and dependency direction
 - gameplay content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
