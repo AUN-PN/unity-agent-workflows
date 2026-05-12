@@ -156,21 +156,7 @@ The important bit: data does not jump straight from "I found a file" to "I edite
 
 ## Install
 
-From the private GitHub repo:
-
-```bash
-npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git
-```
-
-If the repo is public, this shorthand also works:
-
-```bash
-npx github:Aun-Phuwanan/unity-agent-workflows
-```
-
-The npm package, installed skill name, and GitHub repo name are all `unity-agent-workflows`.
-
-After the package is published to npm:
+Install with npx only:
 
 ```bash
 npx unity-agent-workflows
@@ -195,12 +181,6 @@ By default the installer writes to:
 ```
 
 If that folder already exists, the installer backs it up with a timestamp before replacing it.
-
-Manual install is fine too:
-
-```bash
-git clone git@github.com:Aun-Phuwanan/unity-agent-workflows.git ~/.codex/skills/unity-agent-workflows
-```
 
 ## Use
 

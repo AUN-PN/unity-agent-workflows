@@ -27,8 +27,6 @@ function usage() {
 
 Usage:
   npx unity-agent-workflows [options]
-  npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git [options]
-  npx github:Aun-Phuwanan/unity-agent-workflows [options]
 
 Options:
   --target codex|claude|both   Install target. Default: codex
@@ -44,7 +42,7 @@ Options:
 Examples:
   npx unity-agent-workflows
   npx unity-agent-workflows --target both
-  npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git --dry-run
+  npx unity-agent-workflows --dry-run
 `);
 }
 
