@@ -327,29 +327,6 @@ unity-agent-workflows/
 - [cleanup-and-git.md](references/cleanup-and-git.md): safe deletion, generated files, commit hygiene, and push proof
 - [session-mining.md](references/session-mining.md): turning old agent lessons into durable rules without dumping raw chat into the skill
 
-## Validate
-
-Run:
-
-```bash
-bash scripts/validate_skill.sh
-```
-
-This checks the required skill files, `SKILL.md` frontmatter, `agents/openai.yaml`, the `package.json` bin entry, and the installer script syntax.
-
-For npm packaging:
-
-```bash
-npm pack --dry-run
-npm publish --dry-run
-```
-
-The package name is:
-
-```text
-unity-agent-workflows
-```
-
 ## What This Is Not
 
 This is not a replacement for Unity Play Mode, device testing, code review, or a project's own `AGENTS.md`.

@@ -274,25 +274,6 @@ unity-agent-workflows/
 - [cleanup-and-git.md](references/cleanup-and-git.md): safe deletion, generated files, commit hygiene
 - [session-mining.md](references/session-mining.md): แปลง lesson จาก session เก่าเป็น durable rules
 
-## Validate
-
-```bash
-bash scripts/validate_skill.sh
-```
-
-สำหรับ npm package:
-
-```bash
-npm pack --dry-run
-npm publish --dry-run
-```
-
-package name:
-
-```text
-unity-agent-workflows
-```
-
 ## ข้อจำกัด
 
 ไม่แทน Unity Play Mode, device testing, code review, หรือ project-local `AGENTS.md`
