@@ -67,6 +67,21 @@ mindmap
       Git status clarity
 ```
 
+## Working Steps
+
+When I use this skill, I expect the agent to move in this order:
+
+1. Read the local project rules first: `AGENTS.md`, repo `README.md`, architecture notes, or project-specific skill instructions.
+2. Check the repo state with `git status --short` and keep unrelated dirty files out of the patch.
+3. Classify the task: runtime bug, UI/layout, new C# responsibility, visual asset, gameplay content, validation repair, cleanup, or workflow update.
+4. Prove the owner before editing. For visible behavior, trace the runtime owner chain. For structural work, fill the Routing Card.
+5. Name the file boundary: files allowed to touch, files explicitly not touched, and any system that is out of scope.
+6. Patch the smallest file set that actually fixes the proven owner.
+7. Run the smallest useful validation: syntax, skill validation, compile check, Play Mode proof, graph check, or package dry-run depending on the task.
+8. Close with changed files, proof, validation result, and any residual risk.
+
+If step 4 fails, the agent should not "try a value." It should inspect more until the real owner is clear.
+
 ## Install
 
 From the private GitHub repo:
