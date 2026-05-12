@@ -69,18 +69,23 @@ mindmap
 
 ## Working Steps
 
-When I use this skill, I expect the agent to move in this order:
+When I use this skill, this is the working path I expect:
 
-1. Read the local project rules first: `AGENTS.md`, repo `README.md`, architecture notes, or project-specific skill instructions.
-2. Check the repo state with `git status --short` and keep unrelated dirty files out of the patch.
-3. Classify the task: runtime bug, UI/layout, new C# responsibility, visual asset, gameplay content, validation repair, cleanup, or workflow update.
-4. Prove the owner before editing. For visible behavior, trace the runtime owner chain. For structural work, fill the Routing Card.
-5. Name the file boundary: files allowed to touch, files explicitly not touched, and any system that is out of scope.
-6. Patch the smallest file set that actually fixes the proven owner.
-7. Run the smallest useful validation: syntax, skill validation, compile check, Play Mode proof, graph check, or package dry-run depending on the task.
-8. Close with changed files, proof, validation result, and any residual risk.
+```mermaid
+flowchart TD
+    A["1. Read local rules<br/>AGENTS.md / README / architecture notes"] --> B["2. Check repo state<br/>git status --short"]
+    B --> C["3. Classify the task<br/>runtime / UI / C# / asset / content / validation / cleanup"]
+    C --> D["4. Prove the owner<br/>runtime chain or Routing Card"]
+    D --> E{"Owner proven?"}
+    E -- "No" --> F["Inspect deeper<br/>do not try a value"]
+    F --> D
+    E -- "Yes" --> G["5. Name file boundary<br/>allowed / not touched / out of scope"]
+    G --> H["6. Patch the smallest file set<br/>fix the proven owner"]
+    H --> I["7. Run useful validation<br/>syntax / compile / Play Mode / graph / package dry-run"]
+    I --> J["8. Close out<br/>changed files / proof / validation / risk"]
+```
 
-If step 4 fails, the agent should not "try a value." It should inspect more until the real owner is clear.
+If the owner is not proven, the agent loops back into investigation instead of changing a random value.
 
 ## Install
 
