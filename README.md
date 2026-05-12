@@ -224,47 +224,46 @@ If that folder already exists, the installer backs it up with a timestamp before
 
 ## Use
 
-Use this skill in two passes: teach the project once, then use that structure map for real work.
+Use this skill in small passes. Teach only the project area needed for the current task, then use that focused map for real work.
 
-### 1. Teach The Project Structure
+### 1. Teach Only The Needed Area
 
-Run this first in a new Unity repo, before refactors or new systems:
+Start with a narrow structure pass. Do not scan every category unless the task truly needs it.
 
 ```text
 Use $unity-agent-workflows.
-Teach/document this Unity project structure first.
-Create or refresh UNITY_STRUCTURE.md from the live repo.
+Teach only the UI/runtime-owner structure needed for this HUD task.
+Create or refresh the relevant UNITY_STRUCTURE.md section.
+Do not inspect unrelated gameplay, content, build, or asset systems.
 ```
 
-The agent should inspect:
+Pick the area from the task:
 
-- repo instructions: `AGENTS.md`, `README.md`, architecture docs
-- scripts, folders, namespaces, `.asmdef` files
-- scenes, prefabs, bootstraps, composition roots
-- ScriptableObjects, config, localization, addressables/resources
-- graph reports: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`
-- generated/build/cache folders to avoid
+| Task area | Inspect only |
+|---|---|
+| UI/runtime bug | scene/prefab path, presenter/controller, Canvas/TMP/safe-area code |
+| Gameplay feature | owning gameplay module, related data/config, event/contract path |
+| Content/balance | ScriptableObjects/config/localization that own the values |
+| Assembly/refactor | folders, namespaces, `.asmdef`, graph edges for touched modules |
+| Cleanup | code refs, YAML/GUID refs, Resources/addressable paths |
 
-The generated `UNITY_STRUCTURE.md` should answer:
+Keep `UNITY_STRUCTURE.md` as a short index. Put large or domain-specific notes in focused files such as:
 
 ```text
-Where do scripts live?
-What are the module/layer names in this repo?
-Which assemblies depend on which assemblies?
-Which scenes/prefabs own runtime UI or gameplay objects?
-Where does content/data live?
-How do modules communicate?
-What validation commands exist?
-What files/folders should agents avoid?
+UNITY_STRUCTURE.md
+UNITY_STRUCTURE.ui.md
+UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.content.md
+UNITY_STRUCTURE.assemblies.md
 ```
 
 ### 2. Use The Structure Map
 
-After `UNITY_STRUCTURE.md` exists, ask the agent to read it before editing:
+Ask the agent to read only the relevant map before editing:
 
 ```text
 Use $unity-agent-workflows.
-Read UNITY_STRUCTURE.md first.
+Read only UNITY_STRUCTURE.md and UNITY_STRUCTURE.ui.md first.
 Implement this change using the repo's existing structure.
 Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
@@ -274,7 +273,7 @@ For visible/runtime bugs, keep it narrow:
 
 ```text
 Use $unity-agent-workflows.
-Read UNITY_STRUCTURE.md first.
+Read only the relevant UNITY_STRUCTURE files first.
 Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
@@ -285,7 +284,7 @@ If the structure map is stale, refresh only the relevant section:
 
 ```text
 Use $unity-agent-workflows.
-Refresh the UI/runtime-owner parts of UNITY_STRUCTURE.md, then fix this HUD issue.
+Refresh only the UI/runtime-owner map, then fix this HUD issue.
 ```
 
 ## What Is Inside

@@ -166,47 +166,46 @@ npx unity-agent-workflows --dry-run
 
 ## วิธีใช้
 
-ใช้เป็น 2 รอบ: สอนโครงสร้างโปรเจ็คก่อน แล้วค่อยใช้ map นั้นทำงานจริง
+ใช้เป็นรอบเล็กๆ: สอนเฉพาะหมวดที่งานนี้ต้องใช้ แล้วค่อยใช้ map นั้นทำงานจริง
 
-### 1. สอนโครงสร้างโปรเจ็ค
+### 1. สอนเฉพาะหมวดที่ต้องใช้
 
-สำหรับ Unity repo ใหม่ ให้รันก่อนสั่ง refactor หรือเพิ่ม system:
+เริ่มจาก scope แคบ ห้าม scan ทุกหมวดถ้างานไม่ได้ต้องใช้:
 
 ```text
 Use $unity-agent-workflows.
-Teach/document this Unity project structure first.
-Create or refresh UNITY_STRUCTURE.md from the live repo.
+Teach only the UI/runtime-owner structure needed for this HUD task.
+Create or refresh the relevant UNITY_STRUCTURE.md section.
+Do not inspect unrelated gameplay, content, build, or asset systems.
 ```
 
-agent ควร inspect:
+เลือกหมวดจากงาน:
 
-- repo instructions: `AGENTS.md`, `README.md`, architecture docs
-- scripts, folders, namespaces, `.asmdef` files
-- scenes, prefabs, bootstraps, composition roots
-- ScriptableObjects, config, localization, addressables/resources
-- graph reports: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`
-- generated/build/cache folders ที่ต้องเลี่ยง
+| หมวดงาน | อ่านเฉพาะ |
+|---|---|
+| UI/runtime bug | scene/prefab path, presenter/controller, Canvas/TMP/safe-area code |
+| Gameplay feature | owning gameplay module, data/config ที่เกี่ยวข้อง, event/contract path |
+| Content/balance | ScriptableObjects/config/localization ที่เป็นเจ้าของค่า |
+| Assembly/refactor | folders, namespaces, `.asmdef`, graph edges ของ module ที่แตะ |
+| Cleanup | code refs, YAML/GUID refs, Resources/addressable paths |
 
-`UNITY_STRUCTURE.md` ควรตอบคำถามเหล่านี้:
+ให้ `UNITY_STRUCTURE.md` เป็น index สั้นๆ ถ้าเนื้อหาเยอะให้แยกไฟล์ตามหมวด:
 
 ```text
-Where do scripts live?
-What are the module/layer names in this repo?
-Which assemblies depend on which assemblies?
-Which scenes/prefabs own runtime UI or gameplay objects?
-Where does content/data live?
-How do modules communicate?
-What validation commands exist?
-What files/folders should agents avoid?
+UNITY_STRUCTURE.md
+UNITY_STRUCTURE.ui.md
+UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.content.md
+UNITY_STRUCTURE.assemblies.md
 ```
 
 ### 2. ใช้ Structure Map ทำงานจริง
 
-หลังมี `UNITY_STRUCTURE.md` แล้ว ให้สั่ง agent อ่านก่อนแก้:
+ให้ agent อ่านเฉพาะ map ที่เกี่ยวข้องก่อนแก้:
 
 ```text
 Use $unity-agent-workflows.
-Read UNITY_STRUCTURE.md first.
+Read only UNITY_STRUCTURE.md and UNITY_STRUCTURE.ui.md first.
 Implement this change using the repo's existing structure.
 Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
@@ -216,7 +215,7 @@ Show the runtime owner, files touched, and validation command.
 
 ```text
 Use $unity-agent-workflows.
-Read UNITY_STRUCTURE.md first.
+Read only the relevant UNITY_STRUCTURE files first.
 Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
@@ -227,7 +226,7 @@ Patch the smallest file set and show the validation command.
 
 ```text
 Use $unity-agent-workflows.
-Refresh the UI/runtime-owner parts of UNITY_STRUCTURE.md, then fix this HUD issue.
+Refresh only the UI/runtime-owner map, then fix this HUD issue.
 ```
 
 ## ไฟล์ข้างใน

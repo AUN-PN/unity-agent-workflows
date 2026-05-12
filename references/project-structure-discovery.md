@@ -2,24 +2,24 @@
 
 ## Purpose
 
-Use this before routing architecture, new files, new classes, cross-module calls, or broad Unity edits. The agent must learn the user's actual project structure instead of forcing this skill's sample layout.
+Use this before routing architecture, new files, new classes, cross-module calls, or broad Unity edits. The agent must learn only the relevant part of the user's actual project structure instead of forcing this skill's sample layout or scanning the whole repo by default.
 
-The output is a live structure map that can be written as `UNITY_STRUCTURE.md`, `PROJECT_STRUCTURE.md`, or kept in the task notes when the user does not want files added.
+The output is a focused structure map that can be written as a short `UNITY_STRUCTURE.md` index, split into focused files, or kept in task notes when the user does not want files added.
 
 ## Discovery Inputs
 
-Read only what exists in the target repo:
+Read only what exists and only what the task needs:
 
-- `AGENTS.md`, `README.md`, architecture docs, ADRs, package docs.
-- `Assets/` top-level folders.
-- `Assets/Scripts/` folders, namespaces, assembly names, `.asmdef` references.
-- Scene and prefab ownership paths.
-- Bootstrap/composition roots.
-- Content/data paths: ScriptableObjects, configs, localization, addressables/resources.
-- Graph reports: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
-- Existing generated maps such as `UNITY_STRUCTURE.md`, `PROJECT_STRUCTURE.md`, `DESIGN.md`, or project-local workflow docs.
+- Always-read: `AGENTS.md`, relevant `README.md`/architecture docs, existing focused structure maps.
+- UI/runtime bug: scene/prefab path, presenter/controller, Canvas/TMP/safe-area code.
+- Gameplay feature: owning gameplay module, related data/config, event/contract path.
+- Content/balance: ScriptableObjects/config/localization that own the values.
+- Assembly/refactor: folders, namespaces, `.asmdef`, graph edges for touched modules.
+- Cleanup: code refs, YAML/GUID refs, Resources/addressable paths.
+- Graph reports only when routing or dependency proof depends on them: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
 
 Do not invent folders or layer names that are not visible in the repo.
+Do not scan unrelated categories just to fill a template.
 
 ## Structure Map
 
@@ -59,34 +59,40 @@ Open uncertainty:
 
 ## Optional Persistent Context
 
-When the user wants a teach/document flow, create or refresh a project context file:
+When the user wants a teach/document flow, keep the main file short:
 
 ```text
 UNITY_STRUCTURE.md
 ```
 
-Recommended sections:
+Use it as an index plus links to focused maps when needed:
 
 ```text
 Project Identity
-Source Layout
-Assemblies And Dependencies
-Scenes And Prefabs
-Runtime Owners
-UI And Presentation
-Content And Data
-Validation
-Rules For Agents
-Known Gaps
+Known Structure Maps
+Do-Not-Touch Areas
+Validation Notes
+Open Gaps
+```
+
+Split larger notes by area:
+
+```text
+UNITY_STRUCTURE.ui.md
+UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.content.md
+UNITY_STRUCTURE.assemblies.md
+UNITY_STRUCTURE.cleanup.md
 ```
 
 Rules:
 
+- Prefer focused maps over one huge file.
 - Keep it descriptive, not prescriptive.
 - Use exact paths from the repo.
 - Mark inferred facts as inferred.
 - Do not copy huge graphs or raw file dumps.
-- Refresh it when structure changes meaningfully.
+- Refresh only the stale area when structure changes meaningfully.
 
 ## Fallback Pattern
 
