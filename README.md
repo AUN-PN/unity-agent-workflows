@@ -33,6 +33,40 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 
 If that chain is missing, the agent has not earned the patch yet.
 
+## Mindmap
+
+This is the mental model I use when deciding whether the agent is allowed to edit.
+
+```mermaid
+mindmap
+  root((Unity Game AI Workflows))
+    Runtime proof
+      Visible object
+      Scene or prefab reference
+      Script or component owner
+      Mutating method
+      Runtime override
+    Code routing
+      Core
+      Contracts
+      Systems
+      Features
+      Data first content
+    UI and assets
+      Parent hierarchy
+      Anchors and safe area
+      CanvasScaler and TMP
+      Source asset gate
+    Validation
+      Smallest useful check
+      Exact command output
+      Residual risk
+    Cleanup
+      Reference proof
+      Generated file safety
+      Git status clarity
+```
+
 ## Install
 
 From the private GitHub repo:
