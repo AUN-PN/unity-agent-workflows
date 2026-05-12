@@ -6,8 +6,6 @@ I made this after running into the same Unity-agent problems over and over: the 
 
 This skill is the set of guardrails I wish every Unity coding agent had loaded before touching a game project.
 
-The agent entrypoint is [SKILL.md](SKILL.md). This README is just the human-readable overview.
-
 ## What It Helps With
 
 Use it when an agent is working on Unity game code and the task needs more discipline than "grep a name and patch the first match."
