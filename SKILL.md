@@ -1,9 +1,9 @@
 ---
-name: unity-game-ai-workflows
+name: unity-agent-workflows
 description: Use for AI-assisted Unity game development when a task needs disciplined repo discovery, feature routing, runtime-owner proof, modular C# architecture, asmdef boundaries, UI/scene safety, visual asset gating, gameplay content/data-first decisions, validation, cleanup proof, or mining prior agent lessons into durable workflow rules. Best for Unity games with Core/Systems/Features-style structure, runtime-built UI, mobile UX, generated assets, Graphify-style code graphs, or repeated "fix still not visible" failures.
 ---
 
-# Unity Game AI Workflows
+# Unity Agent Workflows
 
 Use this skill as the AI operating system for Unity game work. It turns project-specific lessons into a reusable workflow: read the live repo first, prove the real runtime owner, route code to the right layer, avoid hub growth, validate the smallest useful surface, and publish durable rules only to the artifact that owns them.
 

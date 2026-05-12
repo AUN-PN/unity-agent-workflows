@@ -1,9 +1,9 @@
 {
-  "name": "unity-game-ai-workflows",
+  "name": "unity-agent-workflows",
   "version": "0.1.0",
-  "description": "Install the Unity Game AI Workflows skill for Codex-style AI agents.",
+  "description": "Install the Unity Agent Workflows skill for Codex-style AI agents.",
   "bin": {
-    "unity-game-ai-workflows": "bin/unity-game-ai-workflows.js"
+    "unity-agent-workflows": "bin/unity-agent-workflows.js"
   },
   "files": [
     "SKILL.md",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git"
+    "url": "git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git"
   },
   "engines": {
     "node": ">=18"

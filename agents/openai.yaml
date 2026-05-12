@@ -1,6 +1,6 @@
 interface:
-  display_name: "Unity Game AI Workflows"
+  display_name: "Unity Agent Workflows"
   short_description: "Unity routing, architecture, and validation"
-  default_prompt: "Use $unity-game-ai-workflows to route, implement, and validate a Unity game feature safely."
+  default_prompt: "Use $unity-agent-workflows to route, implement, and validate a Unity game feature safely."
 policy:
   allow_implicit_invocation: true

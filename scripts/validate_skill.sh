@@ -8,7 +8,7 @@ required=(
   "README.md"
   "package.json"
   "agents/openai.yaml"
-  "bin/unity-game-ai-workflows.js"
+  "bin/unity-agent-workflows.js"
   "references/ai-workflows.md"
   "references/modular-architecture.md"
   "references/runtime-owner-proof.md"
@@ -26,7 +26,7 @@ for file in "${required[@]}"; do
   fi
 done
 
-node --check "$ROOT/bin/unity-game-ai-workflows.js" >/dev/null
+node --check "$ROOT/bin/unity-agent-workflows.js" >/dev/null
 
 python3 - "$ROOT/SKILL.md" "$ROOT/agents/openai.yaml" "$ROOT/package.json" <<'PY'
 from pathlib import Path
@@ -46,12 +46,12 @@ for key in ("name:", "description:"):
         raise SystemExit(f"SKILL.md missing {key}")
 if "TODO" in skill:
     raise SystemExit("SKILL.md still contains TODO")
-if "Use $unity-game-ai-workflows" not in openai_yaml:
+if "Use $unity-agent-workflows" not in openai_yaml:
     raise SystemExit("agents/openai.yaml default_prompt missing skill invocation")
-if package_json.get("name") != "unity-game-ai-workflows":
-    raise SystemExit("package.json name must be unity-game-ai-workflows")
-if package_json.get("bin", {}).get("unity-game-ai-workflows") != "bin/unity-game-ai-workflows.js":
-    raise SystemExit("package.json bin missing unity-game-ai-workflows")
+if package_json.get("name") != "unity-agent-workflows":
+    raise SystemExit("package.json name must be unity-agent-workflows")
+if package_json.get("bin", {}).get("unity-agent-workflows") != "bin/unity-agent-workflows.js":
+    raise SystemExit("package.json bin missing unity-agent-workflows")
 for file in ("SKILL.md", "agents", "references", "scripts", "bin"):
     if file not in package_json.get("files", []):
         raise SystemExit(f"package.json files missing {file}")

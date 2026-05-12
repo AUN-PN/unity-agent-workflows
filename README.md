@@ -1,4 +1,4 @@
-# Unity Game AI Workflows
+# Unity Agent Workflows
 
 A practical skill for using AI agents on Unity game projects without letting them guess their way through the codebase.
 
@@ -39,7 +39,7 @@ This is the mental model I use when deciding whether the agent is allowed to edi
 
 ```mermaid
 mindmap
-  root((Unity Game AI Workflows))
+  root((Unity Agent Workflows))
     Runtime proof
       Visible object
       Scene or prefab reference
@@ -92,37 +92,37 @@ If the owner is not proven, the agent loops back into investigation instead of c
 From the private GitHub repo:
 
 ```bash
-npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git
+npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git
 ```
 
 If the repo is public, this shorthand also works:
 
 ```bash
-npx github:Aun-Phuwanan/unity-game-ai-workflows
+npx github:Aun-Phuwanan/unity-agent-workflows
 ```
 
 After the package is published to npm:
 
 ```bash
-npx unity-game-ai-workflows
+npx unity-agent-workflows
 ```
 
 Install to both Codex and Claude-style skill folders:
 
 ```bash
-npx unity-game-ai-workflows --target both
+npx unity-agent-workflows --target both
 ```
 
 Preview the install without writing files:
 
 ```bash
-npx unity-game-ai-workflows --dry-run
+npx unity-agent-workflows --dry-run
 ```
 
 By default the installer writes to:
 
 ```text
-~/.codex/skills/unity-game-ai-workflows
+~/.codex/skills/unity-agent-workflows
 ```
 
 If that folder already exists, the installer backs it up with a timestamp before replacing it.
@@ -130,7 +130,7 @@ If that folder already exists, the installer backs it up with a timestamp before
 Manual install is fine too:
 
 ```bash
-git clone git@github.com:Aun-Phuwanan/unity-game-ai-workflows.git ~/.codex/skills/unity-game-ai-workflows
+git clone git@github.com:Aun-Phuwanan/unity-agent-workflows.git ~/.codex/skills/unity-agent-workflows
 ```
 
 ## Use
@@ -138,13 +138,13 @@ git clone git@github.com:Aun-Phuwanan/unity-game-ai-workflows.git ~/.codex/skill
 Ask your agent to load the skill before it works on Unity game changes:
 
 ```text
-Use $unity-game-ai-workflows to route, implement, and validate this Unity gameplay change safely.
+Use $unity-agent-workflows to route, implement, and validate this Unity gameplay change safely.
 ```
 
 For narrow bugs, I usually ask for three things:
 
 ```text
-Use $unity-game-ai-workflows.
+Use $unity-agent-workflows.
 Prove the runtime owner first.
 Patch the smallest file set and show the validation command.
 ```
@@ -154,14 +154,14 @@ For structural work, the skill makes the agent fill a Routing Card before editin
 ## What Is Inside
 
 ```text
-unity-game-ai-workflows/
+unity-agent-workflows/
 ├── SKILL.md
 ├── README.md
 ├── package.json
 ├── agents/
 │   └── openai.yaml
 ├── bin/
-│   └── unity-game-ai-workflows.js
+│   └── unity-agent-workflows.js
 ├── references/
 │   ├── ai-workflows.md
 │   ├── cleanup-and-git.md
@@ -208,7 +208,7 @@ npm publish --dry-run
 The package name is:
 
 ```text
-unity-game-ai-workflows
+unity-agent-workflows
 ```
 
 ## What This Is Not

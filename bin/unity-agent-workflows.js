@@ -5,7 +5,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
-const SKILL_NAME = "unity-game-ai-workflows";
+const SKILL_NAME = "unity-agent-workflows";
 const PACKAGE_ROOT = path.resolve(__dirname, "..");
 const PAYLOAD = [
   "SKILL.md",
@@ -23,12 +23,12 @@ const DEFAULT_TARGETS = {
 };
 
 function usage() {
-  console.log(`Unity Game AI Workflows installer
+  console.log(`Unity Agent Workflows installer
 
 Usage:
-  npx unity-game-ai-workflows [options]
-  npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git [options]
-  npx github:Aun-Phuwanan/unity-game-ai-workflows [options]
+  npx unity-agent-workflows [options]
+  npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git [options]
+  npx github:Aun-Phuwanan/unity-agent-workflows [options]
 
 Options:
   --target codex|claude|both   Install target. Default: codex
@@ -42,9 +42,9 @@ Options:
   --version                    Show package version
 
 Examples:
-  npx unity-game-ai-workflows
-  npx unity-game-ai-workflows --target both
-  npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git --dry-run
+  npx unity-agent-workflows
+  npx unity-agent-workflows --target both
+  npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git --dry-run
 `);
 }
 
