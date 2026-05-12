@@ -1,5 +1,7 @@
 # Unity Agent Workflows
 
+[ภาษาไทย](README.th.md)
+
 A Codex skill and npx installer for safer Unity AI agent workflows, Unity game development automation, project-derived structure discovery, runtime owner proof, and AI-assisted Unity refactoring.
 
 Use it when an AI coding agent is editing a Unity game and you need proof before patching: what structure this specific project uses, which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
@@ -291,6 +293,7 @@ Refresh the UI/runtime-owner parts of UNITY_STRUCTURE.md, then fix this HUD issu
 unity-agent-workflows/
 ├── SKILL.md
 ├── README.md
+├── README.th.md
 ├── package.json
 ├── agents/
 │   └── openai.yaml
