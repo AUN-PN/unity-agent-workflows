@@ -59,7 +59,7 @@ Open uncertainty:
 
 ## Optional Persistent Context
 
-When the user wants an Impeccable-style "teach/document" flow, create or refresh a project context file:
+When the user wants a teach/document flow, create or refresh a project context file:
 
 ```text
 UNITY_STRUCTURE.md

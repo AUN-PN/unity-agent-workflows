@@ -238,7 +238,7 @@ For structural work, the skill makes the agent derive the user's actual project 
 
 ## Teach The Project Structure First
 
-For a new Unity repo, run a structure pass before asking for refactors or new systems. This is the Impeccable-style step: the agent reads the live project and writes down how this repo is organized.
+For a new Unity repo, run a structure pass before asking for refactors or new systems. The agent reads the live project and writes down how this repo is organized.
 
 ```text
 Use $unity-agent-workflows.

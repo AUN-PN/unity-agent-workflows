@@ -32,7 +32,7 @@ Use this skill as the AI operating system for Unity game work. It turns project-
 Load only the reference needed for the current task.
 
 - `references/ai-workflows.md`: Routing Card, universal workflow, task recipes, closeout shape.
-- `references/project-structure-discovery.md`: how to learn the user's actual Unity structure and create/read `UNITY_STRUCTURE.md` style context.
+- `references/project-structure-discovery.md`: how to learn the user's actual Unity structure and create/read `UNITY_STRUCTURE.md` project context.
 - `references/modular-architecture.md`: project-derived layering, dependency rules, asmdef rules, hub gates; Core/Contracts/Systems/Features is only a fallback example.
 - `references/runtime-owner-proof.md`: Visible object proof chain, runtime visible target lock, repeated-fix diagnostics, scene/prefab/runtime override tracing.
 - `references/unity-validation.md`: `git diff --check`, Unity/Bee/Roslyn checks, stale response files, validation ladder.
