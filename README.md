@@ -23,14 +23,24 @@ Suggested GitHub topics:
 ```text
 codex-skill
 unity
+unity3d
 unity-ai
 unity-mcp
+unity-editor
 ai-agent
+llm-agent
+agentic-coding
 game-development
 workflow-automation
 runtime-owner-proof
 unity-refactoring
+unity-validation
+ai-workflows
+codex-cli
+claude-code
 npx
+npm-package
+developer-tools
 ```
 
 ## What It Helps With

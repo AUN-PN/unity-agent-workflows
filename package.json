@@ -18,20 +18,26 @@
     "pack:dry-run": "npm pack --dry-run"
   },
   "keywords": [
-    "ai-skill",
     "codex-skill",
-    "codex",
     "unity",
+    "unity3d",
     "unity-ai",
     "unity-mcp",
+    "unity-editor",
     "game-development",
-    "game-dev",
     "ai-agent",
-    "agent-workflow",
+    "llm-agent",
+    "agentic-coding",
     "workflow-automation",
     "runtime-owner-proof",
     "unity-refactoring",
-    "npx"
+    "unity-validation",
+    "ai-workflows",
+    "codex-cli",
+    "claude-code",
+    "npx",
+    "npm-package",
+    "developer-tools"
   ],
   "repository": {
     "type": "git",
