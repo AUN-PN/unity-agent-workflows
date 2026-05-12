@@ -54,38 +54,79 @@ If that chain is missing, the agent has not earned the patch yet.
 This is the mental model I use when deciding whether the agent is allowed to edit.
 
 ```mermaid
-mindmap
-  root((Unity Agent Workflows))
-    Runtime proof
-      Visible object
-      Scene or prefab reference
-      Script or component owner
-      Mutating method
-      Runtime override
-    Structure discovery
-      Live folders
-      Namespaces
-      Assemblies
-      Scenes and prefabs
-      Content paths
-    Code routing
-      Project-derived layers
-      Existing owners
-      Contracts and gateways
-      Data first content
-    UI and assets
-      Parent hierarchy
-      Anchors and safe area
-      CanvasScaler and TMP
-      Source asset gate
-    Validation
-      Smallest useful check
-      Exact command output
-      Residual risk
-    Cleanup
-      Reference proof
-      Generated file safety
-      Git status clarity
+flowchart LR
+    UAW["Unity Agent Workflows"]
+
+    subgraph DISC["Discover first"]
+      SD["Structure discovery"]
+      SD1["Live folders"]
+      SD2["Namespaces"]
+      SD3["Assemblies"]
+      SD4["Scenes and prefabs"]
+      SD5["Content paths"]
+      SD --> SD1
+      SD --> SD2
+      SD --> SD3
+      SD --> SD4
+      SD --> SD5
+    end
+
+    subgraph PROOF["Prove ownership"]
+      RP["Runtime proof"]
+      RP1["Visible object"]
+      RP2["Scene or prefab reference"]
+      RP3["Script or component owner"]
+      RP4["Mutating method"]
+      RP5["Runtime override"]
+      RP --> RP1
+      RP --> RP2
+      RP --> RP3
+      RP --> RP4
+      RP --> RP5
+    end
+
+    subgraph ROUTE["Route and change"]
+      CR["Code routing"]
+      CR1["Project-derived layers"]
+      CR2["Existing owners"]
+      CR3["Contracts and gateways"]
+      CR4["Data first content"]
+      UI["UI and assets"]
+      UI1["Parent hierarchy"]
+      UI2["Anchors and safe area"]
+      UI3["CanvasScaler and TMP"]
+      UI4["Source asset gate"]
+      CR --> CR1
+      CR --> CR2
+      CR --> CR3
+      CR --> CR4
+      UI --> UI1
+      UI --> UI2
+      UI --> UI3
+      UI --> UI4
+    end
+
+    subgraph VERIFY["Validate and clean"]
+      VA["Validation"]
+      VA1["Smallest useful check"]
+      VA2["Exact command output"]
+      VA3["Residual risk"]
+      CL["Cleanup"]
+      CL1["Reference proof"]
+      CL2["Generated file safety"]
+      CL3["Git status clarity"]
+      VA --> VA1
+      VA --> VA2
+      VA --> VA3
+      CL --> CL1
+      CL --> CL2
+      CL --> CL3
+    end
+
+    UAW --> DISC
+    UAW --> PROOF
+    UAW --> ROUTE
+    UAW --> VERIFY
 ```
 
 ## Data Flow by Step
