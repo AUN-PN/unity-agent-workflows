@@ -151,16 +151,16 @@ The important bit: data does not jump straight from "I found a file" to "I edite
 From the private GitHub repo:
 
 ```bash
-npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git
+npx git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git
 ```
 
 If the repo is public, this shorthand also works:
 
 ```bash
-npx github:Aun-Phuwanan/unity-game-ai-workflows
+npx github:Aun-Phuwanan/unity-agent-workflows
 ```
 
-The npm package and installed skill name are already `unity-agent-workflows`. The GitHub repo URL above still points at the current repository name; rename the GitHub repo too if you want the browser URL to match.
+The npm package, installed skill name, and GitHub repo name are all `unity-agent-workflows`.
 
 After the package is published to npm:
 
@@ -191,7 +191,7 @@ If that folder already exists, the installer backs it up with a timestamp before
 Manual install is fine too:
 
 ```bash
-git clone git@github.com:Aun-Phuwanan/unity-game-ai-workflows.git ~/.codex/skills/unity-agent-workflows
+git clone git@github.com:Aun-Phuwanan/unity-agent-workflows.git ~/.codex/skills/unity-agent-workflows
 ```
 
 ## Use
