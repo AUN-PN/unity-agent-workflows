@@ -17,6 +17,9 @@ required=(
   "references/content-and-systems.md"
   "references/cleanup-and-git.md"
   "references/session-mining.md"
+  ".claude/skills/unity-agent-workflows/SKILL.md"
+  ".claude/skills/unity-agent-workflows/agents/openai.yaml"
+  ".claude/skills/unity-agent-workflows/references/ai-workflows.md"
 )
 
 for file in "${required[@]}"; do
@@ -27,6 +30,9 @@ for file in "${required[@]}"; do
 done
 
 node --check "$ROOT/bin/unity-agent-workflows.js" >/dev/null
+diff -qr "$ROOT/SKILL.md" "$ROOT/.claude/skills/unity-agent-workflows/SKILL.md" >/dev/null
+diff -qr "$ROOT/agents" "$ROOT/.claude/skills/unity-agent-workflows/agents" >/dev/null
+diff -qr "$ROOT/references" "$ROOT/.claude/skills/unity-agent-workflows/references" >/dev/null
 
 python3 - "$ROOT/SKILL.md" "$ROOT/agents/openai.yaml" "$ROOT/package.json" <<'PY'
 from pathlib import Path

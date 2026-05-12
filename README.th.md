@@ -14,6 +14,15 @@ MCPmarket import URL:
 https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows
 ```
 
+ก่อนกด sync ใน MCPmarket หลังแก้ skill ให้ refresh import folder:
+
+```bash
+npm run sync:mcpmarket
+npm run validate
+```
+
+จากนั้น push ขึ้น GitHub แล้วกด Sync ใน MCPmarket เอง เพราะ GitHub-imported skills จะไม่อัปเดตจนกว่าจะ sync รอบใหม่
+
 ใช้เมื่อต้องให้ AI coding agent แก้ Unity game แล้วไม่อยากให้เดาจากชื่อไฟล์ใกล้ๆ หรือยัด logic เพิ่มใน controller ใหญ่โดยไม่พิสูจน์ว่า path นั้นคือ path ที่รันจริง
 
 กฎหลัก:

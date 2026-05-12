@@ -15,6 +15,7 @@
     "bin"
   ],
   "scripts": {
+    "sync:mcpmarket": "bash scripts/sync_mcpmarket_skill.sh",
     "validate": "bash scripts/validate_skill.sh",
     "pack:dry-run": "npm pack --dry-run"
   },

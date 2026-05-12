@@ -14,6 +14,15 @@ MCPmarket import URL:
 https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows
 ```
 
+Before syncing MCPmarket after local skill changes, refresh the import folder:
+
+```bash
+npm run sync:mcpmarket
+npm run validate
+```
+
+Then push to GitHub and click Sync in MCPmarket. GitHub-imported skills do not update until the next MCPmarket sync.
+
 Use it when an AI coding agent is editing a Unity game and you need proof before patching: what structure this specific project uses, which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
 
 I made this after running into the same Unity-agent problems over and over: the agent assumes a fixed architecture, edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
