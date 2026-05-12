@@ -222,25 +222,11 @@ If that folder already exists, the installer backs it up with a timestamp before
 
 ## Use
 
-Ask your agent to load the skill before it works on Unity game changes:
+Use this skill in two passes: teach the project once, then use that structure map for real work.
 
-```text
-Use $unity-agent-workflows to route, implement, and validate this Unity gameplay change safely.
-```
+### 1. Teach The Project Structure
 
-For narrow bugs, I usually ask for three things:
-
-```text
-Use $unity-agent-workflows.
-Prove the runtime owner first.
-Patch the smallest file set and show the validation command.
-```
-
-For structural work, the skill makes the agent derive the user's actual project structure, then fill a Routing Card before editing. That card forces it to name the owner, repo-local layer/category, cross-module communication path, graph/source proof, validation plan, and files it will not touch.
-
-## Teach The Project Structure First
-
-For a new Unity repo, run a structure pass before asking for refactors or new systems. The agent reads the live project and writes down how this repo is organized.
+Run this first in a new Unity repo, before refactors or new systems:
 
 ```text
 Use $unity-agent-workflows.
@@ -248,14 +234,14 @@ Teach/document this Unity project structure first.
 Create or refresh UNITY_STRUCTURE.md from the live repo.
 ```
 
-The agent should inspect what actually exists:
+The agent should inspect:
 
-- repo instructions: `AGENTS.md`, `README.md`, architecture docs, ADRs
-- script roots, folders, namespaces, `.asmdef` files
+- repo instructions: `AGENTS.md`, `README.md`, architecture docs
+- scripts, folders, namespaces, `.asmdef` files
 - scenes, prefabs, bootstraps, composition roots
 - ScriptableObjects, config, localization, addressables/resources
-- graph reports such as `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, or `graph.json`
-- generated/build/cache folders that should not be edited
+- graph reports: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`
+- generated/build/cache folders to avoid
 
 The generated `UNITY_STRUCTURE.md` should answer:
 
@@ -270,7 +256,9 @@ What validation commands exist?
 What files/folders should agents avoid?
 ```
 
-After that, use the structure map in normal work:
+### 2. Use The Structure Map
+
+After `UNITY_STRUCTURE.md` exists, ask the agent to read it before editing:
 
 ```text
 Use $unity-agent-workflows.
@@ -280,7 +268,18 @@ Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
 ```
 
-If `UNITY_STRUCTURE.md` is stale, ask the agent to refresh only the relevant section:
+For visible/runtime bugs, keep it narrow:
+
+```text
+Use $unity-agent-workflows.
+Read UNITY_STRUCTURE.md first.
+Prove the runtime owner first.
+Patch the smallest file set and show the validation command.
+```
+
+### 3. Refresh Only What Is Stale
+
+If the structure map is stale, refresh only the relevant section:
 
 ```text
 Use $unity-agent-workflows.

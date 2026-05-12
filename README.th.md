@@ -164,32 +164,11 @@ npx unity-agent-workflows --dry-run
 
 ## วิธีใช้
 
-ให้ agent โหลด skill ก่อนทำงาน Unity:
+ใช้เป็น 2 รอบ: สอนโครงสร้างโปรเจ็คก่อน แล้วค่อยใช้ map นั้นทำงานจริง
 
-```text
-Use $unity-agent-workflows to route, implement, and validate this Unity gameplay change safely.
-```
+### 1. สอนโครงสร้างโปรเจ็ค
 
-สำหรับ bug แคบ:
-
-```text
-Use $unity-agent-workflows.
-Prove the runtime owner first.
-Patch the smallest file set and show the validation command.
-```
-
-สำหรับงาน structural:
-
-```text
-Use $unity-agent-workflows.
-Derive this repo's actual project structure first.
-Fill the Routing Card before editing.
-Patch only the proven owner path.
-```
-
-## สอนโครงสร้างโปรเจ็คก่อน
-
-สำหรับ Unity repo ใหม่ ให้รัน structure pass ก่อนสั่ง refactor หรือเพิ่ม system ใหม่ เพื่อให้ agent รู้ว่า repo นี้จัด folder/module/asmdef/scene/prefab อย่างไรจริงๆ
+สำหรับ Unity repo ใหม่ ให้รันก่อนสั่ง refactor หรือเพิ่ม system:
 
 ```text
 Use $unity-agent-workflows.
@@ -197,14 +176,14 @@ Teach/document this Unity project structure first.
 Create or refresh UNITY_STRUCTURE.md from the live repo.
 ```
 
-agent ควร inspect ของจริงใน repo:
+agent ควร inspect:
 
-- repo instructions: `AGENTS.md`, `README.md`, architecture docs, ADRs
-- script roots, folders, namespaces, `.asmdef` files
+- repo instructions: `AGENTS.md`, `README.md`, architecture docs
+- scripts, folders, namespaces, `.asmdef` files
 - scenes, prefabs, bootstraps, composition roots
 - ScriptableObjects, config, localization, addressables/resources
-- graph reports เช่น `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`
-- generated/build/cache folders ที่ไม่ควรแก้
+- graph reports: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`
+- generated/build/cache folders ที่ต้องเลี่ยง
 
 `UNITY_STRUCTURE.md` ควรตอบคำถามเหล่านี้:
 
@@ -219,7 +198,9 @@ What validation commands exist?
 What files/folders should agents avoid?
 ```
 
-หลังสร้าง map แล้ว ใช้กับงานจริง:
+### 2. ใช้ Structure Map ทำงานจริง
+
+หลังมี `UNITY_STRUCTURE.md` แล้ว ให้สั่ง agent อ่านก่อนแก้:
 
 ```text
 Use $unity-agent-workflows.
@@ -228,6 +209,17 @@ Implement this change using the repo's existing structure.
 Do not invent Core/Systems/Features unless this repo already uses them.
 Show the runtime owner, files touched, and validation command.
 ```
+
+สำหรับ visible/runtime bug ให้ scope แคบ:
+
+```text
+Use $unity-agent-workflows.
+Read UNITY_STRUCTURE.md first.
+Prove the runtime owner first.
+Patch the smallest file set and show the validation command.
+```
+
+### 3. Refresh เฉพาะส่วนที่ stale
 
 ถ้า `UNITY_STRUCTURE.md` stale ให้ refresh เฉพาะส่วน:
 
