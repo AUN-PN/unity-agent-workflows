@@ -1,7 +1,7 @@
 {
   "name": "unity-agent-workflows",
   "version": "0.1.0",
-  "description": "Install the Unity Agent Workflows skill for Codex-style AI agents.",
+  "description": "Codex skill and npx installer for safer Unity AI agent workflows, runtime owner proof, and Unity game development automation.",
   "bin": {
     "unity-agent-workflows": "bin/unity-agent-workflows.js"
   },
@@ -19,14 +19,27 @@
   },
   "keywords": [
     "ai-skill",
+    "codex-skill",
     "codex",
     "unity",
+    "unity-ai",
+    "unity-mcp",
     "game-development",
-    "agent-workflow"
+    "game-dev",
+    "ai-agent",
+    "agent-workflow",
+    "workflow-automation",
+    "runtime-owner-proof",
+    "unity-refactoring",
+    "npx"
   ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git"
+  },
+  "homepage": "https://github.com/Aun-Phuwanan/unity-agent-workflows#readme",
+  "bugs": {
+    "url": "https://github.com/Aun-Phuwanan/unity-agent-workflows/issues"
   },
   "engines": {
     "node": ">=18"

@@ -1,14 +1,41 @@
 # Unity Agent Workflows
 
-A practical skill for using AI agents on Unity game projects without letting them guess their way through the codebase.
+A Codex skill and npx installer for safer Unity AI agent workflows, Unity game development automation, runtime owner proof, and AI-assisted Unity refactoring.
+
+Use it when an AI coding agent is editing a Unity game and you need proof before patching: which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
 
 I made this after running into the same Unity-agent problems over and over: the agent edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
 
-This skill is the set of guardrails I wish every Unity coding agent had loaded before touching a game project.
+This skill is the guardrail set I wish every Unity coding agent, Codex agent, Claude Code agent, or Unity MCP workflow had loaded before touching a game project.
+
+Search phrases this README is meant to answer naturally:
+
+- Unity AI agent workflow
+- Codex skill for Unity
+- Unity game development automation
+- Unity runtime owner proof
+- AI-assisted Unity refactoring
+- Unity MCP workflow guardrails
+- npx Codex skill installer
+
+Suggested GitHub topics:
+
+```text
+codex-skill
+unity
+unity-ai
+unity-mcp
+ai-agent
+game-development
+workflow-automation
+runtime-owner-proof
+unity-refactoring
+npx
+```
 
 ## What It Helps With
 
-Use it when an agent is working on Unity game code and the task needs more discipline than "grep a name and patch the first match."
+Use it when an AI agent is working on Unity game code and the task needs more discipline than "grep a name and patch the first match."
 
 It is especially useful for:
 
@@ -18,6 +45,7 @@ It is especially useful for:
 - gameplay content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
 - repeated "still not fixed" passes where the agent needs to stop changing random constants
+- Unity MCP or editor-assisted workflows where the agent needs a clear route before touching scenes, prefabs, or C# scripts
 
 The main rule is simple:
 
