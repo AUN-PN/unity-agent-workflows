@@ -1,113 +1,105 @@
 # Unity Game AI Workflows
 
-AI operating rules for safer Unity game development with Codex-style agents.
+A practical skill for using AI agents on Unity game projects without letting them guess their way through the codebase.
 
-This repository packages a reusable AI skill for Unity game work: repo discovery, runtime-owner proof, modular C# routing, asmdef boundaries, UI and scene safety, visual asset gating, validation, cleanup proof, and durable workflow mining.
+I made this after running into the same Unity-agent problems over and over: the agent edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
 
-The agent entrypoint is [SKILL.md](SKILL.md). This README is the human-facing GitHub page.
+This skill is the set of guardrails I wish every Unity coding agent had loaded before touching a game project.
 
-## Why This Exists
+The agent entrypoint is [SKILL.md](SKILL.md). This README is just the human-readable overview.
 
-Unity projects are easy for AI agents to edit in the wrong place. A searched constant, prefab value, or nearby script can look correct while the visible runtime behavior is actually owned by a presenter, factory, layout writer, service, animation path, or scene override.
+## What It Helps With
 
-This skill turns those lessons into a repeatable workflow:
+Use it when an agent is working on Unity game code and the task needs more discipline than "grep a name and patch the first match."
 
-- Read the live project before acting.
-- Prove the real runtime owner before editing visible behavior.
-- Route new C# responsibility to the right layer.
-- Keep cross-feature communication behind contracts, events, gateways, or bridges.
-- Use source visual assets before Unity integration code.
-- Validate the smallest useful surface and report exact proof.
+It is especially useful for:
 
-## Best For
+- runtime-visible bugs where the edited value might not be the value the player sees
+- UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
+- modular C# work where new responsibility needs the right folder, namespace, and dependency direction
+- gameplay content changes that should go through data/config instead of hardcoded one-offs
+- cleanup work where deleted files need real reference proof
+- repeated "still not fixed" passes where the agent needs to stop changing random constants
 
-Use this skill when a Unity game task involves:
+The main rule is simple:
 
-| Task | What the skill enforces |
-| --- | --- |
-| Runtime-visible bug fixes | Visible object to scene/prefab reference to script/component to mutating method proof |
-| New gameplay features | Layer routing, data-first content, no broad controller growth |
-| Modular C# changes | Core, Contracts, Systems, Features, asmdef, and dependency-boundary checks |
-| UI or screenshot fixes | Parent, anchor, CanvasScaler, TMP, safe-area, and runtime layout ownership checks |
-| Visual source assets | Asset gate before code integration |
-| Validation repair | Exact compiler/runtime errors, stale response-file checks, rerun proof |
-| Cleanup or deletion | Source-vs-generated proof, GUID/search reachability, clean git reporting |
-| Workflow mining | Durable rule extraction without copying raw session noise |
-
-## How It Works
-
-```mermaid
-flowchart LR
-    A[Discover live repo] --> B[Classify task]
-    B --> C[Prove owner or route layer]
-    C --> D[Edit smallest safe file set]
-    D --> E[Validate useful surface]
-    E --> F[Report proof and residual risk]
+```text
+No proof, no edit.
 ```
 
-Core rule: no proof, no edit.
-
-For visible changes, the required chain is:
+For visible Unity behavior, proof means tracing the owner chain:
 
 ```text
 visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override
 ```
 
-For structural code changes, the agent fills the Routing Card in [SKILL.md](SKILL.md) before editing.
+If that chain is missing, the agent has not earned the patch yet.
 
-## Quick Start
+## Install
 
-Install with `npx` from the private GitHub repo now:
+From the private GitHub repo:
 
 ```bash
 npx git+ssh://git@github.com/Aun-Phuwanan/unity-game-ai-workflows.git
 ```
 
-If the GitHub repo is public, the shorthand also works:
+If the repo is public, this shorthand also works:
 
 ```bash
 npx github:Aun-Phuwanan/unity-game-ai-workflows
 ```
 
-After the package is published to npm, install with:
+After the package is published to npm:
 
 ```bash
 npx unity-game-ai-workflows
 ```
 
-Install for both Codex and Claude-style skill folders:
+Install to both Codex and Claude-style skill folders:
 
 ```bash
 npx unity-game-ai-workflows --target both
 ```
 
-Preview without writing files:
+Preview the install without writing files:
 
 ```bash
 npx unity-game-ai-workflows --dry-run
 ```
 
-The installer writes to `~/.codex/skills/unity-game-ai-workflows` by default. If a previous install exists, it creates a timestamped backup before replacing it.
+By default the installer writes to:
 
-Manual Git install also works:
+```text
+~/.codex/skills/unity-game-ai-workflows
+```
+
+If that folder already exists, the installer backs it up with a timestamp before replacing it.
+
+Manual install is fine too:
 
 ```bash
 git clone git@github.com:Aun-Phuwanan/unity-game-ai-workflows.git ~/.codex/skills/unity-game-ai-workflows
 ```
 
-Invoke it in a prompt:
+## Use
+
+Ask your agent to load the skill before it works on Unity game changes:
 
 ```text
 Use $unity-game-ai-workflows to route, implement, and validate this Unity gameplay change safely.
 ```
 
-Validate the local skill package:
+For narrow bugs, I usually ask for three things:
 
-```bash
-bash scripts/validate_skill.sh
+```text
+Use $unity-game-ai-workflows.
+Prove the runtime owner first.
+Patch the smallest file set and show the validation command.
 ```
 
-## Repository Layout
+For structural work, the skill makes the agent fill a Routing Card before editing. That card forces it to name the owner, layer, cross-module communication path, graph/source proof, validation plan, and files it will not touch.
+
+## What Is Inside
 
 ```text
 unity-game-ai-workflows/
@@ -131,57 +123,48 @@ unity-game-ai-workflows/
     └── validate_skill.sh
 ```
 
-## Reference System
+[SKILL.md](SKILL.md) stays short on purpose. The deeper notes live in `references/` so the agent only loads them when the task calls for it.
 
-The skill keeps [SKILL.md](SKILL.md) compact and loads deeper references only when the task needs them.
+## Reference Files
 
-| Reference | Use when |
-| --- | --- |
-| [ai-workflows.md](references/ai-workflows.md) | Routing Card, universal workflow, closeout format |
-| [modular-architecture.md](references/modular-architecture.md) | New scripts, moved responsibility, asmdef, hub gates |
-| [runtime-owner-proof.md](references/runtime-owner-proof.md) | Visible bugs, repeated "still wrong" fixes, runtime override tracing |
-| [unity-validation.md](references/unity-validation.md) | Compile checks, runtime-facing validation, stale response-file repair |
-| [ui-and-visual-assets.md](references/ui-and-visual-assets.md) | Mobile UI, safe area, localization, visual asset gates |
-| [content-and-systems.md](references/content-and-systems.md) | Stages, waves, progression, data-first gameplay content |
-| [cleanup-and-git.md](references/cleanup-and-git.md) | Safe cleanup, deletion proof, commit and push hygiene |
-| [session-mining.md](references/session-mining.md) | Turning prior agent lessons into durable workflow rules |
+- [ai-workflows.md](references/ai-workflows.md): the general workflow, Routing Card, task recipes, and closeout shape
+- [runtime-owner-proof.md](references/runtime-owner-proof.md): how to prove the real owner of visible/runtime behavior
+- [modular-architecture.md](references/modular-architecture.md): Core, Contracts, Systems, Features, asmdef boundaries, and hub gates
+- [unity-validation.md](references/unity-validation.md): compile checks, stale response files, Roslyn/Bee notes, and validation levels
+- [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe areas, localization, and visual asset gates
+- [content-and-systems.md](references/content-and-systems.md): gameplay data, progression, stages, waves, and system readiness
+- [cleanup-and-git.md](references/cleanup-and-git.md): safe deletion, generated files, commit hygiene, and push proof
+- [session-mining.md](references/session-mining.md): turning old agent lessons into durable rules without dumping raw chat into the skill
 
-## README Page System
+## Validate
 
-This README is intentionally structured for GitHub scanning:
+Run:
 
-1. Identity: what the skill is and what problem it solves.
-2. Use cases: when a Unity agent should load it.
-3. Workflow spine: the repeatable operating loop.
-4. Quick start: install, invoke, validate.
-5. Repository map: where each file belongs.
-6. Reference index: progressive disclosure instead of loading every rule at once.
-7. Guarantees and limits: what the skill enforces, and what it does not replace.
+```bash
+bash scripts/validate_skill.sh
+```
 
-This keeps the GitHub page useful to humans while the actual agent instructions remain in [SKILL.md](SKILL.md).
+This checks the required skill files, `SKILL.md` frontmatter, `agents/openai.yaml`, the `package.json` bin entry, and the installer script syntax.
 
-## Guarantees
+For npm packaging:
 
-This skill is designed to make an AI agent:
+```bash
+npm pack --dry-run
+npm publish --dry-run
+```
 
-- Inspect before editing.
-- Preserve unrelated dirty files.
-- Avoid guessing by filename proximity.
-- Avoid growing large Unity hubs.
-- Separate source assets from integration code.
-- Report exact validation commands and results.
+The package name is:
 
-It does not replace Unity Play Mode, device testing, design review, code-owner review, or project-specific `AGENTS.md` instructions.
+```text
+unity-game-ai-workflows
+```
 
-## Research Basis
+## What This Is Not
 
-The README structure follows public documentation patterns:
+This is not a replacement for Unity Play Mode, device testing, code review, or a project's own `AGENTS.md`.
 
-- GitHub READMEs should explain what the project does, why it is useful, how to get started, where to get help, and who maintains it: [GitHub Docs - About READMEs](https://docs.github.com/articles/about-readmes/).
-- Open Source Guides recommends a root README that answers what the project does, why it matters, how to start, and how to get help: [Starting an Open Source Project - Writing a README](https://opensource.guide/starting-a-project/#writing-a-readme).
-- Skill packages should keep `SKILL.md` as the required agent entrypoint, with optional references and scripts for supporting material: [OpenAI skill-creator](https://github.com/openai/skills/blob/main/skills/.system/skill-creator/SKILL.md) and [Claude Code skills](https://code.claude.com/docs/en/skills).
-- `npx` runs commands from local or remote npm packages, and npm uses the `bin` field in `package.json` to expose executables: [npm exec](https://docs.npmjs.com/cli/v11/commands/npm-exec/) and [package.json bin](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bin).
+It also will not magically know your project structure. It forces the agent to read the live repo, prove the owner chain, and explain what it changed. That is the point.
 
 ## License
 
-No license is specified yet. Add a `LICENSE` file before public reuse or contribution.
+No license is specified yet. Add a `LICENSE` file before public reuse or outside contribution.
