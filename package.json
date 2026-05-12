@@ -41,11 +41,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Aun-Phuwanan/unity-agent-workflows.git"
+    "url": "git+ssh://git@github.com/AUN-PN/unity-agent-workflows.git"
   },
-  "homepage": "https://github.com/Aun-Phuwanan/unity-agent-workflows#readme",
+  "homepage": "https://github.com/AUN-PN/unity-agent-workflows#readme",
   "bugs": {
-    "url": "https://github.com/Aun-Phuwanan/unity-agent-workflows/issues"
+    "url": "https://github.com/AUN-PN/unity-agent-workflows/issues"
   },
   "engines": {
     "node": ">=18"
