@@ -107,10 +107,11 @@ Use when placement or ownership is unclear.
 ### WF-6 UI Or Screenshot Fix
 
 1. Identify visible layer and runtime owner.
-2. Separate layout/anchoring from readability/polish.
-3. Change only the shown layer unless owner proof requires a direct dependency.
-4. Preserve camera, background, composition, and gameplay layout unless requested.
-5. Validate with screenshot, hierarchy, or serialized/runtime proof.
+2. If the task involves focus, highlight, selection, click/tap target, visual target, spotlight, modal dimming, duplicate names, or "do not guess", run the Runtime Visible Target Lock from `references/runtime-owner-proof.md` before editing.
+3. Separate layout/anchoring from readability/polish.
+4. Change only the shown layer unless owner proof requires a direct dependency.
+5. Preserve camera, background, composition, and gameplay layout unless requested.
+6. Validate with screenshot, hierarchy, or serialized/runtime proof. If object truth was requested, report the runtime object and coordinate space used.
 
 ### WF-7 Visual Source Asset
 

@@ -6,6 +6,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 
 - Layout/anchors/safe area -> inspect hierarchy, `RectTransform`, `CanvasScaler`, parent groups, masks, and runtime builders.
 - Readability/polish -> inspect typography, contrast, density, touch targets, icon/value alignment, localized text growth.
+- Focus/highlight/spotlight/modal dimming for any visible UI target -> resolve the real runtime target first, then draw from converted runtime bounds.
 - New/replaced UI art, icon art, panel art, sprite, model, VFX source -> run visual asset workflow before code integration.
 
 ## Mobile UI Rules
@@ -26,7 +27,20 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 3. Change only the marked layer and direct dependencies.
 4. If placement is wrong, check parent layout before child offsets.
 5. If text/color/visibility reverts, patch both creation and refresh/update paths.
-6. Validate with screenshot, hierarchy, or runtime proof.
+6. If the user asks for object truth, do not use screenshot pixels as the source of truth.
+7. Validate with screenshot, hierarchy, or runtime proof.
+
+## Spotlight And Modal Highlight
+
+Use this when a tutorial, onboarding, tooltip, modal, focus ring, dim scrim, or spotlight needs to point at a visible UI target such as a button, icon, card, chip, panel, HUD slot, meter, label, list row, marker, or modal control.
+
+- The highlighted target must stay bright and unobstructed unless the user asks otherwise.
+- Dim or block only the background/outside area requested.
+- Use the same coordinate space for target bounds, focus ring, spotlight hole, scrim, and input blocker.
+- Do not create a new button, icon, panel, card, marker, duplicate object, or replacement action unless the user explicitly asks.
+- If background input must be blocked, keep only the allowed modal/action target interactive.
+- Check `Canvas.renderMode`, `CanvasScaler`, safe area, sorting order, parent scale, masks, layout groups, and runtime-created roots before editing offsets.
+- Resolve duplicate names before choosing a target. Parent chain and active/interactable state must disambiguate the real runtime object.
 
 ## Visual Asset Gate
 

@@ -15,6 +15,7 @@ Use this skill as the AI operating system for Unity game work. It turns project-
 4. If a graph exists, read it before architecture claims: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
 5. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
+   - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, or "do not guess" -> runtime visible target lock.
    - New or expanded C# responsibility -> modular routing.
    - UI layout/readability -> UI workflow.
    - Visual source asset -> visual asset gate.
@@ -31,7 +32,7 @@ Load only the reference needed for the current task.
 
 - `references/ai-workflows.md`: Routing Card, universal workflow, task recipes, closeout shape.
 - `references/modular-architecture.md`: Core/Contracts/Systems/Features layering, asmdef rules, hub gates.
-- `references/runtime-owner-proof.md`: Visible object proof chain, repeated-fix diagnostics, scene/prefab/runtime override tracing.
+- `references/runtime-owner-proof.md`: Visible object proof chain, runtime visible target lock, repeated-fix diagnostics, scene/prefab/runtime override tracing.
 - `references/unity-validation.md`: `git diff --check`, Unity/Bee/Roslyn checks, stale response files, validation ladder.
 - `references/ui-and-visual-assets.md`: mobile UI, safe area, localized text, source asset/Pixellab-style gates.
 - `references/content-and-systems.md`: data-first content, stage systems, production-readiness system stack.
@@ -41,6 +42,7 @@ Load only the reference needed for the current task.
 ## Hard Rules
 
 - No proof, no edit. For visible/runtime changes, prove the owner chain first.
+- No guessed targeting. If the user asks to bind, focus, highlight, click, or align a visible object, resolve the real runtime object and coordinate space before editing.
 - Do not grow a hub when a focused collaborator, data object, contract, event, bridge, or service can own the new responsibility.
 - Do not add direct sibling feature references. Route cross-feature facts through contracts, events, gateways, or bridges.
 - Do not add new scripts to legacy broad folders if the repo already has a modular layout.
@@ -82,6 +84,7 @@ Files explicitly not touched:
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
+- **Visible target lock**: read `references/runtime-owner-proof.md`; use it for any visible UI/gameplay target such as buttons, icons, cards, chips, panels, HUD slots, tooltips, markers, colliders, units, props, VFX targets, highlight, spotlight, modal dimming, duplicate object names, "do not guess", or "do not edit yet" requests.
 - **New gameplay feature**: read `references/modular-architecture.md` and `references/content-and-systems.md`; prefer data-first content or focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.

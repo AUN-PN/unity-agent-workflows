@@ -26,6 +26,8 @@ It is especially useful for:
 
 - runtime-visible bugs where the edited value might not be the value the player sees
 - UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
+- focus rings, tutorial spotlights, modal dimming, or visible target binding for buttons, icons, cards, HUD slots, markers, colliders, units, props, and VFX anchors where the agent must use the real runtime object instead of guessed coordinates
+- duplicate Unity object names where `GameObject.Find(name)` or first-match search can select the wrong target
 - modular C# work where new responsibility needs the right folder, namespace, and dependency direction
 - gameplay content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
