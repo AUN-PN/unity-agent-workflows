@@ -18,31 +18,6 @@ Search phrases this README is meant to answer naturally:
 - Unity MCP workflow guardrails
 - npx Codex skill installer
 
-Suggested GitHub topics:
-
-```text
-codex-skill
-unity
-unity3d
-unity-ai
-unity-mcp
-unity-editor
-ai-agent
-llm-agent
-agentic-coding
-game-development
-workflow-automation
-runtime-owner-proof
-unity-refactoring
-unity-validation
-ai-workflows
-codex-cli
-claude-code
-npx
-npm-package
-developer-tools
-```
-
 ## What It Helps With
 
 Use it when an AI agent is working on Unity game code and the task needs more discipline than "grep a name and patch the first match."
