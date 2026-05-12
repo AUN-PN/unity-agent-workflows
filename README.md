@@ -236,12 +236,53 @@ Patch the smallest file set and show the validation command.
 
 For structural work, the skill makes the agent derive the user's actual project structure, then fill a Routing Card before editing. That card forces it to name the owner, repo-local layer/category, cross-module communication path, graph/source proof, validation plan, and files it will not touch.
 
-For Impeccable-style context, ask:
+## Teach The Project Structure First
+
+For a new Unity repo, run a structure pass before asking for refactors or new systems. This is the Impeccable-style step: the agent reads the live project and writes down how this repo is organized.
 
 ```text
 Use $unity-agent-workflows.
 Teach/document this Unity project structure first.
 Create or refresh UNITY_STRUCTURE.md from the live repo.
+```
+
+The agent should inspect what actually exists:
+
+- repo instructions: `AGENTS.md`, `README.md`, architecture docs, ADRs
+- script roots, folders, namespaces, `.asmdef` files
+- scenes, prefabs, bootstraps, composition roots
+- ScriptableObjects, config, localization, addressables/resources
+- graph reports such as `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, or `graph.json`
+- generated/build/cache folders that should not be edited
+
+The generated `UNITY_STRUCTURE.md` should answer:
+
+```text
+Where do scripts live?
+What are the module/layer names in this repo?
+Which assemblies depend on which assemblies?
+Which scenes/prefabs own runtime UI or gameplay objects?
+Where does content/data live?
+How do modules communicate?
+What validation commands exist?
+What files/folders should agents avoid?
+```
+
+After that, use the structure map in normal work:
+
+```text
+Use $unity-agent-workflows.
+Read UNITY_STRUCTURE.md first.
+Implement this change using the repo's existing structure.
+Do not invent Core/Systems/Features unless this repo already uses them.
+Show the runtime owner, files touched, and validation command.
+```
+
+If `UNITY_STRUCTURE.md` is stale, ask the agent to refresh only the relevant section:
+
+```text
+Use $unity-agent-workflows.
+Refresh the UI/runtime-owner parts of UNITY_STRUCTURE.md, then fix this HUD issue.
 ```
 
 ## What Is Inside
