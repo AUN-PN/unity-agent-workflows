@@ -5,11 +5,13 @@
 
 [English](README.md)
 
-Codex skill และ `npx` installer สำหรับทำงาน Unity 2D game กับ AI agent ให้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คจริงก่อน, พิสูจน์ runtime owner ก่อนแก้, route โค้ดเข้าที่ที่ถูกต้อง, validate ด้วย command ที่ตรวจซ้ำได้
+Codex skill และ `npx` installer สำหรับโปรเจ็ค Unity 2D game ที่ให้ AI agent แตะโค้ดจริง, scene, prefab, UI และ gameplay system
 
-เครื่องมือนี้ทำมาสำหรับเกม Unity 2D: sprite, tile, UI/HUD, `Collider2D`, pooled enemy, runtime clone, scene/prefab reference และ gameplay code ที่ต้องตรงกับสิ่งที่ผู้เล่นเห็นจริง
+มันช่วยให้ Codex, Claude Code, Unity MCP Server และ workflow แบบ Unity AI Assistant เดินงาน Unity 2D gameplay automation ได้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คก่อน, พิสูจน์ runtime owner, แล้วค่อยแก้ path ที่ทำให้สิ่งบนจอเปลี่ยนจริง
 
-ใช้เมื่อต้องให้ AI coding agent แก้ Unity game แล้วไม่อยากให้เดาจากชื่อไฟล์ใกล้ๆ หรือยัด logic เพิ่มใน controller ใหญ่โดยไม่พิสูจน์ว่า path นั้นคือ path ที่รันจริง
+เหมาะกับงาน sprite, tile, UI/HUD, `Collider2D`, pooled enemy, runtime clone, scene/prefab reference และ AI-assisted Unity refactoring ที่แค่ compile ผ่านยังไม่พอ ต้องตรงกับสิ่งที่ผู้เล่นเห็นจริง
+
+ผมทำ skill นี้เพราะเจอปัญหาเดิมซ้ำๆ: agent เดา architecture, แก้ไฟล์ใกล้มือแทน runtime owner, เปลี่ยนค่าใน prefab/scene แล้วโดน override ตอน Play Mode, เพิ่ม logic เข้า controller ใหญ่ขึ้นเรื่อยๆ หรือบอกว่า validate แล้วทั้งที่ยังไม่ได้พิสูจน์ path ที่รันจริง
 
 กฎหลัก:
 
@@ -31,7 +33,10 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 - UI ที่ขึ้นกับ parent hierarchy, anchors, safe area, CanvasScaler, TMP refresh
 - focus ring, tutorial spotlight, modal dimming, visible target binding
 - object ชื่อซ้ำที่ `GameObject.Find(name)` หรือ first-match search อาจจับผิดตัว
+- การอ่าน project structure ก่อนให้ agent เพิ่ม script, namespace, assembly หรือ content path ใหม่
 - เกม Unity 2D ที่มี sprite, tile, pooled enemy, `Collider2D`, หรือ runtime clone ซ้ำชื่อกัน แต่ target จริงคนละตัว
+- prefab/scene wiring ที่ AI assistant ต้อง set reference, component, UI object และยังต้องมี runtime validation
+- compile/test/debug loop ที่แค่ C# compile ผ่านยังไม่พอ ต้องพิสูจน์ Play Mode behavior ว่าตรง request
 - งาน C# structural/refactor ที่ต้องใช้ folder, namespace, assembly, dependency direction ของ repo จริง
 - gameplay content ที่ควรผ่าน data/config แทน hardcoded branch
 - cleanup ที่ต้องพิสูจน์ reference ก่อนลบ

@@ -5,27 +5,15 @@
 
 [ภาษาไทย](README.th.md)
 
-A Codex skill and npx installer for safer Unity AI agent workflows in 2D game projects, with Unity 2D gameplay automation, project-derived structure discovery, runtime owner proof, and AI-assisted Unity refactoring.
+A Codex skill and npx installer for Unity 2D game projects where AI agents touch real game code, scenes, prefabs, UI, and gameplay systems.
 
-This is built for Unity 2D games: sprites, tiles, UI/HUD, `Collider2D`, pooled enemies, runtime clones, scene/prefab references, and gameplay code that must match what the player actually sees.
+It gives Codex, Claude Code, Unity MCP Server, and Unity AI Assistant style workflows a safer route through Unity 2D gameplay automation: discover the project structure first, prove the runtime owner, then patch the code or asset path that actually drives what the player sees.
 
-Use it when an AI coding agent is editing a Unity game and you need proof before patching: what structure this specific project uses, which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
+It is especially tuned for sprites, tiles, UI/HUD, `Collider2D`, pooled enemies, runtime clones, scene/prefab references, and AI-assisted Unity refactoring where "the code compiled" is not enough.
 
 I made this after running into the same Unity-agent problems over and over: the agent assumes a fixed architecture, edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
 
-This skill is the guardrail set I wish every Unity coding agent, Codex agent, Claude Code agent, or Unity MCP workflow had loaded before touching a game project.
-
-Search phrases this README is meant to answer naturally:
-
-- Unity AI agent workflow
-- Codex skill for Unity
-- Unity game development automation
-- Unity runtime owner proof
-- Unity project structure discovery
-- Unity 2D duplicate object debugging
-- AI-assisted Unity refactoring
-- Unity MCP workflow guardrails
-- npx Codex skill installer
+This skill is the guardrail set I wish every Unity coding agent, AI coding assistant for Unity, Codex agent, Claude Code Unity MCP workflow, or editor-assisted Unity automation had loaded before touching a game project.
 
 ## What It Helps With
 
@@ -33,11 +21,14 @@ Use it when an AI agent is working on Unity game code and the task needs more di
 
 It is especially useful for:
 
-- runtime-visible bugs where the edited value might not be the value the player sees
+- runtime-visible bugs where the edited value might not be the value the player sees in Play Mode
 - UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
 - focus rings, tutorial spotlights, modal dimming, or visible target binding for buttons, icons, cards, HUD slots, markers, colliders, units, props, and VFX anchors where the agent must use the real runtime object instead of guessed coordinates
 - duplicate Unity object names where `GameObject.Find(name)` or first-match search can select the wrong target
+- project structure discovery before the agent adds new scripts, namespaces, assemblies, or content paths
 - Unity 2D games with repeated sprites, tiles, pooled enemies, `Collider2D` objects, or runtime clones that share the same visible name but are different live targets
+- prefab and scene wiring where an AI assistant needs to set references, components, and UI objects without losing runtime validation
+- compile/test/debug loops where passing C# syntax is not enough; the agent must prove the Play Mode behavior still matches the request
 - modular C# work where new responsibility needs the repo's actual folder, namespace, assembly, and dependency direction
 - gameplay content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
