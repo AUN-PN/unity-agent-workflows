@@ -19,8 +19,8 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Unity Agent Workflows",
-    "shortDescription": "Safer AI workflows for Unity game projects",
+    "displayName": "Unity Workflows",
+    "shortDescription": "Safer AI workflows for Unity 2D projects",
     "longDescription": "Use disciplined repo discovery, runtime-owner proof, project-derived routing, UI and scene safety, validation, and cleanup proof before AI agents edit Unity game projects.",
     "developerName": "AUN-PN",
     "category": "Coding",
@@ -34,6 +34,8 @@
     "defaultPrompt": [
       "Help me safely fix a Unity runtime-visible bug"
     ],
+    "composerIcon": "./assets/unity-workflows.png",
+    "logo": "./assets/unity-workflows.png",
     "screenshots": [],
     "brandColor": "#111827"
   }

@@ -1,6 +1,7 @@
 # Unity 2D Game Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
+[![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-unity--agent--workflows-10A37F)](#add-in-codex-plugins-from-git)
 [![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
 
 [ภาษาไทย](README.th.md)
@@ -191,6 +192,34 @@ Here is the same flow in a more practical table:
 The important bit: data does not jump straight from "I found a file" to "I edited it." It has to pass through live structure discovery, classification, owner proof, file boundary, patch, validation, and closeout.
 
 ## Install
+
+### Add in Codex Plugins from Git
+
+This repo can be added to Codex as a plugin marketplace. In Codex, open Plugins, choose Add marketplace, then use:
+
+```text
+Source:
+https://github.com/AUN-PN/unity-agent-workflows.git
+
+Git ref:
+main
+
+Sparse paths:
+```
+
+Leave `Sparse paths` empty. The placeholder `plugins/codex` is only an example.
+
+The marketplace entry is defined by:
+
+```text
+.agents/plugins/marketplace.json
+plugins/unity-agent-workflows/.codex-plugin/plugin.json
+plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md
+```
+
+After adding the marketplace, install or enable `Unity Workflows` from the Codex Plugins list.
+
+### Install as a local skill
 
 Install with npx only:
 

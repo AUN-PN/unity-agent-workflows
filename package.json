@@ -8,6 +8,7 @@
   "files": [
     ".agents",
     ".codex-plugin",
+    "assets",
     "plugins",
     "SKILL.md",
     "skills",

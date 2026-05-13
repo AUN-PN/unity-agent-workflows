@@ -1,6 +1,7 @@
 # Unity 2D Game Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
+[![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-unity--agent--workflows-10A37F)](#เพิ่มใน-codex-plugins-จาก-git)
 [![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
 
 [English](README.md)
@@ -146,6 +147,34 @@ flowchart LR
 | Cleanup | งานลบ/จัดระเบียบ | reference proof และขอบเขตที่ไม่แตะ |
 
 ## ติดตั้ง
+
+### เพิ่มใน Codex Plugins จาก Git
+
+repo นี้เพิ่มใน Codex เป็น plugin marketplace ได้ ให้เปิด Codex Plugins แล้วเลือก Add marketplace จากนั้นใส่:
+
+```text
+Source:
+https://github.com/AUN-PN/unity-agent-workflows.git
+
+Git ref:
+main
+
+Sparse paths:
+```
+
+ปล่อย `Sparse paths` ว่างไว้ ข้อความ `plugins/codex` เป็นแค่ placeholder ตัวอย่าง
+
+ไฟล์ marketplace ที่ Codex ใช้คือ:
+
+```text
+.agents/plugins/marketplace.json
+plugins/unity-agent-workflows/.codex-plugin/plugin.json
+plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md
+```
+
+หลัง add marketplace แล้ว ให้ install หรือ enable `Unity Workflows` ในหน้า Codex Plugins
+
+### ติดตั้งเป็น local skill
 
 ติดตั้งด้วย `npx`:
 

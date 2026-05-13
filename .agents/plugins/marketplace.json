@@ -1,7 +1,7 @@
 {
   "name": "unity-agent-workflows",
   "interface": {
-    "displayName": "Unity Agent Workflows"
+    "displayName": "Unity Workflows"
   },
   "plugins": [
     {
