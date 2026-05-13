@@ -18,7 +18,7 @@ Use this skill as the AI operating system for Unity game work. It turns project-
 7. If a graph exists, read it before architecture claims only when dependency/routing proof needs graph data: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
 8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
-   - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, or "do not guess" -> runtime visible target lock.
+   - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible target lock.
    - New or expanded C# responsibility -> project-derived routing.
    - UI layout/readability -> UI workflow.
    - Visual source asset -> visual asset gate.
@@ -157,7 +157,7 @@ Files explicitly not touched:
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
-- **Visible target lock**: read `references/runtime-owner-proof.md`; use it for any visible UI/gameplay target such as buttons, icons, cards, chips, panels, HUD slots, tooltips, markers, colliders, units, props, VFX targets, highlight, spotlight, modal dimming, duplicate object names, "do not guess", or "do not edit yet" requests.
+- **Visible target lock**: read `references/runtime-owner-proof.md`; use it for any visible UI/gameplay target such as buttons, icons, cards, chips, panels, HUD slots, tooltips, markers, colliders, units, props, VFX targets, highlight, spotlight, modal dimming, duplicate object names, hardcoded layout/position, "do not guess", or "do not edit yet" requests.
 - **New gameplay feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.

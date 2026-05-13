@@ -25,6 +25,7 @@ Trigger examples:
 - The highlighted/focused target is in the wrong place.
 - The target may be a button, icon, card, chip, panel, HUD slot, tooltip, marker, collider, unit, prop, VFX target, or other visible runtime object.
 - The user asks for the real object, runtime object, real UI element, real world object, or object position.
+- The code uses hardcoded layout, fixed anchor, fixed position, guessed size, or screenshot-measured coordinates for a visible/focus/interactive target.
 - The user says not to guess, not to measure from screenshot, or that the target is still in the same place.
 - The user asks what an object is, how many duplicate names exist, or says not to edit yet.
 
@@ -43,6 +44,30 @@ user-visible target
 ```
 
 If the proof chain is incomplete, do not patch coordinates. Inspect deeper or ask one concise question if two live owners are equally plausible.
+
+## Hardcoded Layout Guard
+
+Hardcoded layout is not runtime object proof.
+
+For any focus ring, tutorial spotlight, modal hole, tap/click target, highlight, selection marker, or visual alignment:
+
+1. Do not start from fixed `Vector2`, anchor, `sizeDelta`, screen pixels, normalized percentages, or helper methods that only return expected coordinates.
+2. First resolve the live target object: visible text/icon -> active `GameObject` -> `RectTransform`/`Transform` -> interactive component -> parent chain -> owner/builder.
+3. Compute the overlay/focus bounds from `RectTransform.GetWorldCorners()`, `Renderer.bounds`, `Collider.bounds`, or an explicit runtime marker transform.
+4. Use hardcoded values only as a named fallback after target resolution fails, and report the fallback as residual risk.
+5. If a fallback is used, log or surface the missing target name/parent chain so the next run can fix the real owner path.
+
+Bad proof:
+
+```text
+expected position -> hardcoded layout -> overlay
+```
+
+Required proof:
+
+```text
+visible target -> runtime object -> runtime bounds -> converted coordinate space -> overlay
+```
 
 ## Read-Only Target Inspection
 
@@ -64,6 +89,7 @@ For Unity UI targets such as buttons, icons, cards, chips, panels, HUD slots, me
 5. Read bounds with `RectTransform.GetWorldCorners()`.
 6. Convert bounds into the same overlay/canvas/root coordinate space used to draw the focus, hole, ring, or blocker.
 7. Compute focus/highlight/spotlight from the converted runtime bounds, not guessed constants.
+8. Reject hardcoded focus anchors/sizes as the primary path when an active UI target exists.
 
 Target proof format:
 
@@ -109,6 +135,7 @@ For non-UI visible targets such as units, enemies, props, projectiles, spawn mar
 - A semantically related file is not proof that it owns the marked screenshot target.
 - A `GameObject.Find(name)` match is not proof when duplicate names or inactive scene objects can exist.
 - Screenshot pixels are not runtime object proof when the user asks for object, hierarchy, or code-derived position.
+- Hardcoded layout/position is not proof for a visible target when a live `RectTransform`, `Transform`, `Renderer`, `Collider`, or marker can be resolved.
 
 ## Coordinate Spaces
 

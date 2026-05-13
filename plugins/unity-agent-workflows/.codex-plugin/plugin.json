@@ -1,6 +1,6 @@
 {
   "name": "unity-agent-workflows",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
   "author": {
     "name": "AUN-PN"

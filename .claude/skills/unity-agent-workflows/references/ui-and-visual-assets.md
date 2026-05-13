@@ -6,7 +6,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 
 - Layout/anchors/safe area -> inspect hierarchy, `RectTransform`, `CanvasScaler`, parent groups, masks, and runtime builders.
 - Readability/polish -> inspect typography, contrast, density, touch targets, icon/value alignment, localized text growth.
-- Focus/highlight/spotlight/modal dimming for any visible UI target -> resolve the real runtime target first, then draw from converted runtime bounds.
+- Focus/highlight/spotlight/modal dimming for any visible UI target -> resolve the real runtime target first, then draw from converted runtime bounds, not hardcoded layout.
 - New/replaced UI art, icon art, panel art, sprite, model, VFX source -> run visual asset workflow before code integration.
 
 ## Mobile UI Rules
@@ -28,7 +28,8 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 4. If placement is wrong, check parent layout before child offsets.
 5. If text/color/visibility reverts, patch both creation and refresh/update paths.
 6. If the user asks for object truth, do not use screenshot pixels as the source of truth.
-7. Validate with screenshot, hierarchy, or runtime proof.
+7. Do not use hardcoded focus anchors, sizes, or expected menu positions as the primary target path.
+8. Validate with screenshot, hierarchy, or runtime proof.
 
 ## Spotlight And Modal Highlight
 
@@ -41,6 +42,7 @@ Use this when a tutorial, onboarding, tooltip, modal, focus ring, dim scrim, or 
 - If background input must be blocked, keep only the allowed modal/action target interactive.
 - Check `Canvas.renderMode`, `CanvasScaler`, safe area, sorting order, parent scale, masks, layout groups, and runtime-created roots before editing offsets.
 - Resolve duplicate names before choosing a target. Parent chain and active/interactable state must disambiguate the real runtime object.
+- If the visible target is interactive, bind the spotlight/focus to the live `RectTransform` of that target; use hardcoded fallback only after target lookup fails and report it.
 
 ## Visual Asset Gate
 
