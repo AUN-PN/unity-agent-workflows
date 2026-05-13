@@ -2,15 +2,15 @@
 
 ## Data-First Rule
 
-Add new gameplay content as data first when the repo has definition/config surfaces.
+Add new runtime/content behavior as data first when the repo has definition/config surfaces.
 
 Use definitions/config for:
 
-- stage numbers, duration, pressure, unlocks
-- enemy/boss/unit HP, speed, score, size, tint, resistance
-- skills, cooldown, duration, radius, potency
-- Sentinel/support loadout and availability
-- status effects, stack/refresh policy, duration bounds
+- level/step/session numbers, duration, pressure, unlocks
+- entity/object HP, speed, score, size, tint, resistance, or availability
+- actions/abilities/tools, cooldown, duration, radius, potency
+- user/player/unit/support loadout and availability
+- state effects, stack/refresh policy, duration bounds
 - synergy rules
 - localization keys and presentation identity
 
@@ -47,22 +47,22 @@ For a missing foundation, add the smallest useful owner:
 4. Event or bridge route instead of a direct feature reference.
 5. Architecture docs/asmdef sync if dependency structure changes.
 
-## Stage Experience Pattern
+## Runtime Experience Pattern
 
-For stage pacing, tutorials, missions, and difficulty shaping, prefer a thin planning layer:
+For level/session pacing, tutorials, objectives, and difficulty shaping, prefer a thin planning layer:
 
 ```text
-Stage config/data
--> StageExperiencePlan
--> Wave/director/adaptive relief/missions/analytics
+Content config/data
+-> RuntimeExperiencePlan
+-> director/adaptive relief/objectives/analytics
 ```
 
-The planner should feed existing seams instead of growing the main game manager or wave controller.
+The planner should feed existing seams instead of growing the main manager, controller, or scene owner.
 
 ## Balance Pass Rules
 
 - Read current data/config and runtime override paths before changing values.
-- Include player power, skill power, support units, economy, and pacing in broad balance passes.
+- Include user/player capability, action/tool power, support systems, economy, and pacing in broad balance passes.
 - Make small targeted changes unless the user explicitly asks for a broad rebalance.
 - Report exact constants/assets changed.
 - Re-scan after broad localization or balance sweeps until the next search is clean or remaining items are out of scope.

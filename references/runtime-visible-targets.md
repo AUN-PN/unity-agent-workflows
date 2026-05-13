@@ -42,7 +42,7 @@ A runtime target can have multiple bounds. Pick the one for the requested job, n
 Always classify these separately:
 
 - `interactiveRect`: click/tap/hit area such as `Button`, `Selectable`, `Collider`, `EventTrigger`
-- `visualRect`: pixels/mesh/sprite/text/card the player sees
+- `visualRect`: pixels/mesh/sprite/text/card the user sees
 - `logicRect`: gameplay area such as attack radius, trigger volume, spawn region, lock-on range
 - `markerRect`: author-provided focus/anchor marker such as `Focus Target`, `Highlight Target`, `Visual Target`, `Aim Point`, `Socket`, `Muzzle`, `Pivot`
 - `overlayRect`: selected rect after conversion into destination overlay/root space

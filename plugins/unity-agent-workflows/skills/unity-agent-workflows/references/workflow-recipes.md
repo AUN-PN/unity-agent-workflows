@@ -6,7 +6,7 @@ Read this only when a task needs a named recipe beyond `references/ai-workflows.
 
 Use when placement or ownership is unclear.
 
-1. Search exact screen text, method names, Unity object names, GUIDs, and gameplay terms with `rg`.
+1. Search exact screen text, method names, Unity object names, GUIDs, and runtime/content terms with `rg`.
 2. Read likely owners and callsites.
 3. Read graph output if present.
 4. Fill the structure map from `references/project-structure-discovery.md` when placement matters.
@@ -20,7 +20,7 @@ Use when placement or ownership is unclear.
 3. Avoid architecture migration unless the boundary caused the bug.
 4. Validate the smallest surface.
 
-## WF-2 New Gameplay Feature
+## WF-2 New Runtime Or Content Feature
 
 1. Decide data-first vs code-first.
 2. Prefer definitions/config for tuning and identity.
@@ -58,8 +58,8 @@ Use when placement or ownership is unclear.
 2. If the task involves focus, highlight, selection, click/tap target, visual target, bounds-type choice, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess", run the Runtime Visible Target Lock from `references/runtime-owner-proof.md` before editing.
 3. Separate layout/anchoring from readability/polish.
 4. Change only the shown layer unless owner proof requires a direct dependency.
-5. Preserve camera, background, composition, and gameplay layout unless requested.
-6. For cross-canvas focus/spotlight work, read `references/coordinate-space-conversion.md`.
+5. Preserve camera, background, composition, and runtime layout unless requested.
+6. For world/local/screen/canvas/camera coordinate mismatch, read `references/coordinate-space-conversion.md`.
 7. If an object is found but no marker exists, read `references/runtime-visible-targets.md` and report candidate rects/ambiguity before choosing.
 8. Validate with screenshot, hierarchy, or serialized/runtime proof.
 

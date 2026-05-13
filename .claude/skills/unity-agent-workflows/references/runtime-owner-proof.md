@@ -42,7 +42,7 @@ If proof is incomplete, do not patch coordinates. Inspect deeper or ask one conc
 |---|---|
 | focus ring, tutorial spotlight, modal hole, tap/click target, highlight, marker, visual alignment, hardcoded layout | `references/runtime-visible-targets.md` |
 | button/icon/card/HUD row/world unit/projectile/VFX/text bounds, choosing `markerRect` vs `visualRect` vs `interactiveRect` | `references/target-bounds-catalog.md` |
-| cross-canvas overlay, spotlight hole, dim scrim, world-to-UI conversion, safe area/screen edge coordinate mismatch | `references/coordinate-space-conversion.md` |
+| world/local/screen/viewport/canvas/camera/safe-area/RenderTexture mismatch or world-to-UI conversion | `references/coordinate-space-conversion.md` |
 
 ## Hardcoded Layout Guard
 

@@ -11,7 +11,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 
 ## Mobile UI Rules
 
-- Preserve gameplay visibility.
+- Preserve the primary scene/viewport visibility.
 - Put primary actions in reachable thumb zones.
 - Respect notches and safe areas.
 - Keep tappable targets near 44x44 points / 48dp equivalent or larger.
@@ -64,7 +64,7 @@ The marker is the source of truth for tutorial focus.
 
 Use this gate for source asset creation/replacement/material redesign:
 
-- model, sprite, unit, enemy, spaceship, prop
+- model, sprite, character, unit, vehicle, prop, environment piece
 - UI/HUD/panel/button/frame/icon art
 - animation source or sprite sheet
 - VFX source texture/frame

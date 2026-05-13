@@ -1,4 +1,4 @@
-# Unity 2D Game Agent Workflows
+# Unity Game Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
 [![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-unity--agent--workflows-10A37F)](#add-in-codex-plugins-from-git)
@@ -6,11 +6,11 @@
 
 [ภาษาไทย](README.th.md)
 
-A Codex skill and npx installer for Unity 2D game projects where AI agents touch real game code, scenes, prefabs, UI, and gameplay systems.
+A Codex skill and npx installer for Unity projects where AI agents touch real code, scenes, prefabs, UI, assets, and runtime systems.
 
-It gives Codex, Claude Code, Unity MCP Server, and Unity AI Assistant style workflows a safer route through Unity 2D gameplay automation: discover the project structure first, prove the runtime owner, then patch the code or asset path that actually drives what the player sees.
+It gives Codex, Claude Code, Unity MCP Server, and Unity AI Assistant style workflows a safer route through Unity automation: discover the project structure first, prove the runtime owner, then patch the code or asset path that actually drives what the user sees.
 
-It is especially tuned for sprites, tiles, UI/HUD, `Collider2D`, pooled enemies, runtime clones, scene/prefab references, and AI-assisted Unity refactoring where "the code compiled" is not enough.
+It is tuned for UI/HUD, 2D or 3D objects, physics/colliders, animation, VFX, pooled objects, runtime clones, scene/prefab references, and AI-assisted Unity refactoring where "the code compiled" is not enough.
 
 I made this after running into the same Unity-agent problems over and over: the agent assumes a fixed architecture, edits the nearby script instead of the runtime owner, changes prefab or scene values that get overwritten in Play mode, grows one more huge controller, or says "validated" without proving the path that actually runs.
 
@@ -22,16 +22,16 @@ Use it when an AI agent is working on Unity game code and the task needs more di
 
 It is especially useful for:
 
-- runtime-visible bugs where the edited value might not be the value the player sees in Play Mode
+- runtime-visible bugs where the edited value might not be the value the user sees in Play Mode
 - UI fixes that depend on parent hierarchy, anchors, safe area, CanvasScaler, or TMP refresh paths
 - focus rings, tutorial spotlights, modal dimming, or visible target binding for buttons, icons, cards, HUD slots, markers, colliders, units, props, and VFX anchors where the agent must use the real runtime object instead of guessed coordinates
 - duplicate Unity object names where `GameObject.Find(name)` or first-match search can select the wrong target
 - project structure discovery before the agent adds new scripts, namespaces, assemblies, or content paths
-- Unity 2D games with repeated sprites, tiles, pooled enemies, `Collider2D` objects, or runtime clones that share the same visible name but are different live targets
+- Unity projects with repeated sprites, meshes, pooled objects, colliders, or runtime clones that share the same visible name but are different live targets
 - prefab and scene wiring where an AI assistant needs to set references, components, and UI objects without losing runtime validation
 - compile/test/debug loops where passing C# syntax is not enough; the agent must prove the Play Mode behavior still matches the request
 - modular C# work where new responsibility needs the repo's actual folder, namespace, assembly, and dependency direction
-- gameplay content changes that should go through data/config instead of hardcoded one-offs
+- runtime/content changes that should go through data/config instead of hardcoded one-offs
 - cleanup work where deleted files need real reference proof
 - repeated "still not fixed" passes where the agent needs to stop changing random constants
 - Unity MCP or editor-assisted workflows where the agent needs a clear route before touching scenes, prefabs, or C# scripts
@@ -139,7 +139,7 @@ flowchart TD
     A["Request<br/>what the user wants changed"] --> D["3. Derive project structure"]
     B["Local rules<br/>AGENTS.md / README / architecture notes"] --> R["1. Read local rules"]
     S["Repo state<br/>git status --short / dirty files"] --> G["2. Check repo state"]
-    M["Graph and source context<br/>Graphify / code search / references"] --> D
+    M["Graph and source context<br/>code graph / code search / references"] --> D
 
     R --> R1["Output:<br/>hard constraints, project rules, out-of-scope areas"]
     G --> G1["Output:<br/>dirty-file boundary and files to preserve"]
@@ -185,7 +185,7 @@ Here is the same flow in a more practical table:
 | Runtime proof | Step 5 | visible object, scene/prefab link, script/component, mutating method, runtime override | owner chain that proves where the live behavior is controlled |
 | Structure discovery | Step 1-4 | repo docs, folders, namespaces, asmdefs, scenes, prefabs, graph/source proof | project-derived structure map before routing |
 | Code routing | Step 4-6 | repo-local owners/layers, data source, dependency direction, hub risk | route choice, Routing Card when structural work is needed, and a file boundary |
-| UI and assets | Step 4-7 | hierarchy, anchors, safe area, CanvasScaler, TMP, asset gate | layout owner or asset decision; PixelLab only when a new/replaced source visual asset is required |
+| UI and assets | Step 4-7 | hierarchy, anchors, safe area, CanvasScaler, TMP, asset gate | layout owner or asset decision; use the project's approved asset tool only when a new/replaced source visual asset is required |
 | Validation | Step 8-9 | smallest useful check, exact command output, known gaps | validation result and residual risk that can be reported honestly |
 | Cleanup | Step 4-9 | YAML/GUID refs, `Resources.Load` paths, generated-file status, git status | deletion/keep proof, safe cleanup scope, and clean Git explanation |
 
@@ -264,7 +264,7 @@ The skill will create/refresh `UNITY_STRUCTURE.md` as a short index and split de
 ```text
 UNITY_STRUCTURE.md
 UNITY_STRUCTURE.ui.md
-UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.runtime.md
 UNITY_STRUCTURE.content.md
 UNITY_STRUCTURE.assemblies.md
 UNITY_STRUCTURE.cleanup.md
@@ -279,7 +279,7 @@ After Teach, agents should read only the index plus the matching focused map:
 | Task | Read |
 |---|---|
 | UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
 | Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
@@ -290,10 +290,10 @@ Short game-session prompts:
 
 | Prompt | Routed maps |
 |---|---|
-| `Move the HUD skill dock to the bottom-right; it overlaps the Earth.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| `Make the Sentinel ship clearly pass behind the Earth.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
-| `Check every file related to the duplicated overlay and fix it.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`, `UNITY_STRUCTURE.cleanup.md` |
-| `Do not fix yet; first check why the ship pauses while flying.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| `Move the quick-action bar to the bottom-right; it overlaps the main viewport.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| `Make the runtime object clearly pass behind the foreground object.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
+| `Check every file related to the duplicated UI overlay and fix it.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`, `UNITY_STRUCTURE.cleanup.md` |
+| `Do not fix yet; first check why the moving object pauses mid-path.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
 
 ### 4. Refresh Only What Is Stale
 
@@ -344,11 +344,11 @@ unity-agent-workflows/
 - [runtime-owner-proof.md](references/runtime-owner-proof.md): how to prove the real owner of visible/runtime behavior, then route to deeper target docs only when needed
 - [runtime-visible-targets.md](references/runtime-visible-targets.md): focus/highlight/click target rules and hardcoded fallback contracts
 - [target-bounds-catalog.md](references/target-bounds-catalog.md): object-type bounds choices for UI/world/VFX/text targets
-- [coordinate-space-conversion.md](references/coordinate-space-conversion.md): cross-canvas, world-to-UI, and safe-area coordinate conversion
+- [coordinate-space-conversion.md](references/coordinate-space-conversion.md): world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion
 - [modular-architecture.md](references/modular-architecture.md): project-derived module boundaries, asmdef rules, and hub gates; Core/Systems/Features is only a sample fallback
 - [unity-validation.md](references/unity-validation.md): compile checks, stale response files, Roslyn/Bee notes, and validation levels
 - [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe areas, localization, and visual asset gates
-- [content-and-systems.md](references/content-and-systems.md): gameplay data, progression, stages, waves, and system readiness
+- [content-and-systems.md](references/content-and-systems.md): content data, progression, runtime configuration, and system readiness
 - [cleanup-and-git.md](references/cleanup-and-git.md): safe deletion, generated files, commit hygiene, and push proof
 - [session-mining.md](references/session-mining.md): turning old agent lessons into durable rules without dumping raw chat into the skill
 

@@ -12,11 +12,11 @@ Read only what exists and only what the task needs:
 
 - Always-read: `AGENTS.md`, relevant `README.md`/architecture docs, existing focused structure maps.
 - UI/runtime bug: scene/prefab path, presenter/controller, Canvas/TMP/safe-area code.
-- Gameplay feature: owning gameplay module, related data/config, event/contract path.
+- Runtime/content feature: owning runtime module, related data/config, event/contract path.
 - Content/balance: ScriptableObjects/config/localization that own the values.
 - Assembly/refactor: folders, namespaces, `.asmdef`, graph edges for touched modules.
 - Cleanup: code refs, YAML/GUID refs, Resources/addressable paths.
-- Graph reports only when routing or dependency proof depends on them: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
+- Code graph reports only when routing or dependency proof depends on them: graph report, graph wiki, `graph.json`, or equivalent.
 
 Do not invent folders or layer names that are not visible in the repo.
 Do not scan unrelated categories just to fill a template.
@@ -41,7 +41,7 @@ Default files:
 ```text
 UNITY_STRUCTURE.md
 UNITY_STRUCTURE.ui.md
-UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.runtime.md
 UNITY_STRUCTURE.content.md
 UNITY_STRUCTURE.assemblies.md
 UNITY_STRUCTURE.cleanup.md
@@ -67,7 +67,7 @@ Use this router after Teach:
 | Task | Read |
 |---|---|
 | UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
 | Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
@@ -132,7 +132,7 @@ Split larger notes by area:
 
 ```text
 UNITY_STRUCTURE.ui.md
-UNITY_STRUCTURE.gameplay.md
+UNITY_STRUCTURE.runtime.md
 UNITY_STRUCTURE.content.md
 UNITY_STRUCTURE.assemblies.md
 UNITY_STRUCTURE.cleanup.md

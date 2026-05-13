@@ -1,11 +1,11 @@
 ---
 name: unity-agent-workflows
-description: Use for AI-assisted Unity game work that needs live repo discovery, project-derived routing, runtime-owner proof, modular C#/asmdef safety, UI/scene/visual asset gates, data-first gameplay/content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, mobile UX, generated assets, Graphify-style graphs, or repeated "fix still not visible" failures.
+description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, or repeated "fix still not visible" failures.
 ---
 
 # Unity Agent Workflows
 
-Use this skill as the AI operating system for Unity game work: read the live repo, derive structure, prove runtime ownership, route to the existing owner/layer, avoid hub growth, validate the smallest useful surface, and publish rules only to the artifact that owns them.
+Use this skill as the AI operating system for Unity work: read the live repo, derive structure, prove runtime ownership, route to the existing owner/layer, avoid hub growth, validate the smallest useful surface, and publish rules only to the artifact that owns them.
 
 ## Start Here
 
@@ -15,7 +15,7 @@ Use this skill as the AI operating system for Unity game work: read the live rep
 4. If the user says `$unity-agent-workflows. Teach`, run the Teach command directly: create/refresh `UNITY_STRUCTURE.md` as a short index and split focused maps by category. Do not search for the skill path first. Do not make one huge all-project document.
 5. Derive only relevant live structure before architecture claims: folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs. Do not impose this skill's sample structure.
 6. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
-7. If a graph exists, read it before architecture claims only when dependency/routing proof needs graph data: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
+7. If a code graph exists, read it before architecture claims only when dependency/routing proof needs graph data: graph report, graph wiki, `graph.json`, or equivalent.
 8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
    - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible target lock.
@@ -57,7 +57,7 @@ Do this automatically:
 2. Create or refresh `UNITY_STRUCTURE.md` as a short index.
 3. Split details into focused files only when that category exists or is needed:
    - `UNITY_STRUCTURE.ui.md`
-   - `UNITY_STRUCTURE.gameplay.md`
+   - `UNITY_STRUCTURE.runtime.md`
    - `UNITY_STRUCTURE.content.md`
    - `UNITY_STRUCTURE.assemblies.md`
    - `UNITY_STRUCTURE.cleanup.md`
@@ -71,7 +71,7 @@ When a later task starts, read only `UNITY_STRUCTURE.md` plus the matching focus
 | Task | Read |
 |---|---|
 | UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Gameplay behavior, enemies, stages, skills, missions | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
 | Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
@@ -88,10 +88,10 @@ Load only the reference needed for the current task.
 - `references/runtime-owner-proof.md`: Visible object proof chain, runtime visible target lock, repeated-fix diagnostics, and routing to deeper target files.
 - `references/runtime-visible-targets.md`: focus/highlight/click target rules, marker/visual/interactive rect choice, hardcoded fallback contract.
 - `references/target-bounds-catalog.md`: object-type bounds choices for UI controls, HUD, world units, projectiles, VFX, safe area, and TMP labels.
-- `references/coordinate-space-conversion.md`: cross-canvas overlay, world-to-UI, safe-area, and coordinate conversion rules.
+- `references/coordinate-space-conversion.md`: world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion rules.
 - `references/unity-validation.md`: `git diff --check`, Unity/Bee/Roslyn checks, stale response files, validation ladder.
-- `references/ui-and-visual-assets.md`: mobile UI, safe area, localized text, source asset/Pixellab-style gates.
-- `references/content-and-systems.md`: data-first content, stage systems, production-readiness system stack.
+- `references/ui-and-visual-assets.md`: UI, safe area, localized text, and project-approved source asset gates.
+- `references/content-and-systems.md`: data-first content, runtime systems, production-readiness system stack.
 - `references/cleanup-and-git.md`: source-vs-generated artifacts, deletion proof, commit/push hygiene.
 - `references/session-mining.md`: how to mine prior AI sessions into reusable rules without copying raw chat.
 
@@ -104,7 +104,7 @@ Before editing, load the matching reference files below. This prevents the failu
 | UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
-| New gameplay feature, content, progression, stages, waves, economy, mission/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
+| New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
 | Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
 | Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
 | Rule/session mining/workflow update | `references/session-mining.md` |
@@ -163,7 +163,7 @@ Files explicitly not touched:
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
 - **Visible target lock**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` only when its trigger matches.
-- **New gameplay feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
+- **New runtime/content feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
 - **UI or screenshot work**: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before editing. Report those references as loaded in closeout.

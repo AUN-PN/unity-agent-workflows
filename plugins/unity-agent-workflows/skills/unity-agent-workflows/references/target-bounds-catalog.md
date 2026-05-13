@@ -48,7 +48,7 @@ Before converting:
 
 Use panel visible rect, arrow tip/pointer marker when aligning to target, and text bounds only when requested.
 
-## World Unit / Enemy / Player / Sentinel
+## World Unit / Character / Vehicle / Prop
 
 Use:
 1. explicit marker transform: `FocusPoint`, `AimPoint`, `Core`, `Center`, `Head`, `Socket`

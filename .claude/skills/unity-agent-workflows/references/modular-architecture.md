@@ -45,13 +45,13 @@ Translate this matrix into the repo's own names. For example, "feature" may be `
 
 | Change | Place | Avoid |
 | --- | --- | --- |
-| One module's gameplay behavior | `Features/<ModuleName>` | `Core`, unrelated systems, sibling features |
+| One module's runtime behavior | `Features/<ModuleName>` | `Core`, unrelated systems, sibling features |
 | Reusable runtime service | Repo-local service/system/runtime owner path | Unrelated feature/module folders |
 | Cross-feature interface/event/DTO | Repo-local contract/event/gateway boundary | Feature/module implementation folders |
-| Generic primitive/utility | `Core` | Feature/system folders with gameplay knowledge |
-| Stage/skill/enemy/boss/balance data | ScriptableObject, content definition, config | Hardcoded branches inside hubs |
+| Generic primitive/utility | `Core` | Feature/system folders with runtime/content knowledge |
+| Content/balance/progression data | ScriptableObject, content definition, config | Hardcoded branches inside hubs |
 | Home/menu UI construction | Owning UI feature | Gameplay systems |
-| Battle HUD/runtime display | Owner feature/system that owns the runtime facts | Unrelated menu feature |
+| Runtime UI/display | Owner feature/system that owns the runtime facts | Unrelated menu feature |
 | App/screen/session state | State contracts plus thin owner publisher | Global polling manager |
 | Analytics/telemetry | Analytics contracts/service plus shared storage | Feature-local file writer |
 | Visual source asset | Asset workflow first | Procedural fallback in random code |
@@ -70,7 +70,7 @@ Stop and split unless the user approves temporary debt when:
   - spawn/registration/active list
   - tick/lifecycle
   - phase/state machine
-  - attack/skill scheduling
+  - action/ability scheduling
   - hit/damage/death resolution
   - visual creation/animation
   - resource loading/fallback art
@@ -83,7 +83,7 @@ Stop and split unless the user approves temporary debt when:
 | Responsibility | Collaborator |
 | --- | --- |
 | Runtime state bucket | `<Feature>RuntimeState` |
-| Attack/skill timing | `<Feature>AttackScheduler` |
+| Action/ability timing | `<Feature>ActionScheduler` |
 | Visual creation/fallback art | `<Feature>VisualFactory` / `<Feature>SpriteCatalog` |
 | UI formatting | `<Feature>Formatter` / `<Feature>Presenter` |
 | Spawn selection/budget | `<Feature>Spawner` / `<Feature>ActiveObjectBudget` |

@@ -1,96 +1,109 @@
 # Coordinate Space Conversion
 
-Read this only for cross-canvas overlays, world-to-UI markers, safe area/screen edge work, or coordinate mismatch bugs.
+Read this only when a Unity task moves or compares positions across world, local, screen, viewport, canvas, camera, safe-area, or RenderTexture spaces.
 
-## Target Selection Check
+## First Identify The Spaces
 
-Before patching focus/highlight/tooltip/arrow position, answer internally:
+Before patching position, size, bounds, raycast, tooltip, marker, camera, or UI-follow behavior, answer internally:
 
-1. What is the user-visible thing?
-2. Is the requested target visual, interactive, logical, or debug?
-3. Which runtime object owns that thing?
-4. Which bounds represent the thing: marker, visual cluster, renderer, collider, or hitbox?
-5. Are there duplicate names or inactive prefab/template objects?
-6. Which coordinate space draws the result?
-7. Which writer may move the target after this frame?
+1. What value is being read?
+2. What space is it in: world, local, screen pixels, viewport, canvas local, anchored UI, normalized, texture UV, or physics units?
+3. What object/root/camera writes or displays the result?
+4. Which camera and canvas render mode are involved?
+5. Which runtime writer can move either side later: layout, safe area, animation, tween, pooling, camera follow, physics, or scale?
 
-If bounds type is not proven, do not patch coordinates.
+If either source space or destination space is unknown, do not copy coordinates.
 
-## Cross-Canvas UI Conversion
+## Common Unity Spaces
 
-Use when a focus ring, tutorial spotlight, dim hole, blocker, or modal overlay is drawn in a different canvas/root than the target.
+- `Transform.position`: world units.
+- `Transform.localPosition`: parent-local units.
+- `Renderer.bounds`: world-space bounds.
+- `Collider.bounds`: world-space bounds.
+- `RectTransform.anchoredPosition`: parent `RectTransform` anchor space.
+- `RectTransform.GetWorldCorners(...)`: world-space corners.
+- `Input.mousePosition` / touch position: screen pixels.
+- `Camera.WorldToScreenPoint(...)`: world to screen pixels.
+- `Camera.ScreenToWorldPoint(...)`: screen pixels to world.
+- `Camera.WorldToViewportPoint(...)`: normalized viewport.
+- `RectTransformUtility.ScreenPointToLocalPointInRectangle(...)`: screen pixels to UI local space.
+- `Screen.safeArea`: screen pixels.
+- RenderTexture UV: normalized texture space, not screen or canvas space.
 
-1. Prove both spaces before editing:
-   - source target `RectTransform` and parent chain
-   - source `Canvas.renderMode`, `worldCamera`, and `CanvasScaler`
-   - destination overlay canvas/root `RectTransform`
-   - destination safe-area/content-frame writer
-2. Do not treat `Screen.width` / `Screen.height` normalized values as overlay-local coordinates.
-3. Do not assume two UI roots share the same scale, anchors, safe area, or reference resolution.
-4. Convert the target world corners through screen space, then into the destination overlay root:
+## Conversion Rules
+
+1. Convert through an explicit API path; do not paste numbers between spaces.
+2. Use `null` camera only for `ScreenSpaceOverlay`.
+3. Use the canvas `worldCamera` for `ScreenSpaceCamera` or `WorldSpace`.
+4. Convert after layout/safe-area/camera/tween writers have run, or re-convert on the next layout tick.
+5. Keep all related output in one destination space: marker, label, hit area, outline, tooltip, or debug gizmo.
+6. Validate by reporting source space, destination space, API path, camera, canvas/root, and runtime proof.
+
+## UI Between Different Roots
+
+Use when a UI element in one canvas/root drives a marker, tooltip, selection outline, blocker, or debug rectangle in another root.
 
 ```csharp
-target.GetWorldCorners(worldCorners);
+sourceRect.GetWorldCorners(worldCorners);
 for (int i = 0; i < 4; i++)
 {
     Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(sourceCamera, worldCorners[i]);
     RectTransformUtility.ScreenPointToLocalPointInRectangle(
-        overlayRoot,
+        destinationRoot,
         screenPoint,
-        overlayCamera,
-        out overlayLocalCorners[i]);
+        destinationCamera,
+        out destinationLocalCorners[i]);
 }
 ```
 
-Use `null` camera only for `ScreenSpaceOverlay`; use the canvas camera for `ScreenSpaceCamera` or `WorldSpace`.
+Build the destination rect from min/max of `destinationLocalCorners`, then assign it under `destinationRoot`.
 
-5. Build the spotlight/focus/blocker from min/max of `overlayLocalCorners`, then assign it in the same root that draws the overlay.
-6. If safe area, `CanvasScaler`, content frame, layout group, tween, or parent scale mutates either root after conversion, convert after that writer has run or re-convert on the next layout tick.
-7. Validation must report source canvas, destination overlay root, conversion API, and screenshot/runtime proof. If hardcoded fallback remains, report why runtime conversion failed.
+## World Object To UI
 
-Target proof format:
-
-```text
-target:
-component:
-active/interactable:
-parent chain:
-source creator:
-duplicate names:
-bounds source:
-source canvas:
-destination overlay root:
-conversion:
-validation:
-```
-
-## World Target Resolution
-
-For non-UI visible targets such as units, enemies, props, projectiles, spawn markers, colliders, VFX anchors, interactables, and camera/world markers:
+Use when UI follows a world object, spawn marker, unit, prop, collider, VFX anchor, interactable, or camera/world marker.
 
 1. Resolve the exact active `GameObject`.
-2. Identify scene/prefab source and runtime creator.
-3. Use `Renderer.bounds`, `Collider.bounds`, or an explicit marker transform as the target bounds.
-4. If UI follows the target, convert world position through the active camera and target canvas render mode.
-5. Validate camera, canvas, scale, pooling, clone, and animation writers before editing offsets.
+2. Choose a bounds source: explicit marker transform, `Renderer.bounds`, or `Collider.bounds`.
+3. Convert world center/corners through the active camera.
+4. Convert screen pixels into the destination canvas/root.
+5. Validate camera, canvas, scale, pooling, clone, animation, and camera-follow writers before editing offsets.
 
-## Coordinate Spaces
+## Safe Area And Screen Edges
 
-Do not copy values across spaces without conversion:
+`Screen.safeArea` is screen pixels. Convert it into the destination canvas/root before using it as UI local bounds.
 
-- World-space `Transform.localScale`.
-- `SpriteRenderer` bounds and pixels-per-unit.
-- Screen-space `RectTransform.sizeDelta`.
-- Canvas scaler reference resolution.
-- Camera orthographic units.
-- Device safe-area pixels.
-- RenderTexture or world-space Canvas units.
+Do not treat these as interchangeable:
 
-For UI focus/highlight/spotlight, use one coordinate space for all related pieces:
+- `Screen.width` / `Screen.height`
+- safe-area pixels
+- canvas reference resolution
+- `RectTransform.sizeDelta`
+- viewport `0..1`
+- world camera units
 
-- target bounds
-- focus ring or outline
-- spotlight hole
-- dim scrim
-- input blocker
-- modal panel
+## RenderTexture Or World-Space Canvas
+
+If input, UI, or marker positions pass through a RenderTexture or world-space Canvas:
+
+1. Identify texture pixel size and displayed rect.
+2. Convert screen point to the displayed rect local space.
+3. Convert local point to UV.
+4. Convert UV to RenderTexture pixels or camera viewport.
+5. Then convert to the target world/UI space.
+
+Do not use main screen pixels directly as RenderTexture pixels.
+
+## Proof Format
+
+```text
+source object:
+source value:
+source space:
+source camera/root:
+destination object:
+destination space:
+destination camera/root:
+conversion API path:
+runtime writer checked:
+validation:
+```
