@@ -111,6 +111,171 @@ For Unity UI targets such as buttons, icons, cards, chips, panels, HUD slots, me
 7. Compute focus/highlight/spotlight from the converted runtime bounds, not guessed constants.
 8. Reject hardcoded focus anchors/sizes as the primary path when an active UI target exists.
 
+## Visual Target Selection
+
+A runtime target can have multiple useful bounds. Pick the bounds for the requested visual job, not the first object with the right name.
+
+A live object is not enough proof. The agent must prove the correct bounds type for the requested job.
+
+Always classify these separately:
+
+- `interactiveBounds`: click/tap/hit area such as `Button`, `Selectable`, `Collider`, `EventTrigger`
+- `visualBounds`: the pixels/mesh/sprite/text/card the player actually sees
+- `logicBounds`: gameplay area such as attack radius, trigger volume, spawn region, lock-on range
+- `markerBounds`: explicit author-provided focus/anchor marker such as `Focus Target`, `Highlight Target`, `Aim Point`, `Socket`, `Muzzle`, `Pivot`
+
+For focus rings, spotlight holes, tutorial highlights, selection brackets, arrows, tooltip anchors, and visual alignment, prefer:
+
+1. explicit `markerBounds`
+2. `visualBounds`
+3. `interactiveBounds`
+4. named hardcoded fallback
+
+Do not use `interactiveBounds` as the primary visual target when visible children or marker transforms exist.
+
+## Target Bounds By Object Type
+
+### UI Button / Tab / Menu Item
+
+Use:
+1. child marker named `* Focus Target`, `* Highlight Target`, `* Visual Target`
+2. visible graphic cluster: active `Image`, `RawImage`, `Text`, `TMP_Text`, icon, label, card/frame children
+3. `Button` / `Selectable` root rect only as fallback
+
+Reject:
+- full-size invisible hitbox
+- transparent background image
+- layout-only parent
+- mask/clip root unless it is the visible frame
+
+Report:
+- `interactiveRect`
+- `visualRect`
+- whether root button fallback was used
+
+### UI Card / Panel / Modal
+
+Use:
+1. explicit marker rect
+2. visible panel/frame image bounds
+3. content group bounds if the card has padding or transparent margins
+
+Reject:
+- parent section root
+- full-screen container
+- scroll viewport unless the viewport itself is the target
+
+### Icon / Badge / Currency / Resource Counter
+
+Use:
+1. icon image rect + value text rect combined
+2. icon rect only if the user points to the icon
+3. text rect only if the user points to the number/label
+
+Do not use the whole HUD bar unless the request names the whole bar.
+
+### Scroll/List Row
+
+Use:
+1. row visible card/frame bounds
+2. row content cluster bounds
+3. row button/hitbox fallback
+
+Before converting:
+- ensure row is active after layout/rebuild
+- ensure scroll content has completed positioning
+- reject pooled inactive row templates
+
+### Tooltip / Coach Bubble / Tutorial Panel
+
+Use:
+1. panel visible rect
+2. arrow tip / pointer marker if aligning to target
+3. text bounds only when user asks for text position
+
+### World Unit / Enemy / Player / Sentinel
+
+Use:
+1. explicit marker transform: `FocusPoint`, `AimPoint`, `Center`, `Head`, `Core`, `Socket`
+2. `Renderer.bounds` combined across visible renderers
+3. `Collider.bounds` only if highlight is gameplay hitbox
+4. root transform position fallback
+
+Reject:
+- pooled inactive prefab
+- parent container bounds that include offscreen helpers
+- weapon/projectile child unless requested
+
+### Projectile / Bullet / Missile / Beam
+
+Use:
+1. active renderer bounds
+2. collider bounds for hitbox debug
+3. trail/line renderer bounds only if visual trail is the target
+
+For fast-moving objects:
+- sample after movement update or in `LateUpdate`
+- avoid stale spawn-position bounds
+
+### VFX / Particle / Explosion / Area Effect
+
+Use:
+1. explicit marker or effect center
+2. `ParticleSystemRenderer.bounds` for visible effect
+3. authored radius/area config for gameplay area
+
+Do not use particle system root if renderer bounds or radius exists.
+
+### 3D Object / Mesh / Prop
+
+Use:
+1. explicit marker transform
+2. combined `Renderer.bounds`
+3. `Collider.bounds` if collision/hitbox target
+
+Convert world to UI through:
+- active gameplay camera
+- destination canvas render mode/camera
+- screen point to overlay root
+
+### Spawn Point / Path / Invisible Trigger
+
+Use:
+1. marker transform/shape gizmo if visible target is a marker
+2. collider/trigger bounds if debugging gameplay area
+3. never use invisible trigger bounds for a visual focus unless the user asked for trigger/debug view
+
+### Safe Area / Screen Edge / Camera View
+
+Use:
+1. `Screen.safeArea` converted into destination canvas/root
+2. camera viewport corners converted through the active camera
+3. do not use raw `Screen.width` / `Screen.height` as overlay-local coordinates
+
+### Text / TMP Label
+
+Use:
+1. text rect after layout rebuild
+2. preferred values only for sizing decisions, not final screen bounds
+3. include outline/shadow padding if focus ring must visually surround text
+
+Reject:
+- parent row/card unless request targets the whole row/card
+
+## Target Selection Decision
+
+Before patching focus/highlight/tooltip/arrow position, answer internally:
+
+1. What is the user-visible thing?
+2. Is the requested target visual, interactive, logical, or debug?
+3. Which runtime object owns that thing?
+4. Which bounds represent the thing: marker, visual cluster, renderer, collider, or hitbox?
+5. Are there duplicate names or inactive prefab/template objects?
+6. Which coordinate space draws the result?
+7. Which writer may move the target after this frame?
+
+If bounds type is not proven, do not patch coordinates.
+
 ## Cross-Canvas UI Conversion
 
 Use this when a focus ring, tutorial spotlight, dim hole, blocker, or modal overlay is drawn in a different canvas/root than the target button, icon, or panel.

@@ -111,11 +111,11 @@ Use when placement or ownership is unclear.
 ### WF-6 UI Or Screenshot Fix
 
 1. Identify visible layer and runtime owner.
-2. If the task involves focus, highlight, selection, click/tap target, visual target, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess", run the Runtime Visible Target Lock from `references/runtime-owner-proof.md` before editing.
+2. If the task involves focus, highlight, selection, click/tap target, visual target, bounds-type choice, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess", run the Runtime Visible Target Lock from `references/runtime-owner-proof.md` before editing.
 3. Separate layout/anchoring from readability/polish.
 4. Change only the shown layer unless owner proof requires a direct dependency.
 5. Preserve camera, background, composition, and gameplay layout unless requested.
-6. For cross-canvas focus/spotlight work, prove the source canvas and destination overlay root, then convert runtime bounds into the overlay root before editing offsets.
+6. For cross-canvas focus/spotlight work, prove the source canvas, destination overlay root, and correct bounds type (`markerBounds`, `visualBounds`, `interactiveBounds`, or `logicBounds`), then convert runtime bounds into the overlay root before editing offsets.
 7. Validate with screenshot, hierarchy, or serialized/runtime proof. If object truth was requested, report the runtime object and coordinate space used. If a hardcoded fallback remains, report why the runtime target could not be resolved.
 
 ### WF-7 Visual Source Asset

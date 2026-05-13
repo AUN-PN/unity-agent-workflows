@@ -85,7 +85,7 @@ Load only the reference needed for the current task.
 - `references/ai-workflows.md`: Routing Card, universal workflow, task recipes, closeout shape.
 - `references/project-structure-discovery.md`: how to learn the user's actual Unity structure and create/read `UNITY_STRUCTURE.md` project context.
 - `references/modular-architecture.md`: project-derived layering, dependency rules, asmdef rules, hub gates; Core/Contracts/Systems/Features is only a fallback example.
-- `references/runtime-owner-proof.md`: Visible object proof chain, runtime visible target lock, repeated-fix diagnostics, scene/prefab/runtime override tracing.
+- `references/runtime-owner-proof.md`: Visible object proof chain, bounds-type selection, runtime visible target lock, repeated-fix diagnostics, scene/prefab/runtime override tracing.
 - `references/unity-validation.md`: `git diff --check`, Unity/Bee/Roslyn checks, stale response files, validation ladder.
 - `references/ui-and-visual-assets.md`: mobile UI, safe area, localized text, source asset/Pixellab-style gates.
 - `references/content-and-systems.md`: data-first content, stage systems, production-readiness system stack.
@@ -157,7 +157,7 @@ Files explicitly not touched:
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
-- **Visible target lock**: read `references/runtime-owner-proof.md`; use it for any visible UI/gameplay target such as buttons, icons, cards, chips, panels, HUD slots, tooltips, markers, colliders, units, props, VFX targets, highlight, spotlight, modal dimming, duplicate object names, hardcoded layout/position, "do not guess", or "do not edit yet" requests.
+- **Visible target lock**: read `references/runtime-owner-proof.md`; use it for any visible UI/gameplay target such as buttons, icons, cards, chips, panels, HUD slots, tooltips, markers, colliders, units, props, VFX targets, highlight, spotlight, modal dimming, duplicate object names, bounds-type choice, hardcoded layout/position, "do not guess", or "do not edit yet" requests.
 - **New gameplay feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
