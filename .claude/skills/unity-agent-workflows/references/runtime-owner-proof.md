@@ -69,6 +69,26 @@ Required proof:
 visible target -> runtime object -> runtime bounds -> converted coordinate space -> overlay
 ```
 
+## Hardcoded Fallback Contract
+
+Keep hardcoded layout only as a named fallback, never as the primary path, when a live runtime target can be resolved.
+
+Allowed fallback shape:
+
+```text
+try runtime target -> try runtime bounds conversion -> if lookup/conversion fails, use named hardcoded fallback -> report residual risk
+```
+
+Do not remove a fallback until runtime target lookup and coordinate conversion have been validated across the relevant scene timing, orientation, safe area, and device layout cases.
+
+When fallback runs, the closeout or runtime log must include:
+
+- target name or identifier that failed
+- expected parent chain or owner
+- source canvas and destination overlay root, if known
+- failed step: lookup, duplicate ambiguity, inactive target, missing camera, layout not ready, or conversion failure
+- fallback anchor/size name used
+
 ## Read-Only Target Inspection
 
 When the user says not to edit yet, or asks what the object is:
@@ -91,6 +111,38 @@ For Unity UI targets such as buttons, icons, cards, chips, panels, HUD slots, me
 7. Compute focus/highlight/spotlight from the converted runtime bounds, not guessed constants.
 8. Reject hardcoded focus anchors/sizes as the primary path when an active UI target exists.
 
+## Cross-Canvas UI Conversion
+
+Use this when a focus ring, tutorial spotlight, dim hole, blocker, or modal overlay is drawn in a different canvas/root than the target button, icon, or panel.
+
+1. Prove both spaces before editing:
+   - source target `RectTransform` and parent chain
+   - source `Canvas.renderMode`, `worldCamera`, and `CanvasScaler`
+   - destination overlay canvas/root `RectTransform`
+   - destination safe-area/content-frame writer
+2. Do not treat `Screen.width` / `Screen.height` normalized values as overlay-local coordinates.
+3. Do not assume two UI roots share the same scale, anchors, safe area, or reference resolution.
+4. Convert the target world corners through screen space, then into the destination overlay root:
+
+```csharp
+target.GetWorldCorners(worldCorners);
+for (int i = 0; i < 4; i++)
+{
+    Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(sourceCamera, worldCorners[i]);
+    RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        overlayRoot,
+        screenPoint,
+        overlayCamera,
+        out overlayLocalCorners[i]);
+}
+```
+
+Use `null` camera only for `ScreenSpaceOverlay`; use the canvas camera for `ScreenSpaceCamera` or `WorldSpace`.
+
+5. Build the spotlight/focus/blocker from min/max of `overlayLocalCorners`, then assign it in the same root that draws the overlay.
+6. If any writer such as safe area, `CanvasScaler`, content frame, layout group, tween, or parent scale mutates either root after conversion, convert after that writer has run or re-convert on the next layout tick.
+7. Validation must report source canvas, destination overlay root, conversion API used, and screenshot/runtime proof. If the implementation still uses hardcoded fallback, report why runtime conversion failed.
+
 Target proof format:
 
 ```text
@@ -101,7 +153,9 @@ parent chain:
 source creator:
 duplicate names:
 bounds source:
-coordinate space:
+source canvas:
+destination overlay root:
+conversion:
 validation:
 ```
 

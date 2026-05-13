@@ -115,7 +115,8 @@ Use when placement or ownership is unclear.
 3. Separate layout/anchoring from readability/polish.
 4. Change only the shown layer unless owner proof requires a direct dependency.
 5. Preserve camera, background, composition, and gameplay layout unless requested.
-6. Validate with screenshot, hierarchy, or serialized/runtime proof. If object truth was requested, report the runtime object and coordinate space used. If a hardcoded fallback remains, report why the runtime target could not be resolved.
+6. For cross-canvas focus/spotlight work, prove the source canvas and destination overlay root, then convert runtime bounds into the overlay root before editing offsets.
+7. Validate with screenshot, hierarchy, or serialized/runtime proof. If object truth was requested, report the runtime object and coordinate space used. If a hardcoded fallback remains, report why the runtime target could not be resolved.
 
 ### WF-7 Visual Source Asset
 

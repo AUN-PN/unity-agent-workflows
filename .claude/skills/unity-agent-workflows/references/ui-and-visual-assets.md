@@ -41,6 +41,7 @@ Use this when a tutorial, onboarding, tooltip, modal, focus ring, dim scrim, or 
 - Do not create a new button, icon, panel, card, marker, duplicate object, or replacement action unless the user explicitly asks.
 - If background input must be blocked, keep only the allowed modal/action target interactive.
 - Check `Canvas.renderMode`, `CanvasScaler`, safe area, sorting order, parent scale, masks, layout groups, and runtime-created roots before editing offsets.
+- For cross-canvas focus/spotlight, convert target `GetWorldCorners()` through `RectTransformUtility.WorldToScreenPoint(...)` and `RectTransformUtility.ScreenPointToLocalPointInRectangle(overlayRoot, ...)`; do not use `Screen.width` / `Screen.height` normalized values as overlay-local coordinates.
 - Resolve duplicate names before choosing a target. Parent chain and active/interactable state must disambiguate the real runtime object.
 - If the visible target is interactive, bind the spotlight/focus to the live `RectTransform` of that target; use hardcoded fallback only after target lookup fails and report it.
 
