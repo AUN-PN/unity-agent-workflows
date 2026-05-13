@@ -1,0 +1,40 @@
+{
+  "name": "unity-agent-workflows",
+  "version": "0.1.13",
+  "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
+  "author": {
+    "name": "AUN-PN"
+  },
+  "homepage": "https://github.com/AUN-PN/unity-agent-workflows#readme",
+  "repository": "https://github.com/AUN-PN/unity-agent-workflows",
+  "license": "UNLICENSED",
+  "keywords": [
+    "unity",
+    "unity3d",
+    "codex-skill",
+    "game-development",
+    "ai-agent",
+    "runtime-owner-proof",
+    "unity-validation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Unity Agent Workflows",
+    "shortDescription": "Safer AI workflows for Unity game projects",
+    "longDescription": "Use disciplined repo discovery, runtime-owner proof, project-derived routing, UI and scene safety, validation, and cleanup proof before AI agents edit Unity game projects.",
+    "developerName": "AUN-PN",
+    "category": "Coding",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/AUN-PN/unity-agent-workflows",
+    "privacyPolicyURL": "https://github.com/AUN-PN/unity-agent-workflows",
+    "termsOfServiceURL": "https://github.com/AUN-PN/unity-agent-workflows",
+    "defaultPrompt": [
+      "Help me safely fix a Unity runtime-visible bug"
+    ],
+    "screenshots": [],
+    "brandColor": "#111827"
+  }
+}

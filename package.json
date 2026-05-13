@@ -6,7 +6,9 @@
     "unity-agent-workflows": "bin/unity-agent-workflows.js"
   },
   "files": [
+    ".codex-plugin",
     "SKILL.md",
+    "skills",
     "README.md",
     "README.th.md",
     "agents",
