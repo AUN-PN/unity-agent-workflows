@@ -6,7 +6,9 @@
     "unity-agent-workflows": "bin/unity-agent-workflows.js"
   },
   "files": [
+    ".agents",
     ".codex-plugin",
+    "plugins",
     "SKILL.md",
     "skills",
     "README.md",
@@ -24,7 +26,7 @@
   "keywords": [
     "codex-skill",
     "unity",
-    "unity3d",
+    "unity2d",
     "unity-ai",
     "unity-mcp",
     "unity-editor",
