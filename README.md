@@ -257,25 +257,6 @@ After Teach, agents should read only the index plus the matching focused map:
 
 ### 3. Use The Structure Map
 
-For real work:
-
-```text
-Use $unity-agent-workflows.
-Use the matching UNITY_STRUCTURE map for this task.
-Implement this change using the repo's existing structure.
-Do not invent Core/Systems/Features unless this repo already uses them.
-Show the runtime owner, files touched, and validation command.
-```
-
-For visible/runtime bugs, keep it narrow:
-
-```text
-Use $unity-agent-workflows.
-Use the matching UNITY_STRUCTURE map for this task.
-Prove the runtime owner first.
-Patch the smallest file set and show the validation command.
-```
-
 Short game-session prompts:
 
 ```text

@@ -212,25 +212,6 @@ UNITY_STRUCTURE.cleanup.md
 
 ### 3. ใช้ Structure Map ทำงานจริง
 
-สำหรับงานจริง:
-
-```text
-Use $unity-agent-workflows.
-Use the matching UNITY_STRUCTURE map for this task.
-Implement this change using the repo's existing structure.
-Do not invent Core/Systems/Features unless this repo already uses them.
-Show the runtime owner, files touched, and validation command.
-```
-
-สำหรับ visible/runtime bug ให้ scope แคบ:
-
-```text
-Use $unity-agent-workflows.
-Use the matching UNITY_STRUCTURE map for this task.
-Prove the runtime owner first.
-Patch the smallest file set and show the validation command.
-```
-
 ตัวอย่างคำสั่งสั้นจาก session โปรเจ็คเกมจริง:
 
 ```text
