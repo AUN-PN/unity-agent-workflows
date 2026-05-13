@@ -288,25 +288,12 @@ After Teach, agents should read only the index plus the matching focused map:
 
 Short game-session prompts:
 
-```text
-Move the HUD skill dock to the bottom-right; it overlaps the Earth.
-```
-The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md`.
-
-```text
-Make the Sentinel ship clearly pass behind the Earth.
-```
-The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`.
-
-```text
-Check every file related to the duplicated overlay and fix it.
-```
-The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md` + `UNITY_STRUCTURE.cleanup.md`.
-
-```text
-Do not fix yet; first check why the ship pauses while flying.
-```
-The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`.
+| Prompt | Routed maps |
+|---|---|
+| `Move the HUD skill dock to the bottom-right; it overlaps the Earth.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| `Make the Sentinel ship clearly pass behind the Earth.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| `Check every file related to the duplicated overlay and fix it.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`, `UNITY_STRUCTURE.cleanup.md` |
+| `Do not fix yet; first check why the ship pauses while flying.` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
 
 ### 4. Refresh Only What Is Stale
 
@@ -332,13 +319,17 @@ unity-agent-workflows/
 ├── references/
 │   ├── ai-workflows.md
 │   ├── cleanup-and-git.md
+│   ├── coordinate-space-conversion.md
 │   ├── content-and-systems.md
 │   ├── modular-architecture.md
 │   ├── project-structure-discovery.md
 │   ├── runtime-owner-proof.md
+│   ├── runtime-visible-targets.md
 │   ├── session-mining.md
+│   ├── target-bounds-catalog.md
 │   ├── ui-and-visual-assets.md
-│   └── unity-validation.md
+│   ├── unity-validation.md
+│   └── workflow-recipes.md
 └── scripts/
     └── validate_skill.sh
 ```
@@ -347,9 +338,13 @@ unity-agent-workflows/
 
 ## Reference Files
 
-- [ai-workflows.md](references/ai-workflows.md): the general workflow, Routing Card, task recipes, and closeout shape
+- [ai-workflows.md](references/ai-workflows.md): the general workflow, Routing Card, and closeout shape
+- [workflow-recipes.md](references/workflow-recipes.md): optional named recipes `WF-0` through `WF-11`
 - [project-structure-discovery.md](references/project-structure-discovery.md): how to learn the user's actual Unity folders, namespaces, assemblies, scenes, prefabs, and optional `UNITY_STRUCTURE.md`
-- [runtime-owner-proof.md](references/runtime-owner-proof.md): how to prove the real owner of visible/runtime behavior
+- [runtime-owner-proof.md](references/runtime-owner-proof.md): how to prove the real owner of visible/runtime behavior, then route to deeper target docs only when needed
+- [runtime-visible-targets.md](references/runtime-visible-targets.md): focus/highlight/click target rules and hardcoded fallback contracts
+- [target-bounds-catalog.md](references/target-bounds-catalog.md): object-type bounds choices for UI/world/VFX/text targets
+- [coordinate-space-conversion.md](references/coordinate-space-conversion.md): cross-canvas, world-to-UI, and safe-area coordinate conversion
 - [modular-architecture.md](references/modular-architecture.md): project-derived module boundaries, asmdef rules, and hub gates; Core/Systems/Features is only a sample fallback
 - [unity-validation.md](references/unity-validation.md): compile checks, stale response files, Roslyn/Bee notes, and validation levels
 - [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe areas, localization, and visual asset gates

@@ -243,25 +243,12 @@ UNITY_STRUCTURE.cleanup.md
 
 ตัวอย่างคำสั่งสั้นจาก session โปรเจ็คเกมจริง:
 
-```text
-แก้ HUD skill dock ขวาล่าง มันทับโลก
-```
-skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md`
-
-```text
-ยาน Sentinel ต้องบังหลังโลกให้ชัด
-```
-skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`
-
-```text
-เช็คไฟล์ทุกอย่างที่เกี่ยวของที่ทำให้เกิดภาพซ้อนและแก้ไข
-```
-skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md` + `UNITY_STRUCTURE.cleanup.md`
-
-```text
-อย่าพึ่งแก้ ดูก่อนว่าทำไมยานบินแล้วหยุดเอง
-```
-skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`
+| Prompt | Route |
+|---|---|
+| `แก้ HUD skill dock ขวาล่าง มันทับโลก` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
+| `ยาน Sentinel ต้องบังหลังโลกให้ชัด` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
+| `เช็คไฟล์ทุกอย่างที่เกี่ยวของที่ทำให้เกิดภาพซ้อนและแก้ไข` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`, `UNITY_STRUCTURE.cleanup.md` |
+| `อย่าพึ่งแก้ ดูก่อนว่าทำไมยานบินแล้วหยุดเอง` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.gameplay.md` |
 
 ### 4. Refresh เฉพาะส่วนที่ stale
 
@@ -287,22 +274,30 @@ unity-agent-workflows/
 ├── references/
 │   ├── ai-workflows.md
 │   ├── cleanup-and-git.md
+│   ├── coordinate-space-conversion.md
 │   ├── content-and-systems.md
 │   ├── modular-architecture.md
 │   ├── project-structure-discovery.md
 │   ├── runtime-owner-proof.md
+│   ├── runtime-visible-targets.md
 │   ├── session-mining.md
+│   ├── target-bounds-catalog.md
 │   ├── ui-and-visual-assets.md
-│   └── unity-validation.md
+│   ├── unity-validation.md
+│   └── workflow-recipes.md
 └── scripts/
     └── validate_skill.sh
 ```
 
 ## Reference Files
 
-- [ai-workflows.md](references/ai-workflows.md): workflow หลัก, Routing Card, recipes, closeout
+- [ai-workflows.md](references/ai-workflows.md): workflow หลัก, Routing Card, closeout
+- [workflow-recipes.md](references/workflow-recipes.md): optional recipes `WF-0` ถึง `WF-11`
 - [project-structure-discovery.md](references/project-structure-discovery.md): อ่านโครงสร้างจริงของ Unity repo และ optional `UNITY_STRUCTURE.md`
-- [runtime-owner-proof.md](references/runtime-owner-proof.md): พิสูจน์ owner ของ visible/runtime behavior
+- [runtime-owner-proof.md](references/runtime-owner-proof.md): พิสูจน์ owner ของ visible/runtime behavior แล้ว route ไปไฟล์ลึกเมื่อจำเป็น
+- [runtime-visible-targets.md](references/runtime-visible-targets.md): rules สำหรับ focus/highlight/click target และ hardcoded fallback
+- [target-bounds-catalog.md](references/target-bounds-catalog.md): เลือก bounds ตามชนิด UI/world/VFX/text target
+- [coordinate-space-conversion.md](references/coordinate-space-conversion.md): cross-canvas, world-to-UI, safe-area coordinate conversion
 - [modular-architecture.md](references/modular-architecture.md): project-derived module boundaries, asmdef rules, hub gates
 - [unity-validation.md](references/unity-validation.md): compile checks, Roslyn/Bee, validation levels
 - [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe area, localization, visual asset gates
