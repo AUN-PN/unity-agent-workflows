@@ -2,26 +2,10 @@
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
 [![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
-[![MCPmarket](https://img.shields.io/badge/MCPmarket-import-635BFF)](https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows)
 
 [ภาษาไทย](README.th.md)
 
 A Codex skill and npx installer for safer Unity AI agent workflows, Unity game development automation, project-derived structure discovery, runtime owner proof, and AI-assisted Unity refactoring.
-
-MCPmarket import URL:
-
-```text
-https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows
-```
-
-Before syncing MCPmarket after local skill changes, refresh the import folder:
-
-```bash
-npm run sync:mcpmarket
-npm run validate
-```
-
-Then push to GitHub and click Sync in MCPmarket. GitHub-imported skills do not update until the next MCPmarket sync.
 
 Use it when an AI coding agent is editing a Unity game and you need proof before patching: what structure this specific project uses, which object is visible, which prefab or scene owns it, which script changes it, and which validation command proves the change.
 

@@ -2,26 +2,10 @@
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
 [![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
-[![MCPmarket](https://img.shields.io/badge/MCPmarket-import-635BFF)](https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows)
 
 [English](README.md)
 
 Codex skill และ `npx` installer สำหรับทำงาน Unity กับ AI agent ให้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คจริงก่อน, พิสูจน์ runtime owner ก่อนแก้, route โค้ดเข้าที่ที่ถูกต้อง, validate ด้วย command ที่ตรวจซ้ำได้
-
-MCPmarket import URL:
-
-```text
-https://github.com/AUN-PN/unity-agent-workflows/tree/main/.claude/skills/unity-agent-workflows
-```
-
-ก่อนกด sync ใน MCPmarket หลังแก้ skill ให้ refresh import folder:
-
-```bash
-npm run sync:mcpmarket
-npm run validate
-```
-
-จากนั้น push ขึ้น GitHub แล้วกด Sync ใน MCPmarket เอง เพราะ GitHub-imported skills จะไม่อัปเดตจนกว่าจะ sync รอบใหม่
 
 ใช้เมื่อต้องให้ AI coding agent แก้ Unity game แล้วไม่อยากให้เดาจากชื่อไฟล์ใกล้ๆ หรือยัด logic เพิ่มใน controller ใหญ่โดยไม่พิสูจน์ว่า path นั้นคือ path ที่รันจริง
 
