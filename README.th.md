@@ -216,23 +216,23 @@ UNITY_STRUCTURE.cleanup.md
 
 ```text
 แก้ HUD skill dock ขวาล่าง มันทับโลก
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.ui.md
 ```
+skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md`
 
 ```text
 ยาน Sentinel ต้องบังหลังโลกให้ชัด
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.gameplay.md
 ```
+skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`
 
 ```text
 เช็คไฟล์ทุกอย่างที่เกี่ยวของที่ทำให้เกิดภาพซ้อนและแก้ไข
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.ui.md + UNITY_STRUCTURE.cleanup.md
 ```
+skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md` + `UNITY_STRUCTURE.cleanup.md`
 
 ```text
 อย่าพึ่งแก้ ดูก่อนว่าทำไมยานบินแล้วหยุดเอง
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.gameplay.md
 ```
+skill จะ route ไปที่ `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`
 
 ### 4. Refresh เฉพาะส่วนที่ stale
 

@@ -261,23 +261,23 @@ Short game-session prompts:
 
 ```text
 Move the HUD skill dock to the bottom-right; it overlaps the Earth.
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.ui.md
 ```
+The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md`.
 
 ```text
 Make the Sentinel ship clearly pass behind the Earth.
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.gameplay.md
 ```
+The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`.
 
 ```text
 Check every file related to the duplicated overlay and fix it.
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.ui.md + UNITY_STRUCTURE.cleanup.md
 ```
+The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.ui.md` + `UNITY_STRUCTURE.cleanup.md`.
 
 ```text
 Do not fix yet; first check why the ship pauses while flying.
-Read: UNITY_STRUCTURE.md + UNITY_STRUCTURE.gameplay.md
 ```
+The skill routes this to `UNITY_STRUCTURE.md` + `UNITY_STRUCTURE.gameplay.md`.
 
 ### 4. Refresh Only What Is Stale
 
