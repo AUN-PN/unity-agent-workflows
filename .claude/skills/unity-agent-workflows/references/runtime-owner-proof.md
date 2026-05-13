@@ -119,28 +119,74 @@ A live object is not enough proof. The agent must prove the correct bounds type 
 
 Always classify these separately:
 
-- `interactiveBounds`: click/tap/hit area such as `Button`, `Selectable`, `Collider`, `EventTrigger`
-- `visualBounds`: the pixels/mesh/sprite/text/card the player actually sees
-- `logicBounds`: gameplay area such as attack radius, trigger volume, spawn region, lock-on range
-- `markerBounds`: explicit author-provided focus/anchor marker such as `Focus Target`, `Highlight Target`, `Aim Point`, `Socket`, `Muzzle`, `Pivot`
+- `interactiveRect`: click/tap/hit area such as `Button`, `Selectable`, `Collider`, `EventTrigger`
+- `visualRect`: the pixels/mesh/sprite/text/card the player actually sees
+- `logicRect`: gameplay area such as attack radius, trigger volume, spawn region, lock-on range
+- `markerRect`: explicit author-provided focus/anchor marker such as `Focus Target`, `Highlight Target`, `Visual Target`, `Aim Point`, `Socket`, `Muzzle`, `Pivot`
+- `overlayRect`: selected rect after conversion into the destination overlay/root coordinate space
 
 For focus rings, spotlight holes, tutorial highlights, selection brackets, arrows, tooltip anchors, and visual alignment, prefer:
 
-1. explicit `markerBounds`
-2. `visualBounds`
-3. `interactiveBounds`
+1. explicit `markerRect`
+2. `visualRect`
+3. `interactiveRect`
 4. named hardcoded fallback
 
-Do not use `interactiveBounds` as the primary visual target when visible children or marker transforms exist.
+Do not use `interactiveRect` as the primary visual target when visible children or marker transforms exist.
+
+## Visual Focus Target Decision
+
+For focus rings, spotlight holes, tutorial arrows, and forced-click blockers, do not assume the best target is the root object center.
+
+Resolve and report these candidates before choosing:
+
+- `markerRect`: child `RectTransform` or transform named `* Focus Target`, `* Highlight Target`, `* Visual Target`
+- `visualRect`: visible graphic cluster, icon + label + visible frame
+- `interactiveRect`: `Button`, `Selectable`, `EventTrigger`, or `Collider` hit area
+- `overlayRect`: selected rect after conversion into destination overlay/root space
+
+Selection order:
+
+1. `markerRect`
+2. `visualRect`
+3. `interactiveRect`
+4. named hardcoded fallback
+
+If `markerRect` is missing and `visualRect` differs strongly from `interactiveRect`, do not silently pick one. Report ambiguity and recommend adding a marker.
+
+If an object is found but no marker exists:
+
+- Do not claim the target is proven from the object alone.
+- Show candidate rects before choosing.
+- If the selected rect does not match the user-visible point, recommend adding a marker.
+- Do not patch hardcoded coordinates from root/object center by guessing.
+
+## Required Target Report
+
+For every UI focus/highlight target, closeout or diagnosis must include:
+
+- target name
+- parent chain
+- owner script/component
+- `interactiveRect`
+- `visualRect`
+- `markerRect`
+- selected rect
+- source canvas
+- destination overlay/root
+- conversion method
+- whether fallback was used
+
+Do not patch coordinates until the selected rect is proven.
 
 ## Target Bounds By Object Type
 
 ### UI Button / Tab / Menu Item
 
 Use:
-1. child marker named `* Focus Target`, `* Highlight Target`, `* Visual Target`
-2. visible graphic cluster: active `Image`, `RawImage`, `Text`, `TMP_Text`, icon, label, card/frame children
-3. `Button` / `Selectable` root rect only as fallback
+1. `markerRect`: child marker named `* Focus Target`, `* Highlight Target`, `* Visual Target`
+2. `visualRect`: visible graphic cluster from active `Image`, `RawImage`, `Text`, `TMP_Text`, icon, label, card/frame children
+3. `interactiveRect`: `Button` / `Selectable` root rect only as fallback
 
 Reject:
 - full-size invisible hitbox
@@ -151,14 +197,16 @@ Reject:
 Report:
 - `interactiveRect`
 - `visualRect`
+- `markerRect`
+- selected rect
 - whether root button fallback was used
 
 ### UI Card / Panel / Modal
 
 Use:
-1. explicit marker rect
-2. visible panel/frame image bounds
-3. content group bounds if the card has padding or transparent margins
+1. `markerRect`: explicit marker rect
+2. `visualRect`: visible panel/frame image rect
+3. content group rect if the card has padding or transparent margins
 
 Reject:
 - parent section root
@@ -177,8 +225,8 @@ Do not use the whole HUD bar unless the request names the whole bar.
 ### Scroll/List Row
 
 Use:
-1. row visible card/frame bounds
-2. row content cluster bounds
+1. active row visible frame
+2. row content cluster
 3. row button/hitbox fallback
 
 Before converting:
@@ -196,9 +244,9 @@ Use:
 ### World Unit / Enemy / Player / Sentinel
 
 Use:
-1. explicit marker transform: `FocusPoint`, `AimPoint`, `Center`, `Head`, `Core`, `Socket`
+1. explicit marker transform: `FocusPoint`, `AimPoint`, `Core`, `Center`, `Head`, `Socket`
 2. `Renderer.bounds` combined across visible renderers
-3. `Collider.bounds` only if highlight is gameplay hitbox
+3. `Collider.bounds` only for hitbox/debug or when the user asks for gameplay hitbox bounds
 4. root transform position fallback
 
 Reject:
@@ -220,9 +268,9 @@ For fast-moving objects:
 ### VFX / Particle / Explosion / Area Effect
 
 Use:
-1. explicit marker or effect center
+1. explicit center marker
 2. `ParticleSystemRenderer.bounds` for visible effect
-3. authored radius/area config for gameplay area
+3. authored radius fallback or area config for gameplay area
 
 Do not use particle system root if renderer bounds or radius exists.
 

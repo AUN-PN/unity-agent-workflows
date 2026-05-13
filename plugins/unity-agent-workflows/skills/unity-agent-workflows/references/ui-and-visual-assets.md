@@ -43,7 +43,22 @@ Use this when a tutorial, onboarding, tooltip, modal, focus ring, dim scrim, or 
 - Check `Canvas.renderMode`, `CanvasScaler`, safe area, sorting order, parent scale, masks, layout groups, and runtime-created roots before editing offsets.
 - For cross-canvas focus/spotlight, convert target `GetWorldCorners()` through `RectTransformUtility.WorldToScreenPoint(...)` and `RectTransformUtility.ScreenPointToLocalPointInRectangle(overlayRoot, ...)`; do not use `Screen.width` / `Screen.height` normalized values as overlay-local coordinates.
 - Resolve duplicate names before choosing a target. Parent chain and active/interactable state must disambiguate the real runtime object.
-- If the visible target is interactive, bind the spotlight/focus to the live `RectTransform` of that target; use hardcoded fallback only after target lookup fails and report it.
+- If the visible target is interactive, still compare `markerRect`, `visualRect`, and `interactiveRect` before choosing; use hardcoded fallback only after target lookup fails and report it.
+- If no marker exists and the visible center differs from the interactive/root center, recommend adding a marker before changing coordinates.
+
+## Designer Focus Marker
+
+When the desired focus point is a designer-chosen position, not the object center, require an explicit marker.
+
+Recommended UI marker:
+
+- child `RectTransform`
+- name: `<Target Name> Focus Target`
+- no visual graphic required
+- placed in the same hierarchy as the visible target
+- size matches the intended spotlight/focus bounds
+
+The marker is the source of truth for tutorial focus.
 
 ## Visual Asset Gate
 
