@@ -9,13 +9,14 @@ Use this skill as the AI operating system for Unity game work. It turns project-
 
 ## Start Here
 
-1. Read the live project instructions first: `AGENTS.md`, `README.md`, architecture docs, or any repo-local agent file.
-2. Check `git status --short` and preserve unrelated dirty files.
-3. If the user says `$unity-agent-workflows. Teach`, run the Teach command: create/refresh `UNITY_STRUCTURE.md` as a short index and split focused maps by category. Do not make one huge all-project document.
-4. Derive only the relevant live project structure before architecture claims. Read existing folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs only when they are relevant to the requested category. Do not impose this skill's sample structure on the user's repo.
-5. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
-6. If a graph exists, read it before architecture claims only when dependency/routing proof needs graph data: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
-7. Classify the task before touching files:
+1. Treat this injected `SKILL.md` body as authoritative. Do not search for this skill's own `SKILL.md` again unless the file body is missing or the user explicitly asks for path diagnostics.
+2. Read the live project instructions first: `AGENTS.md`, `README.md`, architecture docs, or any repo-local agent file.
+3. Check `git status --short` and preserve unrelated dirty files.
+4. If the user says `$unity-agent-workflows. Teach`, run the Teach command directly: create/refresh `UNITY_STRUCTURE.md` as a short index and split focused maps by category. Do not search for the skill path first. Do not make one huge all-project document.
+5. Derive only the relevant live project structure before architecture claims. Read existing folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs only when they are relevant to the requested category. Do not impose this skill's sample structure on the user's repo.
+6. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
+7. If a graph exists, read it before architecture claims only when dependency/routing proof needs graph data: `graphify-out/GRAPH_REPORT.md`, `graphify-out/wiki/index.md`, `graph.json`, or equivalent.
+8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
    - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, or "do not guess" -> runtime visible target lock.
    - New or expanded C# responsibility -> project-derived routing.
@@ -25,8 +26,32 @@ Use this skill as the AI operating system for Unity game work. It turns project-
    - Compile/runtime doubt -> validation workflow.
    - Cleanup/deletion -> cleanup proof.
    - Rule/session mining -> durable-rule workflow.
-8. Edit the smallest safe file set.
-9. Close with changed files, validation, scope boundary, and residual risk.
+9. Edit the smallest safe file set.
+10. Close with changed files, validation, scope boundary, and residual risk.
+
+## Codex Plugin Path Rules
+
+When installed as a Codex plugin, the canonical skill path is normally:
+
+```text
+~/.codex/plugins/cache/unity-agent-workflows/unity-agent-workflows/<version>/skills/unity-agent-workflows/SKILL.md
+```
+
+Do not assume the legacy local skill path exists:
+
+```text
+~/.codex/skills/unity-agent-workflows/SKILL.md
+```
+
+For reference files, resolve paths relative to this skill directory:
+
+```text
+references/runtime-owner-proof.md
+references/unity-validation.md
+references/ui-and-visual-assets.md
+```
+
+If a reference file is not present, continue with the rules already visible in this `SKILL.md` and report the missing bundled reference in closeout. Do not spend the first step doing broad `rg --files` path discovery unless the user asked to debug installation.
 
 ## Teach Command
 
