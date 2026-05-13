@@ -1,11 +1,13 @@
-# Unity 2D Agent Workflows
+# Unity 2D Game Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
 [![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
 
 [English](README.md)
 
-Codex skill และ `npx` installer สำหรับทำงาน Unity กับ AI agent ให้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คจริงก่อน, พิสูจน์ runtime owner ก่อนแก้, route โค้ดเข้าที่ที่ถูกต้อง, validate ด้วย command ที่ตรวจซ้ำได้
+Codex skill และ `npx` installer สำหรับทำงาน Unity 2D game กับ AI agent ให้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คจริงก่อน, พิสูจน์ runtime owner ก่อนแก้, route โค้ดเข้าที่ที่ถูกต้อง, validate ด้วย command ที่ตรวจซ้ำได้
+
+เครื่องมือนี้ทำมาสำหรับเกม Unity 2D: sprite, tile, UI/HUD, `Collider2D`, pooled enemy, runtime clone, scene/prefab reference และ gameplay code ที่ต้องตรงกับสิ่งที่ผู้เล่นเห็นจริง
 
 ใช้เมื่อต้องให้ AI coding agent แก้ Unity game แล้วไม่อยากให้เดาจากชื่อไฟล์ใกล้ๆ หรือยัด logic เพิ่มใน controller ใหญ่โดยไม่พิสูจน์ว่า path นั้นคือ path ที่รันจริง
 
