@@ -26,22 +26,12 @@ Use this skill as the AI operating system for Unity game work. It turns project-
    - Compile/runtime doubt -> validation workflow.
    - Cleanup/deletion -> cleanup proof.
    - Rule/session mining -> durable-rule workflow.
-9. Edit the smallest safe file set.
-10. Close with changed files, validation, scope boundary, and residual risk.
+9. Before editing, load the task's required reference files, not only this `SKILL.md`. For UI/screenshot/visible-target work, this is a hard gate: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before changing files.
+10. If a required reference is missing or inaccessible, stop broad edits, use only rules already visible in this `SKILL.md`, and report the missing reference in closeout.
+11. Edit the smallest safe file set.
+12. Close with changed files, validation, scope boundary, references loaded, and residual risk.
 
-## Codex Plugin Path Rules
-
-When installed as a Codex plugin, the canonical skill path is normally:
-
-```text
-~/.codex/plugins/cache/unity-agent-workflows/unity-agent-workflows/<version>/skills/unity-agent-workflows/SKILL.md
-```
-
-Do not assume the legacy local skill path exists:
-
-```text
-~/.codex/skills/unity-agent-workflows/SKILL.md
-```
+## Local Skill Path Rules
 
 For reference files, resolve paths relative to this skill directory:
 
@@ -76,7 +66,7 @@ Do this automatically:
 
 ## Structure Map File Router
 
-When a later task starts, read only `UNITY_STRUCTURE.md` plus the focused map that matches the task.
+When a later task starts, read only `UNITY_STRUCTURE.md` plus the focused map that matches the task. Do not load every `UNITY_STRUCTURE.*.md` file by default; load all focused maps only for broad all-project audits or when the user explicitly asks for all categories.
 
 | Task | Read |
 |---|---|
@@ -86,7 +76,7 @@ When a later task starts, read only `UNITY_STRUCTURE.md` plus the focused map th
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
 
-If the needed focused map is missing, refresh only that map before editing.
+Before editing, the matching map is a project-structure gate. If the needed focused map is missing, refresh only that map before editing. If map refresh is not possible, continue only with live repo inspection and report the missing map in closeout.
 
 ## Reference Map
 
@@ -101,6 +91,24 @@ Load only the reference needed for the current task.
 - `references/content-and-systems.md`: data-first content, stage systems, production-readiness system stack.
 - `references/cleanup-and-git.md`: source-vs-generated artifacts, deletion proof, commit/push hygiene.
 - `references/session-mining.md`: how to mine prior AI sessions into reusable rules without copying raw chat.
+
+## Required Reference Gate
+
+Before editing, load the matching reference files below. This prevents the failure mode where the agent reads only `SKILL.md` and skips the detailed workflow.
+
+| Task trigger | Required references before editing |
+|---|---|
+| UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
+| New gameplay feature, content, progression, stages, waves, economy, mission/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
+| Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
+| Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
+| Rule/session mining/workflow update | `references/session-mining.md` |
+
+Closeout must include `References loaded:` with the exact reference filenames, or `References missing:` with the filename and how the task was safely narrowed.
+
+Closeout must also include `Project maps loaded:` with the exact `UNITY_STRUCTURE*` filenames, or `Project maps missing:` with the filename and live-inspection fallback used.
 
 ## Hard Rules
 
@@ -153,7 +161,7 @@ Files explicitly not touched:
 - **New gameplay feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
-- **UI or screenshot work**: read `references/ui-and-visual-assets.md` and `references/runtime-owner-proof.md`.
+- **UI or screenshot work**: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before editing. Report those references as loaded in closeout.
 - **Visual asset work**: read `references/ui-and-visual-assets.md`; generate/approve the source asset before Unity integration.
 - **Compile or validation repair**: read `references/unity-validation.md`; capture exact errors and rerun the same check after fixing.
 - **Cleanup/deletion**: read `references/cleanup-and-git.md`; prove unused status through code refs, YAML GUID refs, resources paths, and runtime reachability.
