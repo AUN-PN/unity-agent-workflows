@@ -104,6 +104,7 @@ The Codex marketplace metadata lives at:
 
 ```text
 .agents/plugins/marketplace.json
+.codex-plugin/plugin.json
 plugins/unity-agent-workflows/.codex-plugin/plugin.json
 plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md
 ```
@@ -150,6 +151,8 @@ Supported installer options:
 --no-backup
 --help
 --version
+-h
+-v
 ```
 
 ### Optional skills.sh Discovery
@@ -206,7 +209,7 @@ Later tasks should read only `UNITY_STRUCTURE.md` plus the focused map that matc
 
 The visible bug was a repeated FTUE Stage 5 Sentinel install focus mismatch. A normal non-plugin pass reached the install prompt, but the focus ring stayed on the ship area instead of the live `ADD` button. The `Unity Workflows` pass forced main-agent scope lock, read-only sub-agents, runtime numeric proof requirements, and checker criteria before patching.
 
-**Before using the plugin: the focus is still on the Sentinel menu button/prompt.**
+**Before using the plugin: the focus is still on the bottom Satellite/Sentinel navigation tab.**
 
 ![Before command: Sentinel menu prompt](assets/case-ftue-sentinel-before-plugin.png)
 
@@ -224,27 +227,26 @@ What the plugin changed:
 - Keep sub-agents read-only until the main agent locks scope.
 - Require runtime numeric proof before another focus/position patch.
 - Check that the final focus target is the visible `ADD` button, not the ship area.
-- Keep unrelated systems out of scope.
 
-Main prompt:
+Prompt:
 
 ```text
 Use $unity-agent-workflows.
-Fix the FTUE Stage 5 Sentinel ADD focus mismatch. Treat it as a repeated visible-output failure: spawn read-only sub-agents first, gather runtime numeric proof/checker requirements, lock scope before patching, and do not touch Earth/background/camera/unrelated systems.
-```
+Fix the FTUE Stage 5 Sentinel ADD focus mismatch. Treat it as a repeated visible-output failure.
 
-Sub-agent prompts used:
+Main agent:
+- Spawn read-only sub-agents first.
+- Gather runtime numeric proof and checker requirements.
+- Lock scope before patching.
 
-```text
-Read-only only. Follow project-local rules and Unity Workflows. Task: inspect the Sentinel ADD focus mismatch state/transition timing only. Find the owner chain from Sentinel menu click to install prompt and ADD focus target. Report state steps: shown/clicked/opened/install prompt/equipped/persisted. Do not edit. Do not include private paths or session IDs.
-```
+Sub-agent A:
+Read-only only. Follow project-local rules and Unity Workflows. Inspect the Sentinel ADD focus mismatch state/transition timing only. Find the owner chain from Sentinel menu click to install prompt and ADD focus target. Report state steps: shown/clicked/opened/install prompt/equipped/persisted. Do not edit. Do not include private paths or session IDs.
 
-```text
-Read-only only. Follow project-local rules and Unity Workflows. Task: inspect the visible focus coordinate path for the Sentinel install ADD target. Prove target object chain, source bounds selection, destination conversion, and final focus ring values. Do not edit. Report exact runtime numeric proof and checker requirements to compare ADD button and final ring. Do not include private paths or session IDs.
-```
+Sub-agent B:
+Read-only only. Follow project-local rules and Unity Workflows. Inspect the visible focus coordinate path for the Sentinel install ADD target. Prove target object chain, source bounds selection, destination conversion, and final focus ring values. Do not edit. Report exact runtime numeric proof and checker requirements to compare ADD button and final ring. Do not include private paths or session IDs.
 
-```text
-Read-only only. Follow project-local rules and Unity Workflows. Task: act as checker spec designer for this fix. Determine what a checker must verify after patch: source ADD bounds vs final focus ring bounds, state steps shown/clicked/opened/install/equipped/persisted, and no unrelated systems touched. Do not edit. Return PASS/FAIL criteria. Do not include private paths or session IDs.
+Checker:
+Read-only only. Follow project-local rules and Unity Workflows. Determine what must pass after patch: source ADD bounds vs final focus ring bounds, state steps shown/clicked/opened/install/equipped/persisted, and requested Sentinel ADD focus behavior. Do not edit. Return PASS/FAIL criteria. Do not include private paths or session IDs.
 ```
 
 ## Workflow
@@ -318,7 +320,7 @@ npm run sync:mcpmarket
 npm run pack:dry-run
 ```
 
-`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, README architecture coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates, and multi-agent scope triggers.
+`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, README workflow coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates, and multi-agent scope triggers.
 
 `npm run sync:mcpmarket` mirrors `SKILL.md`, `references/`, and `agents/` into:
 
@@ -330,7 +332,7 @@ plugins/unity-agent-workflows/skills/unity-agent-workflows/
 
 For Unity projects using the skill, Unity Editor, Play Mode, Game view, device tests, batchmode builds, and project logs remain the authoritative validation path. Bee `.rsp` or direct Unity-bundled Roslyn checks are best-effort local compile smoke tests and can be stale after Unity regenerates project artifacts.
 
-## Package Layout
+## Repository Layout
 
 ```text
 unity-agent-workflows/
