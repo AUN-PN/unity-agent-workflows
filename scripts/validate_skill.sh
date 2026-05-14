@@ -138,12 +138,18 @@ for readme_rel in ("README.md", "README.th.md"):
     readme = (root / readme_rel).read_text(encoding="utf-8")
     for phrase in (
         "Architecture Overview",
+        "```mermaid",
+        "flowchart TD",
+        "sequenceDiagram",
         "Invocation surfaces",
         "Task router",
+        "Required reference gate",
         "Runtime-visible proof",
         "State/content proof",
         "Multi-agent guard",
+        "Skill Mirrors",
         "Validation and packaging",
+        "README diagrams",
         "overlay/dim source-bound",
         "guided state-flow",
         "multi-agent scope",

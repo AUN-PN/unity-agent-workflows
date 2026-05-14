@@ -42,26 +42,80 @@ plugin นี้บังคับ workflow ที่เข้มขึ้นส
 
 ## Architecture Overview
 
-plugin นี้แบ่งเป็น guardrail หลายชั้น: ชั้นนอกทำให้ skill ถูกเรียกใช้ได้ถูกเคส ส่วนชั้นในเลือก reference/proof ที่ต้องมีก่อน agent patch Unity project
+plugin นี้แบ่งเป็น guardrail หลายชั้น: invocation surfaces ทำให้ `Unity Workflows` ถูกค้นเจอ, `SKILL.md` route งาน, reference gates เลือก proof ที่ต้องมี และ validation คุม mirrors/package output ให้ตรงกัน
 
-```text
-Codex plugin / local skill / npx installer
--> SKILL.md task router
--> required reference gates
--> project-derived structure maps
--> runtime-owner, runtime-visible, state-step, and multi-agent guards
--> validation and mirror sync
+```mermaid
+flowchart TD
+    plugin["Codex Plugin<br/>.codex-plugin/plugin.json"]
+    agent["Agent Prompt<br/>agents/openai.yaml"]
+    npm["Local Skill Installer<br/>package.json + bin/"]
+    evals["Trigger Regression<br/>evals/skill-trigger-cases.json"]
+
+    router["SKILL.md<br/>Task router"]
+    refs{"Required reference gate"}
+    maps["Structure Discovery<br/>UNITY_STRUCTURE maps"]
+    runtime["Runtime-visible proof<br/>owner chain + source bounds + converted rect"]
+    state["State/content proof<br/>shown clicked opened selected equipped claimed completed persisted"]
+    multi["Multi-agent guard<br/>Routing Card + disjoint worker ownership + checker"]
+    validate["Validation and packaging<br/>validate_skill.sh + sync_mcpmarket_skill.sh"]
+    mirrors["Skill Mirrors<br/>.claude/skills + skills/ + plugins/.../skills"]
+
+    plugin -->|defaultPrompt + manifest triggers| router
+    agent -->|allow_implicit_invocation| router
+    npm -->|installs SKILL.md + references| router
+    evals -->|guards trigger drift| validate
+
+    router -->|loads only needed docs| refs
+    refs -->|project-derived routing| maps
+    refs -->|UI HUD marker focus overlay dim| runtime
+    refs -->|tutorial equipment shop reward navigation| state
+    refs -->|parallel work requested| multi
+
+    runtime -->|runtime numeric proof| validate
+    state -->|state-step proof| validate
+    multi -->|checker PASS/FAIL| validate
+    validate -->|sync:mcpmarket| mirrors
+
+    classDef surface fill:#eef2ff,stroke:#7c3aed,color:#111827;
+    classDef gate fill:#f5f3ff,stroke:#6d28d9,color:#111827;
+    classDef proof fill:#ecfeff,stroke:#0891b2,color:#111827;
+    classDef validation fill:#f0fdf4,stroke:#16a34a,color:#111827;
+    class plugin,agent,npm,evals surface;
+    class router,refs,maps gate;
+    class runtime,state,multi proof;
+    class validate,mirrors validation;
 ```
 
-| Layer | Files | หน้าที่ |
-| --- | --- | --- |
-| Invocation surfaces | `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json`, `evals/skill-trigger-cases.json` | expose `Unity Workflows`, เก็บ trigger phrases ให้ตรงของล่าสุด และพิสูจน์ว่า skill ควรถูกเรียกสำหรับ Unity 2D visible-output, state-flow และ multi-agent cases |
-| Task router | `SKILL.md` | classify request, load references ที่ถูกต้อง, lock scope boundary และหยุด edit ถ้า proof ไม่ครบ |
-| Structure discovery | `references/project-structure-discovery.md` | derive folders, namespaces, `.asmdef`, scenes, prefabs และ content paths จาก Unity repo จริง ไม่ assume fixed layout |
-| Runtime-visible proof | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md` | prove runtime target, selected source bounds, destination canvas/root, conversion path, converted rect และ final drawn rect ก่อนแก้ coordinate/focus |
-| State/content proof | `references/content-and-systems.md` | ทำให้ guided flows ชัด: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, `persisted` เป็น proof คนละขั้น |
-| Multi-agent guard | `references/workflow-recipes.md`, `SKILL.md` | main agent เป็นเจ้าของ Routing Card, file boundaries และ worker ownership ก่อน parallel edits; checker fail ถ้าขาด runtime numeric proof หรือ state-step proof |
-| Validation and packaging | `scripts/validate_skill.sh`, `scripts/sync_mcpmarket_skill.sh` | check manifests, eval triggers, reference routing, mirror drift, JSON syntax และ package dry-run readiness |
+```mermaid
+sequenceDiagram
+    participant U as User / Agent Request
+    participant I as Invocation surfaces
+    participant R as SKILL.md Task router
+    participant G as Required reference gates
+    participant P as Unity project proof
+    participant C as Checker
+    participant V as Validation / Mirrors
+
+    U->>I: Unity 2D visible-output, state-flow, or multi-agent request
+    I->>R: Use $unity-agent-workflows
+    R->>G: Classify task and load required references
+    G->>P: Derive live structure and prove runtime owner
+    P->>P: Resolve source bounds, destination root, conversion path, final drawn rect
+    P->>P: Prove state steps when guided flow is involved
+    R->>C: Assign checker with required proof fields
+    C-->>R: PASS or FAIL missing runtime numeric proof / state-step proof
+    R->>V: Run validate, sync mirrors, pack dry-run
+    V-->>U: Closeout with proof, validation, residual risk
+```
+
+Key guardrails:
+
+- **Invocation surfaces**: `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json` และ `evals/skill-trigger-cases.json` ทำให้ plugin ถูกเรียกสำหรับ Unity 2D visible-output, guided state-flow และ multi-agent cases
+- **Task router**: `SKILL.md` classify งาน, load references ที่ต้องใช้, กำหนด scope boundary และหยุด edit ถ้า proof ไม่ครบ
+- **Runtime-visible proof**: `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md` และ `references/coordinate-space-conversion.md` ต้องมี runtime target, selected source bounds, destination canvas/root, conversion path, converted rect และ final drawn rect ก่อนแก้ coordinate/focus
+- **State/content proof**: `references/content-and-systems.md` ทำให้ guided flows ชัด: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, `persisted` เป็น proof คนละขั้น
+- **Multi-agent guard**: `references/workflow-recipes.md` และ `SKILL.md` บังคับ main agent เป็นเจ้าของ Routing Card, file boundaries และ worker ownership ก่อน parallel edits; checker fail ถ้าขาด runtime numeric proof หรือ state-step proof
+- **Validation and packaging**: `scripts/validate_skill.sh` และ `scripts/sync_mcpmarket_skill.sh` ตรวจ manifests, eval triggers, reference routing, README diagrams, mirror drift, JSON syntax และ package dry-run readiness
 
 guard ล่าสุดสำหรับ runtime-visible งานถือว่า overlay, dim, mask, blocker, scrim, spotlight และ hole objects เป็น destination/output surfaces ไม่ใช่ source bounds สำหรับ focus/highlight math ยกเว้นมี explicit marker ใน surface นั้นที่ระบุ target จริง
 

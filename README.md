@@ -42,26 +42,80 @@ This plugin gives the agent a stricter workflow for Unity 2D projects:
 
 ## Architecture Overview
 
-The plugin is organized as layered guardrails. The outer surfaces make the skill discoverable, while the inner references decide which proof is required before an agent can patch a Unity project.
+The plugin is organized as layered guardrails. Invocation surfaces make `Unity Workflows` discoverable, `SKILL.md` routes the request, reference gates decide the proof required, and validation keeps mirrors/package output aligned.
 
-```text
-Codex plugin / local skill / npx installer
--> SKILL.md task router
--> required reference gates
--> project-derived structure maps
--> runtime-owner, runtime-visible, state-step, and multi-agent guards
--> validation and mirror sync
+```mermaid
+flowchart TD
+    plugin["Codex Plugin<br/>.codex-plugin/plugin.json"]
+    agent["Agent Prompt<br/>agents/openai.yaml"]
+    npm["Local Skill Installer<br/>package.json + bin/"]
+    evals["Trigger Regression<br/>evals/skill-trigger-cases.json"]
+
+    router["SKILL.md<br/>Task router"]
+    refs{"Required reference gate"}
+    maps["Structure Discovery<br/>UNITY_STRUCTURE maps"]
+    runtime["Runtime-visible proof<br/>owner chain + source bounds + converted rect"]
+    state["State/content proof<br/>shown clicked opened selected equipped claimed completed persisted"]
+    multi["Multi-agent guard<br/>Routing Card + disjoint worker ownership + checker"]
+    validate["Validation and packaging<br/>validate_skill.sh + sync_mcpmarket_skill.sh"]
+    mirrors["Skill Mirrors<br/>.claude/skills + skills/ + plugins/.../skills"]
+
+    plugin -->|defaultPrompt + manifest triggers| router
+    agent -->|allow_implicit_invocation| router
+    npm -->|installs SKILL.md + references| router
+    evals -->|guards trigger drift| validate
+
+    router -->|loads only needed docs| refs
+    refs -->|project-derived routing| maps
+    refs -->|UI HUD marker focus overlay dim| runtime
+    refs -->|tutorial equipment shop reward navigation| state
+    refs -->|parallel work requested| multi
+
+    runtime -->|runtime numeric proof| validate
+    state -->|state-step proof| validate
+    multi -->|checker PASS/FAIL| validate
+    validate -->|sync:mcpmarket| mirrors
+
+    classDef surface fill:#eef2ff,stroke:#7c3aed,color:#111827;
+    classDef gate fill:#f5f3ff,stroke:#6d28d9,color:#111827;
+    classDef proof fill:#ecfeff,stroke:#0891b2,color:#111827;
+    classDef validation fill:#f0fdf4,stroke:#16a34a,color:#111827;
+    class plugin,agent,npm,evals surface;
+    class router,refs,maps gate;
+    class runtime,state,multi proof;
+    class validate,mirrors validation;
 ```
 
-| Layer | Files | Responsibility |
-| --- | --- | --- |
-| Invocation surfaces | `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json`, `evals/skill-trigger-cases.json` | Expose `Unity Workflows`, keep trigger phrases current, and prove the skill should run for Unity 2D visible-output, state-flow, and multi-agent cases. |
-| Task router | `SKILL.md` | Classify the request, load the correct references, fill scope boundaries, and stop edits when proof is missing. |
-| Structure discovery | `references/project-structure-discovery.md` | Derive folders, namespaces, `.asmdef` files, scenes, prefabs, and content paths from the live Unity repo instead of assuming a fixed layout. |
-| Runtime-visible proof | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md` | Prove the runtime target, selected source bounds, destination canvas/root, conversion path, converted rect, and final drawn rect before coordinate or focus patches. |
-| State/content proof | `references/content-and-systems.md` | Keep guided flows honest: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, and `persisted` are separate proof steps. |
-| Multi-agent guard | `references/workflow-recipes.md`, `SKILL.md` | Main agent owns the Routing Card, file boundaries, and worker ownership before parallel edits; checker agents fail missing runtime numeric proof or state-step proof. |
-| Validation and packaging | `scripts/validate_skill.sh`, `scripts/sync_mcpmarket_skill.sh` | Check manifests, eval triggers, reference routing, mirror drift, JSON syntax, and package dry-run readiness. |
+```mermaid
+sequenceDiagram
+    participant U as User / Agent Request
+    participant I as Invocation surfaces
+    participant R as SKILL.md Task router
+    participant G as Required reference gates
+    participant P as Unity project proof
+    participant C as Checker
+    participant V as Validation / Mirrors
+
+    U->>I: Unity 2D visible-output, state-flow, or multi-agent request
+    I->>R: Use $unity-agent-workflows
+    R->>G: Classify task and load required references
+    G->>P: Derive live structure and prove runtime owner
+    P->>P: Resolve source bounds, destination root, conversion path, final drawn rect
+    P->>P: Prove state steps when guided flow is involved
+    R->>C: Assign checker with required proof fields
+    C-->>R: PASS or FAIL missing runtime numeric proof / state-step proof
+    R->>V: Run validate, sync mirrors, pack dry-run
+    V-->>U: Closeout with proof, validation, residual risk
+```
+
+Key guardrails:
+
+- **Invocation surfaces**: `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json`, and `evals/skill-trigger-cases.json` keep the plugin discoverable for Unity 2D visible-output, guided state-flow, and multi-agent cases.
+- **Task router**: `SKILL.md` classifies the task, loads required references, fills scope boundaries, and stops edits when proof is missing.
+- **Runtime-visible proof**: `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, and `references/coordinate-space-conversion.md` require runtime target, selected source bounds, destination canvas/root, conversion path, converted rect, and final drawn rect before coordinate or focus patches.
+- **State/content proof**: `references/content-and-systems.md` keeps guided flows honest: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, and `persisted` are separate proof steps.
+- **Multi-agent guard**: `references/workflow-recipes.md` and `SKILL.md` make the main agent own the Routing Card, file boundaries, and worker ownership before parallel edits; checker agents fail missing runtime numeric proof or state-step proof.
+- **Validation and packaging**: `scripts/validate_skill.sh` and `scripts/sync_mcpmarket_skill.sh` check manifests, eval triggers, reference routing, README diagrams, mirror drift, JSON syntax, and package dry-run readiness.
 
 The latest runtime-visible guard treats overlay, dim, mask, blocker, scrim, spotlight, and hole objects as destination/output surfaces. They are not source bounds for focus or highlight math unless an explicit marker inside that surface names the intended target.
 
