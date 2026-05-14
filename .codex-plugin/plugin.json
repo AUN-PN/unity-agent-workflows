@@ -1,6 +1,6 @@
 {
   "name": "unity-agent-workflows",
-  "version": "0.1.13",
+  "version": "0.3.0",
   "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
   "author": {
     "name": "AUN-PN"
@@ -32,8 +32,8 @@
     "privacyPolicyURL": "https://github.com/AUN-PN/unity-agent-workflows",
     "termsOfServiceURL": "https://github.com/AUN-PN/unity-agent-workflows",
     "defaultPrompt": [
-      "Teach/document this Unity project structure first",
-      "Help me safely fix a Unity runtime-visible bug"
+      "Use $unity-agent-workflows. Teach",
+      "Use $unity-agent-workflows to prove and fix a Unity runtime-visible bug."
     ],
     "composerIcon": "./assets/unity-workflows.png",
     "logo": "./assets/unity-workflows.png",

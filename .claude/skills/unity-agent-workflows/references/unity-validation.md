@@ -52,6 +52,21 @@ rg --files Library/Bee | rg '\\.rsp$'
 - Do not chase unrelated compile errors unless they block the requested proof.
 - Do not edit `Library/`, Bee output, generated `.csproj`, or `.sln` as durable source fixes.
 
+## Unity MCP Operational Checks
+
+Use this when validation, hierarchy inspection, scene edits, prefab edits, or Play Mode proof depends on Unity MCP or another editor-assisted tool.
+
+Before trusting MCP output:
+
+- Confirm Unity Editor is open, the intended project is loaded, and the MCP server/listener is connected.
+- If MCP fails, report the exact connection, timeout, or tool error. Do not replace MCP proof with guessed scene data.
+- Confirm the active scene, loaded additive scenes, and current stage: normal scene, Prefab Mode, prefab asset, or prefab instance.
+- Refresh or re-query the hierarchy before choosing object ownership, especially after entering Play Mode, loading scenes, spawning runtime clones, or changing prefabs.
+- Distinguish Edit Mode object state from Play Mode runtime state. MCP hierarchy proof is not visual/runtime proof by itself.
+- For visible fixes, validate the Game view, Play Mode, screenshot, Device Simulator, or device build when the task risk requires it.
+- For scene/prefab mutation, confirm the edit persisted to the intended asset or scene file and was not only a transient editor object change.
+- If MCP is unavailable, narrow the task to file/source inspection or ask for an editor/session retry when runtime proof is required.
+
 ## Final Validation Report
 
 Include:

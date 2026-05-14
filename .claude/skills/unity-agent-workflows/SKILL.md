@@ -45,38 +45,21 @@ If a reference is missing, continue with this `SKILL.md` only and report it in c
 
 ## Teach Command
 
-When the user writes only:
+When the user writes only `$unity-agent-workflows. Teach`, create or refresh a short `UNITY_STRUCTURE.md` index plus focused maps only for categories that exist or are needed:
 
 ```text
-$unity-agent-workflows. Teach
+UNITY_STRUCTURE.ui.md
+UNITY_STRUCTURE.runtime.md
+UNITY_STRUCTURE.content.md
+UNITY_STRUCTURE.assemblies.md
+UNITY_STRUCTURE.cleanup.md
 ```
 
-Do this automatically:
-
-1. Read minimal repo entry docs: `AGENTS.md`, `README.md`, and existing `UNITY_STRUCTURE*.md`.
-2. Create or refresh `UNITY_STRUCTURE.md` as a short index.
-3. Split details into focused files only when that category exists or is needed:
-   - `UNITY_STRUCTURE.ui.md`
-   - `UNITY_STRUCTURE.runtime.md`
-   - `UNITY_STRUCTURE.content.md`
-   - `UNITY_STRUCTURE.assemblies.md`
-   - `UNITY_STRUCTURE.cleanup.md`
-4. Do not scan unrelated categories just to fill every file.
-5. Each focused file must include exact paths, owner patterns, when to read this file, and what not to touch.
+Read `references/project-structure-discovery.md` for the full Teach contract. Do not scan unrelated categories just to fill every file.
 
 ## Structure Map File Router
 
-When a later task starts, read only `UNITY_STRUCTURE.md` plus the matching focused map. Load all focused maps only for broad all-project audits or explicit all-category requests.
-
-| Task | Read |
-|---|---|
-| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
-| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
-| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
-| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
-
-Before editing, the matching map is a project-structure gate. If it is missing, refresh only that map; if refresh is not possible, use live inspection and report the gap.
+When a later task starts, read `UNITY_STRUCTURE.md` plus the matching focused map only. Load all focused maps only for broad all-project audits or explicit all-category requests. If the needed map is missing, refresh only that map; if refresh is not possible, use live inspection and report the gap.
 
 ## Reference Map
 
@@ -130,7 +113,7 @@ Closeout must also include `Project maps loaded:` with the exact `UNITY_STRUCTUR
 
 ## Routing Card
 
-For new files, moved files, new classes, changed module placement, expanded responsibility, architecture updates, or hub deflation, write this card for yourself before editing. If you cannot fill it, inspect more.
+For new files, moved files, new classes, changed module placement, expanded responsibility, architecture updates, or hub deflation, fill the useful parts of this card before editing. If a field is unknown and relevant, inspect more.
 
 ```text
 Task type:
@@ -145,18 +128,14 @@ Runtime source-of-truth values:
 Coordinate/rendering space checked: yes/no
 New responsibility added? yes/no
 Cross-module communication needed? yes/no
-Architecture docs sync needed? yes/no
 Hub risk: low / medium / stop
-Graph source used:
-God Node status:
-Edge count:
-Largest touched .cs line count:
-Over-500 gate:
 Visual source asset required? yes/no
 Validation plan:
 Files allowed to touch:
 Files explicitly not touched:
 ```
+
+Add graph, God Node, edge count, over-500 status, and architecture-doc sync only when architecture or C# responsibility changed and graph/source data exists.
 
 ## Task Router
 
@@ -180,7 +159,12 @@ Report compactly:
 - Non-requested systems touched: yes/no.
 - Runtime-owner or structural proof.
 - Validation command and result.
-- Largest touched `.cs` files and over-500 status when C# responsibility changed.
-- Graph/God Node/edge-gate status when architecture changed and graph data exists.
-- Visual asset tool used: yes/no plus reason.
-- Residual risk if Play mode, Game view, device, batchmode, or graph refresh was not run.
+- References loaded/missing and project maps loaded/missing.
+- Residual risk.
+
+Add only when relevant:
+
+- Largest touched `.cs` files and over-500 status for C# responsibility changes.
+- Graph/God Node/edge-gate status for architecture changes when graph data exists.
+- Visual asset tool used plus reason for visual source asset work.
+- Play Mode, Game view, device, batchmode, or graph refresh gaps when those validations were needed but skipped.

@@ -202,6 +202,8 @@ npx unity-agent-workflows --dry-run
 
 ถ้า folder นี้มีอยู่แล้ว installer จะ backup ด้วย timestamp ก่อน replace
 
+`npx` installer ติดตั้งเฉพาะ local skill payload ถ้าต้องการติดตั้ง Codex plugin marketplace entry ให้ใช้ flow เพิ่มใน Codex Plugins จาก Git ด้านบน
+
 ## วิธีใช้
 
 ใช้เป็นรอบเล็กๆ: คำสั่ง Teach สั้นๆ จะสร้าง index และแยกเอกสารตามหมวดอัตโนมัติ จากนั้นงานจริงอ่านเฉพาะ map ที่ต้องใช้

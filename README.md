@@ -247,6 +247,8 @@ By default the installer writes to:
 
 If that folder already exists, the installer backs it up with a timestamp before replacing it.
 
+The `npx` installer installs the local skill payload only. To install the Codex plugin marketplace entry, use the Codex Plugins from Git flow above.
+
 ## Use
 
 Use this skill in small passes. One short Teach command creates a structure index and focused maps, then later tasks read only the map they need.

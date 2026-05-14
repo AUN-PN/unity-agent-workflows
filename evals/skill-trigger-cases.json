@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "skill": "unity-agent-workflows",
+  "purpose": "Small regression set for skill routing and intent preservation. Run manually or from a future codex exec harness before changing SKILL.md routing semantics.",
+  "cases": [
+    {
+      "id": "explicit-teach",
+      "prompt": "$unity-agent-workflows. Teach",
+      "expected_skill": true,
+      "expectation": "Creates or refreshes UNITY_STRUCTURE.md plus focused maps without making one huge all-project document."
+    },
+    {
+      "id": "runtime-visible-bug",
+      "prompt": "Unity: this HUD value changed in code but still looks wrong in Play Mode. Find the real owner and fix it.",
+      "expected_skill": true,
+      "expectation": "Routes through runtime-owner proof before editing and reports validation or residual risk."
+    },
+    {
+      "id": "ui-screenshot-safe-area",
+      "prompt": "Unity screenshot: the mobile HUD button overlaps the safe area. Fix only the marked UI target.",
+      "expected_skill": true,
+      "expectation": "Loads UI, runtime-owner, and validation references; checks hierarchy, RectTransform, CanvasScaler, and safe area."
+    },
+    {
+      "id": "cleanup-delete-unused-prefab",
+      "prompt": "Unity cleanup: remove this unused prefab and any dead scripts around it.",
+      "expected_skill": true,
+      "expectation": "Requires code refs, YAML GUID refs, Resources/addressables, scene/prefab refs, and runtime reachability proof before deletion."
+    },
+    {
+      "id": "negative-generic-js",
+      "prompt": "Refactor this Express route handler to use async/await.",
+      "expected_skill": false,
+      "expectation": "Does not trigger for generic non-Unity coding."
+    },
+    {
+      "id": "negative-generic-writing",
+      "prompt": "Rewrite this README paragraph to sound friendlier.",
+      "expected_skill": false,
+      "expectation": "Does not trigger for generic writing unless Unity workflow rules or plugin docs are the subject."
+    }
+  ]
+}
