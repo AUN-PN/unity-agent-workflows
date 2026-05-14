@@ -18,7 +18,7 @@ If one link is missing, search another direction before stopping.
 
 ## Runtime Visible Target Lock
 
-Use this lock when the user asks to move, focus, highlight, click, bind, align, dim around, brighten, select, inspect, or fix any visible UI/gameplay target.
+Use when the user asks to move, focus, highlight, click, bind, align, dim around, brighten, select, inspect, or fix any visible UI/gameplay target.
 
 Required proof before editing:
 
@@ -38,7 +38,7 @@ If proof is incomplete, do not patch coordinates. Inspect deeper or ask one conc
 
 ## Runtime Visible Output Hard Stop
 
-Use this for any runtime output that is drawn, positioned, blocked, aimed, anchored, masked, followed, measured, or converted from a live Unity target. This is broader than tutorial focus UI.
+Use for runtime-visible output drawn, positioned, blocked, aimed, anchored, masked, followed, measured, or converted from a live Unity target. Broader than tutorial focus UI.
 
 Examples include UI overlays, selection outlines, input blockers, drag targets, HUD markers, objective arrows, world-to-UI labels, damage numbers, nameplates, health bars, safe-area-dependent UI, camera targets, RenderTexture-driven UI, world-space canvases, and hardcoded layout used as a substitute for a live target.
 
@@ -58,11 +58,11 @@ user-visible output
 -> validation method
 ```
 
-If any required link is unknown, stay read-only or inspect deeper. Do not patch from semantic similarity, object center, first-name lookup, screenshot proximity, or a previously edited constant.
+If any link is unknown, stay read-only or inspect deeper. Do not patch from semantic similarity, object center, first-name lookup, screenshot proximity, or a previously edited constant.
 
 ## Runtime Numeric Proof Gate
 
-Use this gate after any visible-output patch fails, appears unchanged, lands in the wrong place, or is challenged with a screenshot.
+Use after any visible-output patch fails, appears unchanged, lands in the wrong place, or is challenged with a screenshot.
 
 Static source inspection is not runtime proof. Sub-agent reasoning is not runtime proof. Compile success is not visual proof. Screenshot estimation is not coordinate proof. Checker confidence is not proof without values.
 
@@ -103,15 +103,11 @@ Missing source bounds, converted rect, or final drawn rect is a FAIL. On FAIL, s
 
 ## Hardcoded Layout Guard
 
-Hardcoded layout is not runtime object proof.
-
-Required proof:
-
 ```text
 visible target -> runtime object -> runtime bounds -> converted coordinate space -> overlay
 ```
 
-Use hardcoded values only as a named fallback after runtime target resolution fails, and report the fallback as residual risk.
+Hardcoded layout is not runtime object proof. Use hardcoded values only as a named fallback after runtime target resolution fails, and report residual risk.
 
 ## Read-Only Target Inspection
 
@@ -135,9 +131,7 @@ When the user says not to edit yet, or asks what the object is:
 
 ## Serialized Scene And Prefab Persistence
 
-Use this when the fix touches serialized scene objects, prefab assets, prefab instances, variants, component fields, object references, or editor tooling.
-
-Before closing a serialized Unity edit, prove:
+Use when the fix touches serialized scene objects, prefab assets, prefab instances, variants, component fields, object references, or editor tooling. Before closeout, prove:
 
 ```text
 intended target
@@ -147,8 +141,6 @@ intended target
 -> saved asset or scene file updated
 -> runtime path still reads that serialized value
 ```
-
-Practical checklist:
 
 - Distinguish scene instance, prefab asset, prefab instance override, nested prefab, prefab variant, and Prefab Mode before editing.
 - Use the project's existing editor tooling when it exists; otherwise prefer Unity editor APIs such as `SerializedObject`, `Undo.RecordObject`, `PrefabUtility`, `EditorUtility.SetDirty`, and `EditorSceneManager.MarkSceneDirty`.
@@ -188,4 +180,4 @@ When the user says the result is still wrong:
 
 ## Screenshot Ambiguity
 
-If the screenshot and text disagree, ask one concise clarifying question before editing. If the screenshot clearly marks one object, the marked runtime target wins over semantic guesses; scope the patch to that object and direct dependencies only.
+If screenshot and text disagree, ask one concise clarifying question before editing. If the screenshot clearly marks one object, that runtime target wins over semantic guesses; scope to that object and direct dependencies only.

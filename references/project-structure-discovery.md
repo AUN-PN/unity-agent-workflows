@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Use this before routing architecture, new files, new classes, cross-module calls, or broad Unity edits. The agent must learn only the relevant part of the user's actual project structure instead of forcing this skill's sample layout or scanning the whole repo by default.
+Use before architecture routing, new files/classes, cross-module calls, or broad Unity edits. Learn only the relevant live project structure; do not force this skill's sample layout or scan the whole repo by default.
 
-The output is a focused structure map that can be written as a short `UNITY_STRUCTURE.md` index, split into focused files, or kept in task notes when the user does not want files added.
+Output: focused structure map in task notes, a short `UNITY_STRUCTURE.md` index, or split focused files when the user wants persistent docs.
 
 ## Discovery Inputs
 
@@ -23,9 +23,9 @@ Do not scan unrelated categories just to fill a template.
 
 ## Serialized Wiring Scan
 
-Code search alone is insufficient for Unity serialized wiring. Before declaring a method, field, script, prefab, scene object, animation hook, or asset unused, scan the Unity serialized surfaces that can call or reference it without a normal C# callsite.
+Code search alone is insufficient. Before unused/deletion/rename/routing claims, scan Unity serialized surfaces that can call/reference code without C# callsites.
 
-Include these checks when the task involves refactor, deletion, rename, routing, dead-code claims, owner proof, button/menu actions, animation flow, or scene/prefab impact:
+Use for refactor, deletion, rename, routing, dead-code claims, owner proof, button/menu actions, animation flow, scene/prefab impact:
 
 - script `.meta` GUID -> `.unity`, `.prefab`, `.asset`, `.controller`, `.anim`, and relevant generated/imported asset references
 - `UnityEvent` persistent calls such as `Button.onClick`, `Toggle.onValueChanged`, timeline/signals, or custom serialized events
@@ -37,20 +37,16 @@ Treat `rg` over `.cs` as code evidence only. A dead-code, unused-asset, or safe-
 
 ## Teach Command Contract
 
-The short command is:
-
 ```text
 $unity-agent-workflows. Teach
 ```
 
-This means:
+Contract:
 
 1. Create or refresh a short `UNITY_STRUCTURE.md` index.
 2. Auto-split detailed structure into focused files by category.
 3. Create a focused file only when the category is present, useful, or requested.
 4. Never dump every folder, scene, graph node, or raw search result into one file.
-
-Default files:
 
 ```text
 UNITY_STRUCTURE.md
@@ -76,8 +72,6 @@ Open gaps:
 
 ## File Router
 
-Use this router after Teach:
-
 | Task | Read |
 |---|---|
 | UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
@@ -86,7 +80,7 @@ Use this router after Teach:
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
 
-If a requested task spans multiple categories, read the index first, then the smallest set of focused maps needed.
+If a task spans categories, read the index first, then the smallest needed focused maps.
 
 ## Structure Map
 
@@ -126,13 +120,7 @@ Open uncertainty:
 
 ## Optional Persistent Context
 
-When the user wants a teach/document flow, keep the main file short:
-
-```text
-UNITY_STRUCTURE.md
-```
-
-Use it as an index plus links to focused maps when needed:
+If the user wants a teach/document flow, keep `UNITY_STRUCTURE.md` as a short index:
 
 ```text
 Project Identity
@@ -140,16 +128,6 @@ Known Structure Maps
 Do-Not-Touch Areas
 Validation Notes
 Open Gaps
-```
-
-Split larger notes by area:
-
-```text
-UNITY_STRUCTURE.ui.md
-UNITY_STRUCTURE.runtime.md
-UNITY_STRUCTURE.content.md
-UNITY_STRUCTURE.assemblies.md
-UNITY_STRUCTURE.cleanup.md
 ```
 
 Rules:

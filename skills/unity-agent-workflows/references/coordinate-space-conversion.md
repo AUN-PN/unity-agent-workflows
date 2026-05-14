@@ -1,10 +1,10 @@
 # Coordinate Space Conversion
 
-Read this only when a Unity task moves or compares positions across world, local, screen, viewport, canvas, camera, safe-area, or RenderTexture spaces.
+Read only when a Unity task moves or compares positions across world, local, screen, viewport, canvas, camera, safe-area, or RenderTexture spaces.
 
 ## First Identify The Spaces
 
-Before patching position, size, bounds, raycast, tooltip, marker, camera, or UI-follow behavior, answer internally:
+Before patching position, size, bounds, raycast, tooltip, marker, camera, or UI-follow behavior, answer:
 
 1. What value is being read?
 2. What space is it in: world, local, screen pixels, viewport, canvas local, anchored UI, normalized, texture UV, or physics units?
@@ -41,7 +41,7 @@ If either source space or destination space is unknown, do not copy coordinates.
 
 ## Coordinate Patch Hard Stop
 
-For any output that crosses spaces or roots, do not edit coordinates, scale, anchors, offsets, padding, conversion code, fallback rectangles, or layout timing until the conversion proof is complete.
+For output crossing spaces/roots, do not edit coordinates, scale, anchors, offsets, padding, conversion code, fallback rectangles, or layout timing until conversion proof is complete.
 
 Static source inspection is not coordinate proof. Sub-agent reasoning is not coordinate proof. Compile success is not visual proof. Screenshot estimation is not coordinate proof. Checker confidence is not coordinate proof unless it cites concrete runtime values.
 
@@ -70,8 +70,6 @@ runtime writer checked:
 validation:
 ```
 
-Hard-stop pass criteria:
-
 - Every required field must contain concrete runtime values from Play Mode, Unity MCP/runtime hierarchy query, Device Simulator, Game view inspection, or temporary runtime logs.
 - Values such as `expected`, `likely`, `same helper`, `known from source`, `compile passed`, or `checker thinks OK` are not proof.
 - Missing `source bounds`, `converted min/max`, or `final output position/size` is a FAIL.
@@ -81,9 +79,7 @@ Hard-stop pass criteria:
 
 ## Cross-Canvas/Root Focus And Spotlight
 
-Use this when focus, highlight, spotlight, hole, dim, mask, or blocker output is drawn in a different canvas/root than the selected runtime target.
-
-Required proof:
+Use when focus, highlight, spotlight, hole, dim, mask, or blocker output is drawn in a different canvas/root than the selected runtime target.
 
 ```text
 source target:
@@ -121,7 +117,7 @@ for (int i = 0; i < 4; i++)
 }
 ```
 
-Build the destination rect from min/max of `destinationLocalCorners`, then assign it under `destinationRoot`.
+Build destination rect from min/max of `destinationLocalCorners`, then assign it under `destinationRoot`.
 
 ## World Object To UI
 
