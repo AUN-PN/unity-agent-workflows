@@ -22,7 +22,7 @@ Use the smallest useful check. Validation should match the edited surface and ri
    - For runtime-built UI, validate the builder/presenter path, not only scene YAML.
 
 5. Runtime visual:
-   - Use Game view, Device Simulator, Play mode, screenshot, or device build only when the task/risk justifies it.
+   - Use Game view, Device Simulator, Play mode, captured visual output, or device build only when the task/risk justifies it.
    - State clearly when visual runtime validation was not run.
    - For repeated visible-output failures, include runtime numeric proof for source bounds, converted rect, and final drawn rect before another patch. `git diff --check`, C# compile, source inspection, and sub-agent review do not satisfy this proof.
 
@@ -64,10 +64,18 @@ Before trusting MCP output:
 - Confirm the active scene, loaded additive scenes, and current stage: normal scene, Prefab Mode, prefab asset, or prefab instance.
 - Refresh or re-query the hierarchy before choosing object ownership, especially after entering Play Mode, loading scenes, spawning runtime clones, or changing prefabs.
 - Distinguish Edit Mode object state from Play Mode runtime state. MCP hierarchy proof is not visual/runtime proof by itself.
-- For visible fixes, validate the Game view, Play Mode, screenshot, Device Simulator, or device build when the task risk requires it.
-- For repeated screenshot-visible failures, Play Mode, Game view, Device Simulator, Unity MCP/runtime query, or temporary runtime logs must provide concrete numeric values before another coordinate/focus/layout patch.
+- For visible fixes, validate the Game view, Play Mode, captured visual output, Device Simulator, or device build when the task risk requires it.
+- For repeated captured-output failures, Play Mode, Game view, Device Simulator, Unity MCP/runtime query, or temporary runtime logs must provide concrete numeric values before another coordinate/focus/layout patch.
 - For scene/prefab mutation, confirm the edit persisted to the intended asset or scene file and was not only a transient editor object change.
 - If MCP is unavailable, narrow the task to file/source inspection or ask for an editor/session retry when runtime proof is required.
+
+## Visible Output Checker Failures
+
+Checkers must return FAIL for repeated visible-output patches when any of these are true:
+
+- runtime numeric values for source bounds, converted min/max, and final drawn rect are missing
+- cross-canvas or cross-root output lacks source canvas/root/camera/scaleFactor and destination canvas/root/camera/scaleFactor
+- overlay/dim/mask/blocker output rects are used as source bounds without an explicit marker proof
 
 ## Final Validation Report
 

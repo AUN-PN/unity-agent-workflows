@@ -52,17 +52,28 @@ for file in "${required[@]}"; do
 done
 
 node --check "$ROOT/bin/unity-agent-workflows.js" >/dev/null
-diff -qr "$ROOT/SKILL.md" "$ROOT/.claude/skills/unity-agent-workflows/SKILL.md" >/dev/null
-diff -qr "$ROOT/agents" "$ROOT/.claude/skills/unity-agent-workflows/agents" >/dev/null
-diff -qr "$ROOT/references" "$ROOT/.claude/skills/unity-agent-workflows/references" >/dev/null
-diff -qr "$ROOT/SKILL.md" "$ROOT/skills/unity-agent-workflows/SKILL.md" >/dev/null
-diff -qr "$ROOT/agents" "$ROOT/skills/unity-agent-workflows/agents" >/dev/null
-diff -qr "$ROOT/references" "$ROOT/skills/unity-agent-workflows/references" >/dev/null
-diff -qr "$ROOT/.codex-plugin" "$ROOT/plugins/unity-agent-workflows/.codex-plugin" >/dev/null
-diff -qr "$ROOT/assets" "$ROOT/plugins/unity-agent-workflows/assets" >/dev/null
-diff -qr "$ROOT/SKILL.md" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md" >/dev/null
-diff -qr "$ROOT/agents" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/agents" >/dev/null
-diff -qr "$ROOT/references" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/references" >/dev/null
+
+check_diff() {
+  local left="$1"
+  local right="$2"
+  if ! diff -qr "$left" "$right" >/dev/null; then
+    echo "mirror drift: $left != $right" >&2
+    diff -qr "$left" "$right" >&2 || true
+    exit 1
+  fi
+}
+
+check_diff "$ROOT/SKILL.md" "$ROOT/.claude/skills/unity-agent-workflows/SKILL.md"
+check_diff "$ROOT/agents" "$ROOT/.claude/skills/unity-agent-workflows/agents"
+check_diff "$ROOT/references" "$ROOT/.claude/skills/unity-agent-workflows/references"
+check_diff "$ROOT/SKILL.md" "$ROOT/skills/unity-agent-workflows/SKILL.md"
+check_diff "$ROOT/agents" "$ROOT/skills/unity-agent-workflows/agents"
+check_diff "$ROOT/references" "$ROOT/skills/unity-agent-workflows/references"
+check_diff "$ROOT/.codex-plugin" "$ROOT/plugins/unity-agent-workflows/.codex-plugin"
+check_diff "$ROOT/assets" "$ROOT/plugins/unity-agent-workflows/assets"
+check_diff "$ROOT/SKILL.md" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md"
+check_diff "$ROOT/agents" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/agents"
+check_diff "$ROOT/references" "$ROOT/plugins/unity-agent-workflows/skills/unity-agent-workflows/references"
 
 python3 - "$ROOT" "$ROOT/SKILL.md" "$ROOT/agents/openai.yaml" "$ROOT/package.json" <<'PY'
 from pathlib import Path
@@ -106,6 +117,38 @@ require(frontmatter_values.get("license") == "MIT", "SKILL.md license must be MI
 if "TODO" in skill:
     raise SystemExit("SKILL.md still contains TODO")
 require("Use $unity-agent-workflows" in openai_yaml, "agents/openai.yaml default_prompt missing skill invocation")
+require("allow_implicit_invocation: true" in openai_yaml, "agents/openai.yaml must allow implicit invocation")
+for phrase in (
+    "Unity 2D",
+    "multi-agent scope",
+    "runtime numeric proof",
+    "visible-output/state failures",
+):
+    require(phrase in openai_yaml, f"agents/openai.yaml missing trigger phrase: {phrase}")
+for phrase in (
+    "runtime-visible output",
+    "runtime numeric proof",
+    "state-step guards",
+    "multi-agent scope ownership",
+    "overlay/dim source-bound mistakes",
+    "guided equipment/shop flows",
+):
+    require(phrase in skill, f"SKILL.md missing trigger phrase: {phrase}")
+for readme_rel in ("README.md", "README.th.md"):
+    readme = (root / readme_rel).read_text(encoding="utf-8")
+    for phrase in (
+        "Architecture Overview",
+        "Invocation surfaces",
+        "Task router",
+        "Runtime-visible proof",
+        "State/content proof",
+        "Multi-agent guard",
+        "Validation and packaging",
+        "overlay/dim source-bound",
+        "guided state-flow",
+        "multi-agent scope",
+    ):
+        require(phrase in readme, f"{readme_rel} missing architecture phrase: {phrase}")
 require("runtime numeric proof" in skill, "SKILL.md missing runtime numeric proof trigger")
 require("repeated visible-output" in skill, "SKILL.md missing repeated visible-output trigger")
 require("runtime numeric proof" in openai_yaml, "agents/openai.yaml missing runtime numeric proof invocation")
@@ -145,6 +188,16 @@ for manifest_rel in (".codex-plugin/plugin.json", "plugins/unity-agent-workflows
         or any("runtime numeric proof" in prompt for prompt in default_prompts),
         f"{manifest_rel} missing runtime numeric proof trigger copy",
     )
+    manifest_text = json.dumps(manifest, ensure_ascii=False)
+    for phrase in (
+        "Unity 2D",
+        "runtime-owner proof",
+        "runtime numeric proof",
+        "overlay/dim source-bound",
+        "guided state-step guards",
+        "multi-agent scope ownership",
+    ):
+        require(phrase in manifest_text, f"{manifest_rel} missing trigger phrase: {phrase}")
     for prompt in default_prompts:
         require(isinstance(prompt, str) and len(prompt) <= 128, f"{manifest_rel} defaultPrompt entry too long")
     for asset_key in ("composerIcon", "logo"):
@@ -161,6 +214,9 @@ required_eval_ids = {
     "runtime-visible-output-conversion",
     "repeated-visible-numeric-proof",
     "checker-fails-missing-runtime-values",
+    "overlay-dim-source-bound-mistake",
+    "multi-agent-scope-before-patch",
+    "guided-equipment-state-flow",
 }
 for case in cases:
     for key in ("id", "prompt", "expected_skill", "expectation"):
@@ -170,7 +226,7 @@ for case in cases:
 missing_eval_ids = required_eval_ids - seen_ids
 require(not missing_eval_ids, f"evals missing numeric visible-output cases: {', '.join(sorted(missing_eval_ids))}")
 eval_text = json.dumps(evals, ensure_ascii=False)
-for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect"):
+for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect", "overlay", "multi-agent", "guided equipment"):
     require(phrase in eval_text, f"evals missing trigger phrase: {phrase}")
 
 reference_files = sorted(root.joinpath("references").glob("*.md"))
@@ -191,15 +247,40 @@ if missing_from_skill:
 
 required_reference_phrases = {
     "references/runtime-owner-proof.md": "Runtime Numeric Proof Gate",
-    "references/runtime-visible-targets.md": "Runtime Numeric Target Report",
-    "references/coordinate-space-conversion.md": "Required runtime numeric proof",
+    "references/runtime-visible-targets.md": "Overlay/Dim/Mask/Blocker Source Bounds",
+    "references/coordinate-space-conversion.md": "Cross-Canvas/Root Focus And Spotlight",
     "references/unity-validation.md": "runtime numeric proof",
     "references/ui-and-visual-assets.md": "runtime numeric proof",
     "references/workflow-recipes.md": "WF-6R Repeated Visible Mismatch",
+    "references/content-and-systems.md": "Guided Flow State Proof",
 }
 for rel, phrase in required_reference_phrases.items():
     text = (root / rel).read_text(encoding="utf-8")
     require(phrase in text, f"{rel} missing required phrase: {phrase}")
+
+extra_reference_phrases = {
+    "references/runtime-visible-targets.md": (
+        "Runtime Numeric Target Report",
+        "Cross-Canvas/Root Focus Proof",
+        "overlay/dim/mask/blocker output rects as source bounds",
+    ),
+    "references/coordinate-space-conversion.md": (
+        "Required runtime numeric proof",
+        "Overlay, dim, mask, blocker, scrim, spotlight, and hole objects are destination/output surfaces.",
+    ),
+    "references/unity-validation.md": (
+        "Visible Output Checker Failures",
+        "overlay/dim/mask/blocker output rects are used as source bounds",
+    ),
+    "references/workflow-recipes.md": (
+        "WF-12 Multi-Agent Visible Or State Work",
+        "state-step proof treats screen open/click/analytics as domain completion",
+    ),
+}
+for rel, phrases in extra_reference_phrases.items():
+    text = (root / rel).read_text(encoding="utf-8")
+    for phrase in phrases:
+        require(phrase in text, f"{rel} missing required phrase: {phrase}")
 
 print("skill validation ok")
 PY

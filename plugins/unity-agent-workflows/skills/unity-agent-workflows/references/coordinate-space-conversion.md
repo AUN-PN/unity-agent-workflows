@@ -75,8 +75,34 @@ Hard-stop pass criteria:
 - Every required field must contain concrete runtime values from Play Mode, Unity MCP/runtime hierarchy query, Device Simulator, Game view inspection, or temporary runtime logs.
 - Values such as `expected`, `likely`, `same helper`, `known from source`, `compile passed`, or `checker thinks OK` are not proof.
 - Missing `source bounds`, `converted min/max`, or `final output position/size` is a FAIL.
+- For cross-canvas or cross-root focus/highlight/spotlight/hole output, missing source canvas/root/camera/scaleFactor, destination canvas/root/camera/scaleFactor, converted min/max, or final drawn rect is a FAIL.
 - On FAIL, stay read-only and add a runtime probe plan only.
 - Do not patch from inference.
+
+## Cross-Canvas/Root Focus And Spotlight
+
+Use this when focus, highlight, spotlight, hole, dim, mask, or blocker output is drawn in a different canvas/root than the selected runtime target.
+
+Required proof:
+
+```text
+source target:
+source selected bounds:
+source canvas/root:
+source camera:
+source scaleFactor:
+destination overlay/root:
+destination camera:
+destination scaleFactor:
+conversion API path:
+converted min/max:
+converted center/size:
+final drawn rect:
+runtime writer checked:
+validation:
+```
+
+Overlay, dim, mask, blocker, scrim, spotlight, and hole objects are destination/output surfaces. Do not use their full-screen rect, generated mask geometry, or blocker rect as source target bounds unless an explicit marker inside that surface names the intended source target.
 
 ## UI Between Different Roots
 

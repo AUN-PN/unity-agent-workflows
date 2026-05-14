@@ -1,7 +1,7 @@
 {
   "name": "unity-agent-workflows",
   "version": "0.3.3",
-  "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
+  "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, runtime numeric proof, multi-agent scope ownership, and Unity game development automation.",
   "author": {
     "name": "AUN-PN"
   },
@@ -15,13 +15,16 @@
     "game-development",
     "ai-agent",
     "runtime-owner-proof",
-    "unity-validation"
+    "runtime-numeric-proof",
+    "unity-validation",
+    "unity-ui",
+    "multi-agent"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Unity Workflows",
     "shortDescription": "Safer AI workflows for Unity 2D projects",
-    "longDescription": "Use Teach first. Teach creates or refreshes UNITY_STRUCTURE.md for the current Unity 2D project, then agents use disciplined repo discovery, runtime-owner proof, runtime numeric proof for repeated visible-output failures, project-derived routing, UI and scene safety, validation, and cleanup proof before editing.",
+    "longDescription": "Use Teach first. Teach creates or refreshes UNITY_STRUCTURE.md for the current Unity 2D project, then agents use disciplined repo discovery, runtime-owner proof, runtime numeric proof for repeated visible-output failures, overlay/dim source-bound checks, guided state-step guards, multi-agent scope ownership, project-derived routing, UI and scene safety, validation, and cleanup proof before editing.",
     "developerName": "AUN-PN",
     "category": "Coding",
     "capabilities": ["Read", "Write"],
@@ -31,7 +34,7 @@
     "defaultPrompt": [
       "Use $unity-agent-workflows. Teach",
       "Use $unity-agent-workflows to prove and fix a Unity runtime-visible bug.",
-      "Use $unity-agent-workflows to require runtime numeric proof before another visible-output patch."
+      "Use $unity-agent-workflows for overlay/dim focus bugs, guided state flows, or multi-agent checker reviews."
     ],
     "composerIcon": "./assets/unity-workflows.png",
     "logo": "./assets/unity-workflows.png",

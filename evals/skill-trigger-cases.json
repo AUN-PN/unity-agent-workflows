@@ -40,10 +40,28 @@
       "expectation": "Uses the checker rule for repeated visible-output work and rejects patches without concrete runtime numeric proof."
     },
     {
+      "id": "overlay-dim-source-bound-mistake",
+      "prompt": "Unity 2D: the tutorial dim hole follows the panel background instead of the real button target. Fix the overlay source bounds without guessing.",
+      "expected_skill": true,
+      "expectation": "Routes through runtime visible-output proof, selects the correct source bounds, and proves destination overlay root, converted rect, final drawn rect, and runtime writer before patching."
+    },
+    {
+      "id": "multi-agent-scope-before-patch",
+      "prompt": "Unity 2D: use a main agent and worker agents to fix a visible HUD marker and a tutorial state bug. Do not let workers patch until the main agent defines the Routing Card and allowed files.",
+      "expected_skill": true,
+      "expectation": "Requires main-agent scope ownership, disjoint worker write sets, allowed/not-touched files, checker review, runtime numeric proof for visible output, and state-step proof for the tutorial flow."
+    },
+    {
       "id": "state-step-transition-guard",
       "prompt": "Unity 2D: the tutorial says the reward was claimed after opening the shop, but old saves keep repeating the prompt.",
       "expected_skill": true,
       "expectation": "Runs the Runtime State Step Guard and separates shown, clicked, opened, claimed, completed, persisted, old-save, and reset paths."
+    },
+    {
+      "id": "guided-equipment-state-flow",
+      "prompt": "Unity 2D: the guided equipment flow marks the sword as equipped after opening the equipment shop, but no item is selected, equipped, or persisted.",
+      "expected_skill": true,
+      "expectation": "Runs the Runtime State Step Guard and treats shown, clicked, opened, selected, equipped, completed, and persisted as separate proof steps; screen open or click is not completion proof."
     },
     {
       "id": "cleanup-delete-unused-prefab",

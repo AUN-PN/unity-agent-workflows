@@ -40,6 +40,31 @@ plugin นี้บังคับ workflow ที่เข้มขึ้นส
 
 `runtime-owner proof` เป็น workflow heuristic ของโปรเจ็คนี้ ไม่ใช่ Unity API term โดยอิงจาก GameObject/Component model, serialized fields, prefab overrides และ runtime instantiation behavior ของ Unity
 
+## Architecture Overview
+
+plugin นี้แบ่งเป็น guardrail หลายชั้น: ชั้นนอกทำให้ skill ถูกเรียกใช้ได้ถูกเคส ส่วนชั้นในเลือก reference/proof ที่ต้องมีก่อน agent patch Unity project
+
+```text
+Codex plugin / local skill / npx installer
+-> SKILL.md task router
+-> required reference gates
+-> project-derived structure maps
+-> runtime-owner, runtime-visible, state-step, and multi-agent guards
+-> validation and mirror sync
+```
+
+| Layer | Files | หน้าที่ |
+| --- | --- | --- |
+| Invocation surfaces | `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json`, `evals/skill-trigger-cases.json` | expose `Unity Workflows`, เก็บ trigger phrases ให้ตรงของล่าสุด และพิสูจน์ว่า skill ควรถูกเรียกสำหรับ Unity 2D visible-output, state-flow และ multi-agent cases |
+| Task router | `SKILL.md` | classify request, load references ที่ถูกต้อง, lock scope boundary และหยุด edit ถ้า proof ไม่ครบ |
+| Structure discovery | `references/project-structure-discovery.md` | derive folders, namespaces, `.asmdef`, scenes, prefabs และ content paths จาก Unity repo จริง ไม่ assume fixed layout |
+| Runtime-visible proof | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md` | prove runtime target, selected source bounds, destination canvas/root, conversion path, converted rect และ final drawn rect ก่อนแก้ coordinate/focus |
+| State/content proof | `references/content-and-systems.md` | ทำให้ guided flows ชัด: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, `persisted` เป็น proof คนละขั้น |
+| Multi-agent guard | `references/workflow-recipes.md`, `SKILL.md` | main agent เป็นเจ้าของ Routing Card, file boundaries และ worker ownership ก่อน parallel edits; checker fail ถ้าขาด runtime numeric proof หรือ state-step proof |
+| Validation and packaging | `scripts/validate_skill.sh`, `scripts/sync_mcpmarket_skill.sh` | check manifests, eval triggers, reference routing, mirror drift, JSON syntax และ package dry-run readiness |
+
+guard ล่าสุดสำหรับ runtime-visible งานถือว่า overlay, dim, mask, blocker, scrim, spotlight และ hole objects เป็น destination/output surfaces ไม่ใช่ source bounds สำหรับ focus/highlight math ยกเว้นมี explicit marker ใน surface นั้นที่ระบุ target จริง
+
 ## ติดตั้งเป็น Codex Plugin
 
 ใน Codex เปิด Plugins, เลือก Add marketplace แล้วใส่:
@@ -207,7 +232,10 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 | UI/HUD                    | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP และ runtime builders                           |
 | Visible targets           | resolve runtime bounds แทนการเดา hardcoded coordinates                                                    |
 | Repeated visible mismatch | บังคับ runtime numeric proof ก่อน patch coordinate, focus, layout, marker หรือ fallback ซ้ำ               |
+| Overlay/dim source bounds | reject overlay, mask, blocker หรือ spotlight surfaces เป็น source bounds ยกเว้น explicit marker prove target |
 | Coordinate conversion     | ระบุ world, local, screen, viewport, canvas, camera และ safe-area space ชัด                               |
+| Guided state flows        | แยก shown/clicked/opened/selected/equipped/claimed/completed/persisted ก่อน mark completion               |
+| Multi-agent work          | lock Routing Card, file ownership, runtime proof และ checker gates ก่อน parallel worker patches           |
 | C# routing                | derive folders, namespaces, `.asmdef`, dependency direction และ owner modules                             |
 | Content changes           | ใช้ data/config surface เดิมก่อน ถ้าโปรเจ็คมี                                                             |
 | Validation                | ใช้ check ที่เล็กแต่มีประโยชน์ และรายงาน exact command output                                             |
@@ -243,7 +271,7 @@ npm run sync:mcpmarket
 npm run pack:dry-run
 ```
 
-`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, reference links, JavaScript syntax และ runtime numeric proof trigger coverage
+`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, README architecture coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates และ multi-agent scope triggers
 
 `npm run sync:mcpmarket` mirror `SKILL.md`, `references/` และ `agents/` ไปที่:
 

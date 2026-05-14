@@ -40,6 +40,31 @@ This plugin gives the agent a stricter workflow for Unity 2D projects:
 
 `runtime-owner proof` is this project's workflow heuristic, not a Unity API term. It is grounded in Unity's GameObject/Component model, serialized fields, prefab overrides, and runtime instantiation behavior.
 
+## Architecture Overview
+
+The plugin is organized as layered guardrails. The outer surfaces make the skill discoverable, while the inner references decide which proof is required before an agent can patch a Unity project.
+
+```text
+Codex plugin / local skill / npx installer
+-> SKILL.md task router
+-> required reference gates
+-> project-derived structure maps
+-> runtime-owner, runtime-visible, state-step, and multi-agent guards
+-> validation and mirror sync
+```
+
+| Layer | Files | Responsibility |
+| --- | --- | --- |
+| Invocation surfaces | `.codex-plugin/plugin.json`, `agents/openai.yaml`, `package.json`, `evals/skill-trigger-cases.json` | Expose `Unity Workflows`, keep trigger phrases current, and prove the skill should run for Unity 2D visible-output, state-flow, and multi-agent cases. |
+| Task router | `SKILL.md` | Classify the request, load the correct references, fill scope boundaries, and stop edits when proof is missing. |
+| Structure discovery | `references/project-structure-discovery.md` | Derive folders, namespaces, `.asmdef` files, scenes, prefabs, and content paths from the live Unity repo instead of assuming a fixed layout. |
+| Runtime-visible proof | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md` | Prove the runtime target, selected source bounds, destination canvas/root, conversion path, converted rect, and final drawn rect before coordinate or focus patches. |
+| State/content proof | `references/content-and-systems.md` | Keep guided flows honest: `shown`, `clicked`, `opened`, `selected`, `equipped`, `claimed`, `completed`, and `persisted` are separate proof steps. |
+| Multi-agent guard | `references/workflow-recipes.md`, `SKILL.md` | Main agent owns the Routing Card, file boundaries, and worker ownership before parallel edits; checker agents fail missing runtime numeric proof or state-step proof. |
+| Validation and packaging | `scripts/validate_skill.sh`, `scripts/sync_mcpmarket_skill.sh` | Check manifests, eval triggers, reference routing, mirror drift, JSON syntax, and package dry-run readiness. |
+
+The latest runtime-visible guard treats overlay, dim, mask, blocker, scrim, spotlight, and hole objects as destination/output surfaces. They are not source bounds for focus or highlight math unless an explicit marker inside that surface names the intended target.
+
 ## Install As A Codex Plugin
 
 In Codex, open Plugins, choose Add marketplace, then use:
@@ -207,7 +232,10 @@ If that chain is incomplete, the agent should inspect deeper or ask one focused 
 | UI/HUD                    | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP, and runtime builders                              |
 | Visible targets           | resolve runtime bounds instead of guessing hardcoded coordinates                                              |
 | Repeated visible mismatch | require runtime numeric proof before another coordinate, focus, layout, marker, or fallback patch             |
+| Overlay/dim source bounds | reject overlay, mask, blocker, or spotlight surfaces as source bounds unless an explicit marker proves target |
 | Coordinate conversion     | keep world, local, screen, viewport, canvas, camera, and safe-area spaces explicit                            |
+| Guided state flows        | separate shown/clicked/opened/selected/equipped/claimed/completed/persisted before marking completion        |
+| Multi-agent work          | lock Routing Card, file ownership, runtime proof, and checker gates before parallel worker patches            |
 | C# routing                | derive folders, namespaces, `.asmdef` files, dependency direction, and owner modules                          |
 | Content changes           | prefer existing data/config surfaces when the project has them                                                |
 | Validation                | use the smallest useful check and report exact command output                                                 |
@@ -243,7 +271,7 @@ npm run sync:mcpmarket
 npm run pack:dry-run
 ```
 
-`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, reference links, JavaScript syntax, and the runtime numeric proof trigger coverage.
+`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, README architecture coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates, and multi-agent scope triggers.
 
 `npm run sync:mcpmarket` mirrors `SKILL.md`, `references/`, and `agents/` into:
 

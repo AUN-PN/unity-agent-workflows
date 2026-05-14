@@ -76,6 +76,14 @@ For focus rings, spotlight holes, tutorial highlights, selection brackets, arrow
 
 Do not use `interactiveRect` as the primary visual target when visible children or marker transforms exist.
 
+## Overlay/Dim/Mask/Blocker Source Bounds
+
+Overlay, dim, mask, blocker, scrim, spotlight, and hole objects are destination/output surfaces. Do not use their `RectTransform`, full-screen rect, generated mask geometry, or blocker rect as the source bounds for focus, highlight, spotlight, or hole calculation.
+
+These objects can be source bounds only when they contain an explicit `markerRect` or marker child that names the intended target and is not merely the output surface. Otherwise, resolve the active runtime target separately, choose `markerRect`, `visualRect`, `interactiveRect`, or `logicRect`, then convert those selected source bounds into the destination overlay/root.
+
+For focus/highlight/spotlight/hole patches, using an overlay/dim/mask/blocker rect as source bounds is a FAIL unless the report proves the explicit marker and target relationship with runtime values.
+
 If `markerRect` is missing and `visualRect` differs strongly from `interactiveRect`, report ambiguity and recommend adding a marker.
 
 If an object is found but no marker exists:
@@ -139,12 +147,27 @@ validation:
 
 Values like `expected`, `likely`, `same helper`, `known from source`, `compile passed`, or `checker thinks OK` are not proof.
 
+## Cross-Canvas/Root Focus Proof
+
+For cross-canvas or cross-root focus, highlight, spotlight, hole, dim, mask, or blocker output, the report must prove all of these runtime numeric values:
+
+- source canvas/root
+- source camera
+- source scaleFactor
+- destination canvas/root
+- destination camera
+- destination scaleFactor
+- converted min/max
+- final drawn rect
+
+The source rect must be the selected runtime target bounds, not the destination overlay/dim/mask/blocker surface, unless an explicit marker inside that surface is the documented target.
+
 ## Repeated Visible Failure Lock
 
-If the user says the result is still wrong, unchanged, in the wrong place, or provides a marked screenshot after a patch:
+If the user says the result is still wrong, unchanged, in the wrong place, or provides marked visual evidence after a patch:
 
 1. Stop tuning constants.
-2. Treat the marked screenshot target as the current scope.
+2. Treat the marked visual target as the current scope.
 3. Re-resolve the active runtime target and duplicate names.
 4. Re-classify `markerRect`, `visualRect`, `interactiveRect`, `logicRect`, and selected output rect.
 5. Re-check source canvas/root, destination canvas/root, camera, scale factor, layout timing, safe area, animation, pooling, and refresh writers.
@@ -153,4 +176,4 @@ If the user says the result is still wrong, unchanged, in the wrong place, or pr
 
 Do not infer the fix from the previous patch, nearby object names, or a visually similar control.
 
-Checker rule: return FAIL when runtime numeric proof is absent for a repeated visible-output patch.
+Checker rule: return FAIL when runtime numeric proof is absent for a repeated visible-output patch, or when the patch uses overlay/dim/mask/blocker output rects as source bounds without an explicit marker proof.

@@ -69,6 +69,21 @@ Never collapse these states into one boolean unless the live design already prov
 shown != clicked != opened != selected != equipped != claimed != completed != persisted
 ```
 
+### Guided Flow State Proof
+
+For guided equipment, shop, tutorial, onboarding, reward, or navigation flows, treat every state-step as separately provable:
+
+- `shown`: prompt, overlay, marker, or instruction is visible.
+- `clicked`: user clicked/tapped the prompt, target, or navigation control.
+- `opened`: screen, panel, shop, inventory, or section became active.
+- `selected`: a domain item/option/card/loadout entry is selected.
+- `equipped`: selection was applied to the active loadout/runtime owner.
+- `claimed`: reward/currency/item was granted by the domain owner.
+- `completed`: the guided objective/step is marked done by the flow owner.
+- `persisted`: completion or domain state is written to the save/progression store.
+
+Opening a screen, recording a click, logging analytics, or showing the next prompt is interaction/navigation proof only. It is not proof that an item was selected, equipment was equipped, a reward was claimed, a tutorial step was completed, or the result was persisted.
+
 Before editing a state transition, prove:
 
 ```text
@@ -85,7 +100,7 @@ runtime writer/refresh path:
 validation:
 ```
 
-Analytics, click tracking, section navigation, and prompt display are not completion proof. Patch the owner that actually advances domain state or persistence, and keep UI presenters presentation-only when the repo already has a service/gateway/contract layer.
+Patch the owner that actually advances domain state or persistence, and keep UI presenters presentation-only when the repo already has a service/gateway/contract layer.
 
 ## Balance Pass Rules
 

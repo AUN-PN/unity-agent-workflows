@@ -1,6 +1,6 @@
 ---
 name: unity-agent-workflows
-description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, runtime numeric proof for repeated visible-output failures, state-step guards, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, coordinate conversions, focus/highlight/marker/HUD alignment, or repeated "fix still not visible" failures.
+description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, runtime numeric proof for repeated visible-output failures, state-step guards, multi-agent scope ownership, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, guided equipment/shop flows, overlay/dim source-bound mistakes, coordinate conversions, focus/highlight/marker/HUD alignment, or repeated "fix still not visible" failures.
 license: MIT
 ---
 
@@ -20,7 +20,9 @@ Use this skill as the AI operating system for Unity work: read the live repo, de
 8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
    - Runtime-visible output, target alignment, interactive/visual target focus, marker/overlay/input blocking, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible output hard stop.
+   - Overlay/dim source-bound mismatch -> runtime visible output hard stop plus runtime target bounds proof.
    - Repeated visible-output mismatch after a patch -> runtime numeric proof before another patch.
+   - Multi-agent visible-output or state work -> main-agent scope lock before worker patches.
    - New or expanded C# responsibility -> project-derived routing.
    - UI layout/readability -> UI workflow.
    - Visual source asset -> visual asset gate.
@@ -88,7 +90,9 @@ Before editing, load the matching reference files below. This prevents the failu
 |---|---|
 | UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Overlay/dim source-bound mismatch, wrong source bounds, focus hole follows the wrong target | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
 | Repeated visible-output failure after a patch, wrong focus/highlight/marker/HUD/camera position, cross-root/cross-canvas mismatch | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
+| Multi-agent Unity visible-output or state-transition work, parallel workers, checker review | `references/ai-workflows.md`, `references/workflow-recipes.md`, `references/runtime-owner-proof.md`, `references/content-and-systems.md`, `references/unity-validation.md` |
 | New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
 | New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
 | Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, or state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
@@ -108,6 +112,8 @@ Closeout must also include `Project maps loaded:` with the exact `UNITY_STRUCTUR
 - Runtime numeric proof is mandatory before patching a repeated visible-output failure. Static source inspection, sub-agent analysis, compile success, checker confidence, or screenshot estimation is not enough when the task involves focus rings, spotlight holes, highlights, blockers, markers, tooltip anchors, camera targets, safe-area offsets, world-to-UI labels, HUD markers, or cross-root/cross-canvas conversion.
 - After the user reports a visible fix is still wrong, unchanged, or in the wrong place, the next step must be runtime measurement or editor/runtime query. Do not patch the same coordinate, focus, layout, camera, or fallback owner again until numeric runtime proof explains the mismatch.
 - A checker must fail any coordinate/focus/layout/marker patch that lacks concrete runtime values for source bounds, destination bounds, converted rect, and final drawn rect.
+- Opening a screen, recording a click, logging analytics, or showing a prompt is not completion proof for guided equipment, shop, tutorial, reward, or navigation flows. Prove shown/clicked/opened/selected/equipped/claimed/completed/persisted as separate state steps.
+- For multi-agent visible-output or state-transition work, the main agent owns the Routing Card, scope, and allowed file set before workers patch. Workers must use disjoint ownership, and a checker must fail missing runtime numeric proof or missing state-step proof.
 - No fixed structure. Derive module names, layers, folders, namespaces, assemblies, bootstraps, and scene/prefab ownership from the user's project before routing new work.
 - No guessed targeting. If the user asks to bind, focus, highlight, click, or align a visible object, resolve the real runtime object and coordinate space before editing.
 - Do not grow a hub when a focused collaborator, data object, contract, event, bridge, or service can own the new responsibility.
@@ -144,12 +150,24 @@ Files explicitly not touched:
 
 Add graph, God Node, edge count, over-500 status, and architecture-doc sync only when architecture or C# responsibility changed and graph/source data exists.
 
+## Multi-Agent Visible/State Guard
+
+Use this before parallel workers patch Unity visible-output or state-transition work.
+
+1. Main agent loads required references, fills the Routing Card, and defines `Files allowed to touch` plus `Files explicitly not touched`.
+2. Main agent assigns disjoint ownership for each worker by file set, runtime target, state step, or validation slice.
+3. Workers stop and report back when they need a file outside their assignment or find a different runtime owner.
+4. Checker fails missing runtime numeric proof for visible-output work: source bounds, destination bounds/root, converted rect, final drawn rect, and runtime writer.
+5. Checker fails missing state-step proof for guided flows: shown, clicked, opened, selected, equipped, claimed, completed, persisted.
+6. Main agent integrates, validates, and closes out; mirrors or public package copies are touched only when explicitly in scope.
+
 ## Task Router
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, and `references/unity-validation.md`; collect runtime numeric proof before changing more values.
 - **Runtime visible output**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` when the output depends on a live target, bounds choice, or coordinate conversion.
 - **New runtime/content feature or state transition**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
+- **Multi-agent visible/state work**: read `references/ai-workflows.md`, `references/workflow-recipes.md`, `references/runtime-owner-proof.md`, `references/content-and-systems.md`, and `references/unity-validation.md`; main agent locks scope and allowed files before workers patch, then checker enforces runtime numeric proof and state-step proof.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
 - **UI or screenshot work**: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before editing. Report those references as loaded in closeout.
