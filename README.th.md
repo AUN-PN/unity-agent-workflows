@@ -40,29 +40,49 @@ plugin นี้บังคับ workflow ที่เข้มขึ้นส
 
 `runtime-owner proof` เป็น workflow heuristic ของโปรเจ็คนี้ ไม่ใช่ Unity API term โดยอิงจาก GameObject/Component model, serialized fields, prefab overrides และ runtime instantiation behavior ของ Unity
 
-## Architecture Overview
+## ขั้นตอนการทำงาน
 
-plugin บังคับให้ agent เดินตาม step นี้:
+plugin เริ่มจาก input ของผู้ใช้, route งาน, แล้ววน proof จนกว่าจะ patch ได้ปลอดภัยหรือปิดงานได้
 
 ```mermaid
 flowchart TD
-    step1["1. Invoke skill<br/>Use $unity-agent-workflows"]
-    step2["2. Read project rules<br/>AGENTS.md / README / git status"]
-    step3["3. Derive live structure<br/>folders / scenes / prefabs / asmdefs / maps"]
-    step4["4. Classify task<br/>load only required references"]
-    step5["5. Prove before edit<br/>owner chain / runtime target / state steps"]
-    step6["6. Lock scope<br/>Routing Card / files allowed / multi-agent scope"]
-    step7["7. Patch smallest safe set<br/>no unrelated scene, prefab, or cache churn"]
-    step8["8. Validate<br/>runtime numeric proof / state-step proof / compile or docs checks"]
-    step9["9. Close out<br/>changed files / proof / validation / residual risk"]
+    input["1. User input<br/>Unity task, screenshot, stack trace, or repo request"]
+    invoke["2. Skill trigger<br/>explicit $unity-agent-workflows or implicit Unity workflow match"]
+    context["3. Read context<br/>AGENTS.md, git status, structure maps, relevant docs"]
+    classify["4. Classify task<br/>visible output, state flow, content, architecture, cleanup, validation"]
+    refs["5. Load required references<br/>only the docs needed for this task"]
+    prove{"6. Proof complete?"}
+    inspect["Inspect deeper / probe runtime<br/>owner chain, source bounds, state steps, duplicate objects"]
+    scope["7. Lock scope<br/>Routing Card, files allowed, files not touched, worker ownership"]
+    patch["8. Patch smallest safe set"]
+    validate{"9. Validation pass?"}
+    fixloop["Fix validation issue<br/>or return probe plan if proof is still missing"]
+    close["10. Close out<br/>changed files, proof, validation, residual risk"]
 
-    step1 --> step2 --> step3 --> step4 --> step5 --> step6 --> step7 --> step8 --> step9
+    input --> invoke --> context --> classify --> refs --> prove
+    prove -- "no" --> inspect --> classify
+    prove -- "yes" --> scope --> patch --> validate
+    validate -- "no" --> fixloop --> prove
+    validate -- "yes" --> close
 
     classDef step fill:#eef2ff,stroke:#7c3aed,color:#111827;
-    class step1,step2,step3,step4,step5,step6,step7,step8,step9 step;
+    classDef decision fill:#fef9c3,stroke:#ca8a04,color:#111827;
+    class input,invoke,context,classify,refs,inspect,scope,patch,fixloop,close step;
+    class prove,validate decision;
 ```
 
-Step 5 คือจุดตรวจ overlay/dim source-bound, guided state-flow proof และ repeated visible-output runtime numeric proof. Step 6 คือจุด lock multi-agent scope ก่อน worker patch
+รายละเอียดแต่ละ step:
+
+1. **User input**: รับ Unity task, screenshot, stack trace, feature request, cleanup request หรือ validation request
+2. **Skill trigger**: เรียก skill จาก `$unity-agent-workflows` หรือ implicit Unity 2D workflow match
+3. **Read context**: อ่าน project rules, dirty state, structure maps และ docs ที่เกี่ยวข้อง
+4. **Classify task**: แยกงานเป็น visible output, state flow, content, architecture, cleanup หรือ validation
+5. **Load references**: `SKILL.md` เลือก reference files ที่ต้องใช้ ไม่โหลดทุก rule
+6. **Proof loop**: ถ้า owner chain, overlay/dim source-bound proof, runtime numeric proof หรือ guided state-flow proof ยังไม่ครบ ให้วนกลับไป inspect/probe runtime data
+7. **Lock scope**: main agent ระบุ `Files allowed to touch`, `Files explicitly not touched` และ multi-agent ownership ก่อน worker patch
+8. **Patch**: แก้เฉพาะ smallest safe file set หลัง proof ครบ
+9. **Validation loop**: validation fail ให้วนกลับไป proof/patch; ถ้ายังขาด runtime proof ให้คืน probe plan แทนการเดา
+10. **Close out**: สรุป changed files, proof, validation และ residual risk
 
 ## ติดตั้งเป็น Codex Plugin
 

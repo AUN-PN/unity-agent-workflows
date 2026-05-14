@@ -136,24 +136,28 @@ for phrase in (
     require(phrase in skill, f"SKILL.md missing trigger phrase: {phrase}")
 for readme_rel in ("README.md", "README.th.md"):
     readme = (root / readme_rel).read_text(encoding="utf-8")
+    old_heading = "Architecture" + " Overview"
+    require(old_heading not in readme, f"{readme_rel} must use workflow steps, not the old architecture heading")
     for phrase in (
-        "Architecture Overview",
         "```mermaid",
         "flowchart TD",
-        "Invoke skill",
-        "Read project rules",
-        "Derive live structure",
+        "User input",
+        "Skill trigger",
+        "Read context",
         "Classify task",
-        "Prove before edit",
+        "Load required references",
+        "Proof complete?",
+        "Inspect deeper / probe runtime",
         "Lock scope",
         "Patch smallest safe set",
-        "Validate",
+        "Validation pass?",
+        "Fix validation issue",
         "Close out",
         "overlay/dim source-bound",
         "guided state-flow",
         "multi-agent scope",
     ):
-        require(phrase in readme, f"{readme_rel} missing architecture phrase: {phrase}")
+        require(phrase in readme, f"{readme_rel} missing workflow step phrase: {phrase}")
 require("runtime numeric proof" in skill, "SKILL.md missing runtime numeric proof trigger")
 require("repeated visible-output" in skill, "SKILL.md missing repeated visible-output trigger")
 require("runtime numeric proof" in openai_yaml, "agents/openai.yaml missing runtime numeric proof invocation")

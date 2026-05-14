@@ -40,29 +40,49 @@ This plugin gives the agent a stricter workflow for Unity 2D projects:
 
 `runtime-owner proof` is this project's workflow heuristic, not a Unity API term. It is grounded in Unity's GameObject/Component model, serialized fields, prefab overrides, and runtime instantiation behavior.
 
-## Architecture Overview
+## Workflow Steps
 
-The plugin keeps the agent on this work path:
+The plugin starts from the user's input, routes the task, then loops on proof until it is safe to patch or close out.
 
 ```mermaid
 flowchart TD
-    step1["1. Invoke skill<br/>Use $unity-agent-workflows"]
-    step2["2. Read project rules<br/>AGENTS.md / README / git status"]
-    step3["3. Derive live structure<br/>folders / scenes / prefabs / asmdefs / maps"]
-    step4["4. Classify task<br/>load only required references"]
-    step5["5. Prove before edit<br/>owner chain / runtime target / state steps"]
-    step6["6. Lock scope<br/>Routing Card / files allowed / multi-agent scope"]
-    step7["7. Patch smallest safe set<br/>no unrelated scene, prefab, or cache churn"]
-    step8["8. Validate<br/>runtime numeric proof / state-step proof / compile or docs checks"]
-    step9["9. Close out<br/>changed files / proof / validation / residual risk"]
+    input["1. User input<br/>Unity task, screenshot, stack trace, or repo request"]
+    invoke["2. Skill trigger<br/>explicit $unity-agent-workflows or implicit Unity workflow match"]
+    context["3. Read context<br/>AGENTS.md, git status, structure maps, relevant docs"]
+    classify["4. Classify task<br/>visible output, state flow, content, architecture, cleanup, validation"]
+    refs["5. Load required references<br/>only the docs needed for this task"]
+    prove{"6. Proof complete?"}
+    inspect["Inspect deeper / probe runtime<br/>owner chain, source bounds, state steps, duplicate objects"]
+    scope["7. Lock scope<br/>Routing Card, files allowed, files not touched, worker ownership"]
+    patch["8. Patch smallest safe set"]
+    validate{"9. Validation pass?"}
+    fixloop["Fix validation issue<br/>or return probe plan if proof is still missing"]
+    close["10. Close out<br/>changed files, proof, validation, residual risk"]
 
-    step1 --> step2 --> step3 --> step4 --> step5 --> step6 --> step7 --> step8 --> step9
+    input --> invoke --> context --> classify --> refs --> prove
+    prove -- "no" --> inspect --> classify
+    prove -- "yes" --> scope --> patch --> validate
+    validate -- "no" --> fixloop --> prove
+    validate -- "yes" --> close
 
     classDef step fill:#eef2ff,stroke:#7c3aed,color:#111827;
-    class step1,step2,step3,step4,step5,step6,step7,step8,step9 step;
+    classDef decision fill:#fef9c3,stroke:#ca8a04,color:#111827;
+    class input,invoke,context,classify,refs,inspect,scope,patch,fixloop,close step;
+    class prove,validate decision;
 ```
 
-Step 5 is where overlay/dim source-bound checks, guided state-flow proof, and repeated visible-output runtime numeric proof happen. Step 6 is where multi-agent scope is locked before workers patch.
+Step details:
+
+1. **User input**: a Unity task, screenshot, stack trace, feature request, cleanup request, or validation request enters the agent.
+2. **Skill trigger**: the skill runs from an explicit `$unity-agent-workflows` prompt or an implicit Unity 2D workflow match.
+3. **Read context**: the agent reads project rules, dirty state, structure maps, and only relevant docs.
+4. **Classify task**: the request is routed as visible output, state flow, content, architecture, cleanup, or validation.
+5. **Load references**: `SKILL.md` selects the required reference files instead of loading every rule.
+6. **Proof loop**: if owner chain, overlay/dim source-bound proof, runtime numeric proof, or guided state-flow proof is missing, the agent loops back to inspect or probe runtime data.
+7. **Lock scope**: the main agent names `Files allowed to touch`, `Files explicitly not touched`, and multi-agent ownership before workers patch.
+8. **Patch**: edit the smallest safe file set only after proof is complete.
+9. **Validation loop**: failed validation returns to proof/patch; missing runtime proof returns a probe plan instead of another guess.
+10. **Close out**: report changed files, proof, validation, and residual risk.
 
 ## Install As A Codex Plugin
 
