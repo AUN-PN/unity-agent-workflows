@@ -232,21 +232,12 @@ Prompt:
 
 ```text
 Use $unity-agent-workflows.
-Fix the FTUE Stage 5 Sentinel ADD focus mismatch. Treat it as a repeated visible-output failure.
-
-Main agent:
-- Spawn read-only sub-agents first.
-- Gather runtime numeric proof and checker requirements.
-- Lock scope before patching.
-
-Sub-agent A:
-Read-only only. Follow project-local rules and Unity Workflows. Inspect the Sentinel ADD focus mismatch state/transition timing only. Find the owner chain from Sentinel menu click to install prompt and ADD focus target. Report state steps: shown/clicked/opened/install prompt/equipped/persisted. Do not edit. Do not include private paths or session IDs.
-
-Sub-agent B:
-Read-only only. Follow project-local rules and Unity Workflows. Inspect the visible focus coordinate path for the Sentinel install ADD target. Prove target object chain, source bounds selection, destination conversion, and final focus ring values. Do not edit. Report exact runtime numeric proof and checker requirements to compare ADD button and final ring. Do not include private paths or session IDs.
-
-Checker:
-Read-only only. Follow project-local rules and Unity Workflows. Determine what must pass after patch: source ADD bounds vs final focus ring bounds, state steps shown/clicked/opened/install/equipped/persisted, and requested Sentinel ADD focus behavior. Do not edit. Return PASS/FAIL criteria. Do not include private paths or session IDs.
+Fix the FTUE Stage 5 Sentinel ADD focus mismatch.
+Main: lock scope, patch only after proof.
+Sub-agent A: read-only state flow proof.
+Sub-agent B: read-only ADD focus bounds proof.
+Checker: verify ADD focus, state steps, and PASS/FAIL criteria.
+Do not include private paths or session IDs.
 ```
 
 ## Workflow
