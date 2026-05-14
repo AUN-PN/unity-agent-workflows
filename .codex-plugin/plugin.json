@@ -1,6 +1,6 @@
 {
   "name": "unity-agent-workflows",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
   "author": {
     "name": "AUN-PN"
@@ -24,10 +24,7 @@
     "longDescription": "Use Teach first. Teach creates or refreshes UNITY_STRUCTURE.md for the current Unity 2D project, then agents use disciplined repo discovery, runtime-owner proof, project-derived routing, UI and scene safety, validation, and cleanup proof before editing.",
     "developerName": "AUN-PN",
     "category": "Coding",
-    "capabilities": [
-      "Read",
-      "Write"
-    ],
+    "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/AUN-PN/unity-agent-workflows",
     "privacyPolicyURL": "https://github.com/AUN-PN/unity-agent-workflows",
     "termsOfServiceURL": "https://github.com/AUN-PN/unity-agent-workflows",
