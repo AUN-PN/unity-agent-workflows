@@ -1,9 +1,9 @@
-.DS_Store
+.git/
+node_modules/
+.venv/
 __pycache__/
 *.pyc
-.venv/
-node_modules/
-*.tgz
+.DS_Store
 
 # Local secrets and auth material
 .env*
@@ -25,3 +25,4 @@ build/
 cache/
 tmp/
 temp/
+*.tgz

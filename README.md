@@ -282,7 +282,7 @@ unity-agent-workflows/
 - Does not assume a fixed project structure.
 - Does not make `runtime-owner proof` an official Unity concept; it is a guardrail workflow.
 - Does not install the Codex plugin marketplace entry through `npx`.
-- Public reuse and external contribution are limited while the package is `UNLICENSED` and no `LICENSE` file is present.
+- Public reuse and external contribution are allowed under the MIT License; see [LICENSE](LICENSE).
 
 ## Support
 
@@ -294,4 +294,4 @@ https://github.com/AUN-PN/unity-agent-workflows/issues
 
 ## License
 
-`UNLICENSED`
+MIT License. See [LICENSE](LICENSE).

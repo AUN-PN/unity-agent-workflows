@@ -49,7 +49,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/AUN-PN/unity-agent-workflows.git"
+    "url": "git+https://github.com/AUN-PN/unity-agent-workflows.git"
   },
   "homepage": "https://github.com/AUN-PN/unity-agent-workflows#readme",
   "bugs": {
@@ -58,5 +58,5 @@
   "engines": {
     "node": ">=18"
   },
-  "license": "UNLICENSED"
+  "license": "MIT"
 }

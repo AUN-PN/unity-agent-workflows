@@ -7,7 +7,7 @@
   },
   "homepage": "https://github.com/AUN-PN/unity-agent-workflows#readme",
   "repository": "https://github.com/AUN-PN/unity-agent-workflows",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": [
     "unity",
     "unity2d",
@@ -34,7 +34,6 @@
     ],
     "composerIcon": "./assets/unity-workflows.png",
     "logo": "./assets/unity-workflows.png",
-    "screenshots": [],
     "brandColor": "#111827"
   }
 }

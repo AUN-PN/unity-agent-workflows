@@ -282,7 +282,7 @@ unity-agent-workflows/
 - ไม่ assume project structure ตายตัว
 - ไม่ทำให้ `runtime-owner proof` เป็น official Unity concept; มันคือ guardrail workflow
 - `npx` ไม่ได้ติดตั้ง Codex plugin marketplace entry
-- public reuse และ external contribution ยังจำกัด เพราะ package เป็น `UNLICENSED` และยังไม่มี `LICENSE` file
+- อนุญาต public reuse และ external contribution ภายใต้ MIT License; ดู [LICENSE](LICENSE)
 
 ## Support
 
@@ -294,4 +294,4 @@ https://github.com/AUN-PN/unity-agent-workflows/issues
 
 ## License
 
-`UNLICENSED`
+MIT License. ดู [LICENSE](LICENSE)

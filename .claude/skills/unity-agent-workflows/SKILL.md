@@ -1,6 +1,7 @@
 ---
 name: unity-agent-workflows
 description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, or repeated "fix still not visible" failures.
+license: MIT
 ---
 
 # Unity Agent Workflows

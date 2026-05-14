@@ -5,6 +5,9 @@ ROOT="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 required=(
   "SKILL.md"
+  "LICENSE"
+  "SECURITY.md"
+  ".codexignore"
   "README.md"
   "package.json"
   ".agents/plugins/marketplace.json"
@@ -29,6 +32,10 @@ required=(
   ".claude/skills/unity-agent-workflows/agents/openai.yaml"
   ".claude/skills/unity-agent-workflows/references/ai-workflows.md"
   "plugins/unity-agent-workflows/.codex-plugin/plugin.json"
+  "plugins/unity-agent-workflows/LICENSE"
+  "plugins/unity-agent-workflows/SECURITY.md"
+  "plugins/unity-agent-workflows/.codexignore"
+  "plugins/unity-agent-workflows/README.md"
   "plugins/unity-agent-workflows/assets/unity-workflows.png"
   "skills/unity-agent-workflows/agents/openai.yaml"
   "skills/unity-agent-workflows/references/ai-workflows.md"
@@ -95,6 +102,7 @@ for line in frontmatter:
         frontmatter_values[key.strip()] = value.strip()
 require(frontmatter_values.get("name") == "unity-agent-workflows", "SKILL.md name must be unity-agent-workflows")
 require(frontmatter_values.get("description"), "SKILL.md description must be non-empty")
+require(frontmatter_values.get("license") == "MIT", "SKILL.md license must be MIT")
 if "TODO" in skill:
     raise SystemExit("SKILL.md still contains TODO")
 require("Use $unity-agent-workflows" in openai_yaml, "agents/openai.yaml default_prompt missing skill invocation")
