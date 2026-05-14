@@ -2,6 +2,26 @@
 
 Read this only when a task involves focus, highlight, click/tap target, visual target, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess".
 
+## Runtime Visible Output Scope
+
+Use this for any visible or interactive output whose position, size, mask, blocker, label, camera target, selection, or marker depends on a runtime object. Do not limit this workflow to tutorial overlays.
+
+Common cases:
+
+- UI overlays, markers, highlights, selections, blockers, masks, and dimming holes.
+- HUD markers, objective arrows, nameplates, health bars, damage numbers, and world-to-UI labels.
+- Click/tap/drag targets, input blockers, tooltip anchors, and selection brackets.
+- Safe-area-dependent UI, RenderTexture UI, world-space Canvas, camera/world/screen/canvas conversions.
+- Hardcoded anchors or fallback rectangles that stand in for live runtime targets.
+
+Required chain:
+
+```text
+visible output -> active runtime target -> selected source bounds -> converted output rect -> runtime writer -> validation
+```
+
+If the chain is incomplete, stay read-only or inspect deeper before editing.
+
 ## Hardcoded Fallback Contract
 
 Keep hardcoded layout only as a named fallback, never as the primary path, when a live runtime target can be resolved.
@@ -67,7 +87,7 @@ If an object is found but no marker exists:
 
 ## Required Target Report
 
-For every UI focus/highlight target, closeout or diagnosis must include:
+For every runtime visible output target, closeout or diagnosis must include:
 
 - target name
 - parent chain
@@ -82,3 +102,16 @@ For every UI focus/highlight target, closeout or diagnosis must include:
 - whether fallback was used
 
 Patch coordinates only after the selected rect is proven.
+
+## Repeated Visible Failure Lock
+
+If the user says the result is still wrong, unchanged, in the wrong place, or provides a marked screenshot after a patch:
+
+1. Stop tuning constants.
+2. Treat the marked screenshot target as the current scope.
+3. Re-resolve the active runtime target and duplicate names.
+4. Re-classify `markerRect`, `visualRect`, `interactiveRect`, `logicRect`, and selected output rect.
+5. Re-check source canvas/root, destination canvas/root, camera, scale factor, layout timing, safe area, animation, pooling, and refresh writers.
+6. Patch only after the converted output rect is proven.
+
+Do not infer the fix from the previous patch, nearby object names, or a visually similar control.

@@ -30,7 +30,8 @@
     "termsOfServiceURL": "https://github.com/AUN-PN/unity-agent-workflows",
     "defaultPrompt": [
       "Use $unity-agent-workflows. Teach",
-      "Use $unity-agent-workflows to prove and fix a Unity runtime-visible bug."
+      "Use $unity-agent-workflows to prove and fix a Unity runtime-visible bug.",
+      "Use $unity-agent-workflows for Unity state-step gates and runtime UI output."
     ],
     "composerIcon": "./assets/unity-workflows.png",
     "logo": "./assets/unity-workflows.png",

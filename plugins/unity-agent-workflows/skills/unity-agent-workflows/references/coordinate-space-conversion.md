@@ -39,6 +39,34 @@ If either source space or destination space is unknown, do not copy coordinates.
 5. Keep all related output in one destination space: marker, label, hit area, outline, tooltip, or debug gizmo.
 6. Validate by reporting source space, destination space, API path, camera, canvas/root, and runtime proof.
 
+## Coordinate Patch Hard Stop
+
+For any output that crosses spaces or roots, do not edit coordinates, scale, anchors, offsets, padding, conversion code, fallback rectangles, or layout timing until the conversion proof is complete.
+
+Required proof:
+
+```text
+source object:
+source parent chain:
+source RectTransform worldCorners or world bounds:
+source canvas/root:
+source canvas renderMode:
+source canvas scaleFactor:
+source camera:
+destination object/root:
+destination canvas/root:
+destination canvas renderMode:
+destination canvas scaleFactor:
+destination camera:
+conversion API path:
+converted min/max:
+final output position/size:
+runtime writer checked:
+validation:
+```
+
+If any field is unknown, stay read-only or inspect deeper. Do not patch from inference.
+
 ## UI Between Different Roots
 
 Use when a UI element in one canvas/root drives a marker, tooltip, selection outline, blocker, or debug rectangle in another root.

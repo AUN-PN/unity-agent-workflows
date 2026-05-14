@@ -36,11 +36,35 @@ user-visible target
 
 If proof is incomplete, do not patch coordinates. Inspect deeper or ask one concise question if two live owners are equally plausible.
 
+## Runtime Visible Output Hard Stop
+
+Use this for any runtime output that is drawn, positioned, blocked, aimed, anchored, masked, followed, measured, or converted from a live Unity target. This is broader than tutorial focus UI.
+
+Examples include UI overlays, selection outlines, input blockers, drag targets, HUD markers, objective arrows, world-to-UI labels, damage numbers, nameplates, health bars, safe-area-dependent UI, camera targets, RenderTexture-driven UI, world-space canvases, and hardcoded layout used as a substitute for a live target.
+
+Do not edit coordinates, anchors, offsets, padding, scale, layout timing, camera conversion, or fallback constants until this proof exists:
+
+```text
+user-visible output
+-> active source object
+-> selected source bounds: markerRect / visualRect / interactiveRect / logicRect
+-> source parent chain
+-> source owner script/component
+-> runtime writer after creation/layout
+-> source space and camera/canvas
+-> destination root/canvas/space
+-> conversion API path
+-> converted output rect/position
+-> validation method
+```
+
+If any required link is unknown, stay read-only or inspect deeper. Do not patch from semantic similarity, object center, first-name lookup, screenshot proximity, or a previously edited constant.
+
 ## Load Extra Detail Only When Needed
 
 | Trigger | Read |
 |---|---|
-| focus ring, tutorial spotlight, modal hole, tap/click target, highlight, marker, visual alignment, hardcoded layout | `references/runtime-visible-targets.md` |
+| runtime-visible output, focus ring, tutorial spotlight, modal hole, tap/click target, highlight, marker, visual alignment, input blocker, world-to-UI label, HUD marker, hardcoded layout | `references/runtime-visible-targets.md` |
 | button/icon/card/HUD row/world unit/projectile/VFX/text bounds, choosing `markerRect` vs `visualRect` vs `interactiveRect` | `references/target-bounds-catalog.md` |
 | world/local/screen/viewport/canvas/camera/safe-area/RenderTexture mismatch or world-to-UI conversion | `references/coordinate-space-conversion.md` |
 
@@ -119,7 +143,7 @@ When the user says the result is still wrong:
 
 1. Stop tuning constants.
 2. Re-read the screenshot/target wording.
-3. Re-run the Runtime Visible Target Lock proof chain.
+3. Re-run the Runtime Visible Output Hard Stop proof chain.
 4. Check duplicate names, inactive scene objects, cloned runtime objects, and parent-chain ambiguity.
 5. Search runtime writers and refresh paths.
 6. Check whether the edited script is in the compiled assembly.
@@ -129,4 +153,4 @@ When the user says the result is still wrong:
 
 ## Screenshot Ambiguity
 
-If the screenshot and text disagree, ask one concise clarifying question before editing. If the screenshot clearly marks one object, scope the patch to that object and direct dependencies only.
+If the screenshot and text disagree, ask one concise clarifying question before editing. If the screenshot clearly marks one object, the marked runtime target wins over semantic guesses; scope the patch to that object and direct dependencies only.

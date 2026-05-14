@@ -59,6 +59,34 @@ Content config/data
 
 The planner should feed existing seams instead of growing the main manager, controller, or scene owner.
 
+## Runtime State Step Guard
+
+Use this for tutorials, onboarding, missions, unlocks, quests, shop flows, equipment flows, rewards, navigation gates, and any user-visible state machine.
+
+Never collapse these states into one boolean unless the live design already proves they are identical:
+
+```text
+shown != clicked != opened != selected != equipped != claimed != completed != persisted
+```
+
+Before editing a state transition, prove:
+
+```text
+visible prompt/state:
+user action:
+screen/section opened:
+domain action completed:
+completion/persistence key:
+old-save/default-content path:
+already-done path:
+reset/new-install path:
+analytics-only path:
+runtime writer/refresh path:
+validation:
+```
+
+Analytics, click tracking, section navigation, and prompt display are not completion proof. Patch the owner that actually advances domain state or persistence, and keep UI presenters presentation-only when the repo already has a service/gateway/contract layer.
+
 ## Balance Pass Rules
 
 - Read current data/config and runtime override paths before changing values.

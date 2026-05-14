@@ -27,6 +27,7 @@ Use when placement or ownership is unclear.
 3. Put code-first feature behavior in the repo's owning feature/module/runtime path.
 4. Route cross-module facts through contracts/events/bridges.
 5. Extract a collaborator if a controller would gain a new responsibility group.
+6. For tutorials, missions, unlocks, equipment, rewards, shops, navigation gates, or other state machines, run the Runtime State Step Guard from `references/content-and-systems.md`.
 
 ## WF-3 Cross-Module Communication
 
@@ -55,7 +56,7 @@ Use when placement or ownership is unclear.
 ## WF-6 UI Or Screenshot Fix
 
 1. Identify visible layer and runtime owner.
-2. If the task involves focus, highlight, selection, click/tap target, visual target, bounds-type choice, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess", run the Runtime Visible Target Lock from `references/runtime-owner-proof.md` before editing.
+2. If the task involves any runtime visible output, focus, highlight, selection, click/tap target, visual target, bounds-type choice, marker, blocker, mask, world-to-UI label, HUD marker, modal dimming, duplicate names, hardcoded layout/position, or "do not guess", run the Runtime Visible Output Hard Stop from `references/runtime-owner-proof.md` before editing.
 3. Separate layout/anchoring from readability/polish.
 4. Change only the shown layer unless owner proof requires a direct dependency.
 5. Preserve camera, background, composition, and runtime layout unless requested.

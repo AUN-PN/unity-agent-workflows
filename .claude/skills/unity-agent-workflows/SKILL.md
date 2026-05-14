@@ -1,6 +1,6 @@
 ---
 name: unity-agent-workflows
-description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, or repeated "fix still not visible" failures.
+description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, state-step guards, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, coordinate conversions, or repeated "fix still not visible" failures.
 license: MIT
 ---
 
@@ -19,7 +19,7 @@ Use this skill as the AI operating system for Unity work: read the live repo, de
 7. If a code graph exists, read it before architecture claims only when dependency/routing proof needs graph data: graph report, graph wiki, `graph.json`, or equivalent.
 8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
-   - Visible target alignment, interactive/visual target focus, spotlight, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible target lock.
+   - Runtime-visible output, target alignment, interactive/visual target focus, marker/overlay/input blocking, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible output hard stop.
    - New or expanded C# responsibility -> project-derived routing.
    - UI layout/readability -> UI workflow.
    - Visual source asset -> visual asset gate.
@@ -89,6 +89,7 @@ Before editing, load the matching reference files below. This prevents the failu
 | Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
 | New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
+| Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, or state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
 | Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
 | Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
 | Rule/session mining/workflow update | `references/session-mining.md` |
@@ -142,8 +143,8 @@ Add graph, God Node, edge count, over-500 status, and architecture-doc sync only
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
 - **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
-- **Visible target lock**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` only when its trigger matches.
-- **New runtime/content feature**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
+- **Runtime visible output**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` when the output depends on a live target, bounds choice, or coordinate conversion.
+- **New runtime/content feature or state transition**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
 - **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
 - **UI or screenshot work**: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before editing. Report those references as loaded in closeout.

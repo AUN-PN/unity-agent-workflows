@@ -22,6 +22,18 @@
       "expectation": "Loads UI, runtime-owner, and validation references; checks hierarchy, RectTransform, CanvasScaler, and safe area."
     },
     {
+      "id": "runtime-visible-output-conversion",
+      "prompt": "Unity 2D: the objective arrow follows the wrong enemy after converting world position into HUD space. Do not guess coordinates.",
+      "expected_skill": true,
+      "expectation": "Runs the Runtime Visible Output Hard Stop, proves source bounds, destination root, camera/canvas spaces, conversion path, and runtime writer before editing."
+    },
+    {
+      "id": "state-step-transition-guard",
+      "prompt": "Unity 2D: the tutorial says the reward was claimed after opening the shop, but old saves keep repeating the prompt.",
+      "expected_skill": true,
+      "expectation": "Runs the Runtime State Step Guard and separates shown, clicked, opened, claimed, completed, persisted, old-save, and reset paths."
+    },
+    {
       "id": "cleanup-delete-unused-prefab",
       "prompt": "Unity cleanup: remove this unused prefab and any dead scripts around it.",
       "expected_skill": true,
