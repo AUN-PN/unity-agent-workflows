@@ -6,17 +6,17 @@ Installable Codex plugin bundle for Unity Agent Workflows.
 
 **Before using the plugin: the focus is still on the bottom Satellite/Sentinel navigation tab.**
 
-![Before command: Sentinel menu prompt](assets/case-ftue-sentinel-before-plugin.png)
+![Before command: Sentinel menu tutorial text](assets/case-ftue-sentinel-before-plugin.png)
 
 **Fix with `Unity Workflows`: the focus moves to the real Sentinel `ADD` button.**
 
 ![After Unity Workflows: ADD button focus](assets/case-ftue-sentinel-after-plugin.png)
 
-**Fix without plugin rules: the install prompt appears, but the focus lands around the ship position instead of `ADD`.**
+**Attempt without plugin rules: the Sentinel install tutorial text appears, but the focus lands around the ship position instead of `ADD`.**
 
 ![Without plugin rules: wrong ship-area focus](assets/case-ftue-sentinel-without-plugin.png)
 
-Prompt:
+Example request:
 
 ```text
 Use $unity-agent-workflows.

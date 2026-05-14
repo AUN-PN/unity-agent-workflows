@@ -207,17 +207,17 @@ Do not edit yet. Inspect the project structure and report the proposed UNITY_STR
 
 ### เคสตัวอย่าง: FTUE Sentinel Install Focus
 
-บั๊กคือ FTUE Stage 5 Sentinel install focus เพี้ยนซ้ำ: agent แบบไม่ใช้ plugin ทำให้ install prompt ขึ้นได้ แต่ focus ring ไปอยู่แถว ship ไม่ใช่ปุ่ม `ADD` จริง. รอบที่ใช้ `Unity Workflows` บังคับ main-agent scope lock, sub-agent read-only, runtime numeric proof และ checker criteria ก่อน patch
+บั๊กคือ FTUE Stage 5 Sentinel install focus เพี้ยนซ้ำ: agent แบบไม่ใช้ plugin ทำให้ข้อความสอนติดตั้ง Sentinel ขึ้นได้ แต่ focus ring ไปอยู่แถว ship ไม่ใช่ปุ่ม `ADD` จริง. รอบที่ใช้ `Unity Workflows` บังคับ main-agent scope lock, sub-agent read-only, runtime numeric proof และ checker criteria ก่อน patch
 
 **ก่อนใช้ plugin: focus ยังอยู่ที่แท็บนำทางล่าง Satellite/Sentinel**
 
-![Before command: Sentinel menu prompt](assets/case-ftue-sentinel-before-plugin.png)
+![Before command: Sentinel menu tutorial text](assets/case-ftue-sentinel-before-plugin.png)
 
 **แก้โดยใช้ `Unity Workflows`: focus ไปอยู่ตำแหน่งปุ่ม Sentinel `ADD` จริง**
 
 ![After Unity Workflows: ADD button focus](assets/case-ftue-sentinel-after-plugin.png)
 
-**แก้โดยไม่ใช้ plugin rules: install prompt ขึ้น แต่ focus ไปอยู่แถวตำแหน่งยาน ไม่ใช่ `ADD`**
+**รอบที่ไม่ใช้ plugin rules: ข้อความสอนติดตั้ง Sentinel ขึ้น แต่ focus ไปอยู่แถวตำแหน่งยาน ไม่ใช่ `ADD`**
 
 ![Without plugin rules: wrong ship-area focus](assets/case-ftue-sentinel-without-plugin.png)
 
@@ -228,7 +228,7 @@ Do not edit yet. Inspect the project structure and report the proposed UNITY_STR
 - ต้องมี runtime numeric proof ก่อน patch focus/position ซ้ำ
 - checker ต้องเทียบว่า final focus อยู่ที่ปุ่ม `ADD` จริง ไม่ใช่แถวยาน
 
-Prompt:
+ตัวอย่างคำสั่งเรียกใช้:
 
 ```text
 Use $unity-agent-workflows.

@@ -207,17 +207,17 @@ Later tasks should read only `UNITY_STRUCTURE.md` plus the focused map that matc
 
 ### Example Case: FTUE Sentinel Install Focus
 
-The visible bug was a repeated FTUE Stage 5 Sentinel install focus mismatch. A normal non-plugin pass reached the install prompt, but the focus ring stayed on the ship area instead of the live `ADD` button. The `Unity Workflows` pass forced main-agent scope lock, read-only sub-agents, runtime numeric proof requirements, and checker criteria before patching.
+The visible bug was a repeated FTUE Stage 5 Sentinel install focus mismatch. A normal non-plugin pass showed the Sentinel install tutorial text, but the focus ring stayed on the ship area instead of the live `ADD` button. The `Unity Workflows` pass forced main-agent scope lock, read-only sub-agents, runtime numeric proof requirements, and checker criteria before patching.
 
 **Before using the plugin: the focus is still on the bottom Satellite/Sentinel navigation tab.**
 
-![Before command: Sentinel menu prompt](assets/case-ftue-sentinel-before-plugin.png)
+![Before command: Sentinel menu tutorial text](assets/case-ftue-sentinel-before-plugin.png)
 
 **Fix with `Unity Workflows`: the focus moves to the real Sentinel `ADD` button.**
 
 ![After Unity Workflows: ADD button focus](assets/case-ftue-sentinel-after-plugin.png)
 
-**Fix without plugin rules: the install prompt appears, but the focus lands around the ship position instead of `ADD`.**
+**Attempt without plugin rules: the Sentinel install tutorial text appears, but the focus lands around the ship position instead of `ADD`.**
 
 ![Without plugin rules: wrong ship-area focus](assets/case-ftue-sentinel-without-plugin.png)
 
@@ -228,7 +228,7 @@ What the plugin changed:
 - Require runtime numeric proof before another focus/position patch.
 - Check that the final focus target is the visible `ADD` button, not the ship area.
 
-Prompt:
+Example request:
 
 ```text
 Use $unity-agent-workflows.
