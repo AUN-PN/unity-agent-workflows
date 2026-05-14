@@ -30,6 +30,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 6. If the user asks for object truth, do not use screenshot pixels as the source of truth.
 7. Do not use hardcoded focus anchors, sizes, or expected menu positions as the primary target path.
 8. Validate with screenshot, hierarchy, or runtime proof.
+9. If a visible patch already failed or the user says it is still wrong, stop editing and collect runtime numeric proof before another patch.
 
 ## Spotlight And Modal Highlight
 
@@ -45,6 +46,7 @@ Use this when a tutorial, onboarding, tooltip, modal, focus ring, dim scrim, or 
 - Resolve duplicate names before choosing a target. Parent chain and active/interactable state must disambiguate the real runtime object.
 - If the visible target is interactive, still compare `markerRect`, `visualRect`, and `interactiveRect` before choosing; use hardcoded fallback only after target lookup fails and report it.
 - If no marker exists and the visible center differs from the interactive/root center, recommend adding a marker before changing coordinates.
+- After a failed focus/highlight/spotlight/modal patch, require runtime numeric values for target bounds, converted rect, and final drawn ring/hole/blocker rect before changing offsets, anchors, scale, timing, or fallback constants again.
 
 ## Designer Focus Marker
 

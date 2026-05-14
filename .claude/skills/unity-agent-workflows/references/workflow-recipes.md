@@ -64,6 +64,17 @@ Use when placement or ownership is unclear.
 7. If an object is found but no marker exists, read `references/runtime-visible-targets.md` and report candidate rects/ambiguity before choosing.
 8. Validate with screenshot, hierarchy, or serialized/runtime proof.
 
+## WF-6R Repeated Visible Mismatch
+
+Use when a UI/HUD/focus/highlight/marker/camera/world-to-UI fix already failed, looks unchanged, or lands in the wrong place.
+
+1. Stop patching the same coordinate/layout/fallback owner.
+2. Treat the user's latest screenshot or visible target wording as the current scope.
+3. Read `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, and `references/unity-validation.md`.
+4. Collect runtime numeric proof: source bounds, destination bounds/root, converted rect, final drawn rect, and runtime writer.
+5. If values are missing, return a runtime probe plan only.
+6. Let a checker fail the work if the next patch lacks numeric proof.
+
 ## WF-7 Visual Source Asset
 
 1. Stop code editing.

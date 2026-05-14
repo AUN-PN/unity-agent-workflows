@@ -10,12 +10,12 @@ Codex plugin, Codex skill และ `npx` installer สำหรับงาน 
 
 ใช้เมื่อ agent ต้องแตะไฟล์ Unity จริง แต่ต้องพิสูจน์ก่อนว่า path ไหนควบคุมสิ่งที่ผู้เล่นเห็นจริง: local rules, project structure, scene/prefab references, runtime owner, mutation path และ validation
 
-| Surface | Name |
-|---|---|
-| npm package | `unity-agent-workflows` |
-| Codex plugin display name | `Unity Workflows` |
-| Skill name | `unity-agent-workflows` |
-| Skill title | `Unity Agent Workflows` |
+| Surface                   | Name                    |
+| ------------------------- | ----------------------- |
+| npm package               | `unity-agent-workflows` |
+| Codex plugin display name | `Unity Workflows`       |
+| Skill name                | `unity-agent-workflows` |
+| Skill title               | `Unity Agent Workflows` |
 
 กฎหลัก:
 
@@ -150,13 +150,13 @@ Do not edit yet. Inspect the project structure and report the proposed UNITY_STR
 
 งานถัดไปควรอ่านแค่ `UNITY_STRUCTURE.md` บวก focused map ที่ตรงกับงาน
 
-| งาน | อ่าน |
-|---|---|
-| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
-| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
-| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
-| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+| งาน                                                                  | อ่าน                                                  |
+| -------------------------------------------------------------------- | ----------------------------------------------------- |
+| UI, HUD, menu, safe area, TMP, visible target                        | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`         |
+| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md`    |
+| Balance, localization, ScriptableObjects, config                     | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md`    |
+| New files, refactor, asmdef, namespace, dependency                   | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables           | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md`    |
 
 ตัวอย่าง prompt:
 
@@ -201,36 +201,37 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 
 ## ครอบคลุมอะไร
 
-| Area | สิ่งที่ skill บังคับ |
-|---|---|
-| Runtime-visible bugs | prove object, owner, mutator และ override path |
-| UI/HUD | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP และ runtime builders |
-| Visible targets | resolve runtime bounds แทนการเดา hardcoded coordinates |
-| Coordinate conversion | ระบุ world, local, screen, viewport, canvas, camera และ safe-area space ชัด |
-| C# routing | derive folders, namespaces, `.asmdef`, dependency direction และ owner modules |
-| Content changes | ใช้ data/config surface เดิมก่อน ถ้าโปรเจ็คมี |
-| Validation | ใช้ check ที่เล็กแต่มีประโยชน์ และรายงาน exact command output |
-| Cleanup | prove unused status ผ่าน code refs, YAML/GUID refs, Resources/addressables paths และ runtime reachability |
+| Area                      | สิ่งที่ skill บังคับ                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Runtime-visible bugs      | prove object, owner, mutator และ override path                                                            |
+| UI/HUD                    | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP และ runtime builders                           |
+| Visible targets           | resolve runtime bounds แทนการเดา hardcoded coordinates                                                    |
+| Repeated visible mismatch | บังคับ runtime numeric proof ก่อน patch coordinate, focus, layout, marker หรือ fallback ซ้ำ               |
+| Coordinate conversion     | ระบุ world, local, screen, viewport, canvas, camera และ safe-area space ชัด                               |
+| C# routing                | derive folders, namespaces, `.asmdef`, dependency direction และ owner modules                             |
+| Content changes           | ใช้ data/config surface เดิมก่อน ถ้าโปรเจ็คมี                                                             |
+| Validation                | ใช้ check ที่เล็กแต่มีประโยชน์ และรายงาน exact command output                                             |
+| Cleanup                   | prove unused status ผ่าน code refs, YAML/GUID refs, Resources/addressables paths และ runtime reachability |
 
 ## Reference Files
 
 [SKILL.md](SKILL.md) ตั้งใจให้สั้น ส่วน workflow ลึกอยู่ใน `references/` และโหลดเฉพาะเมื่องานต้องใช้
 
-| File | ใช้ทำอะไร |
-|---|---|
-| [references/ai-workflows.md](references/ai-workflows.md) | universal workflow, Routing Card, closeout shape |
-| [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery และ `UNITY_STRUCTURE.md` maps |
-| [references/runtime-owner-proof.md](references/runtime-owner-proof.md) | runtime-visible owner proof และ repeated-fix diagnostics |
-| [references/runtime-visible-targets.md](references/runtime-visible-targets.md) | focus, highlight, click target, marker และ fallback rules |
-| [references/target-bounds-catalog.md](references/target-bounds-catalog.md) | UI, 2D world, VFX, safe-area และ TMP bounds choices |
+| File                                                                                   | ใช้ทำอะไร                                                                    |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [references/ai-workflows.md](references/ai-workflows.md)                               | universal workflow, Routing Card, closeout shape                             |
+| [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery และ `UNITY_STRUCTURE.md` maps                 |
+| [references/runtime-owner-proof.md](references/runtime-owner-proof.md)                 | runtime-visible owner proof และ repeated-fix diagnostics                     |
+| [references/runtime-visible-targets.md](references/runtime-visible-targets.md)         | focus, highlight, click target, marker และ fallback rules                    |
+| [references/target-bounds-catalog.md](references/target-bounds-catalog.md)             | UI, 2D world, VFX, safe-area และ TMP bounds choices                          |
 | [references/coordinate-space-conversion.md](references/coordinate-space-conversion.md) | world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion |
-| [references/modular-architecture.md](references/modular-architecture.md) | project-derived module boundaries, asmdef safety, hub gates |
-| [references/unity-validation.md](references/unity-validation.md) | validation ladder, Unity/Bee/Roslyn notes, MCP checks |
-| [references/ui-and-visual-assets.md](references/ui-and-visual-assets.md) | UI layout, mobile readability, safe area, localization, visual asset gates |
-| [references/content-and-systems.md](references/content-and-systems.md) | data-first content และ runtime system readiness |
-| [references/cleanup-and-git.md](references/cleanup-and-git.md) | deletion proof, generated files, commit/push hygiene |
-| [references/session-mining.md](references/session-mining.md) | แปลง lesson จาก agent session เก่าเป็น durable rules |
-| [references/workflow-recipes.md](references/workflow-recipes.md) | optional recipes สำหรับ work patterns ที่พบบ่อย |
+| [references/modular-architecture.md](references/modular-architecture.md)               | project-derived module boundaries, asmdef safety, hub gates                  |
+| [references/unity-validation.md](references/unity-validation.md)                       | validation ladder, Unity/Bee/Roslyn notes, MCP checks                        |
+| [references/ui-and-visual-assets.md](references/ui-and-visual-assets.md)               | UI layout, mobile readability, safe area, localization, visual asset gates   |
+| [references/content-and-systems.md](references/content-and-systems.md)                 | data-first content และ runtime system readiness                              |
+| [references/cleanup-and-git.md](references/cleanup-and-git.md)                         | deletion proof, generated files, commit/push hygiene                         |
+| [references/session-mining.md](references/session-mining.md)                           | แปลง lesson จาก agent session เก่าเป็น durable rules                         |
+| [references/workflow-recipes.md](references/workflow-recipes.md)                       | optional recipes สำหรับ work patterns ที่พบบ่อย                              |
 
 ## ตรวจ Package นี้
 
@@ -242,7 +243,7 @@ npm run sync:mcpmarket
 npm run pack:dry-run
 ```
 
-`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, reference links และ JavaScript syntax
+`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, reference links, JavaScript syntax และ runtime numeric proof trigger coverage
 
 `npm run sync:mcpmarket` mirror `SKILL.md`, `references/` และ `agents/` ไปที่:
 
@@ -294,4 +295,4 @@ https://github.com/AUN-PN/unity-agent-workflows/issues
 
 ## License
 
-MIT License. ดู [LICENSE](LICENSE)
+MIT License.

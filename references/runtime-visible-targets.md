@@ -103,6 +103,42 @@ For every runtime visible output target, closeout or diagnosis must include:
 
 Patch coordinates only after the selected rect is proven.
 
+## Runtime Numeric Target Report
+
+For repeated visible failures, the report must include concrete runtime values, not only owner names or source-code reasoning:
+
+```text
+target name:
+parent chain:
+owner script/component:
+duplicate count:
+active/interactable state:
+markerRect:
+visualRect:
+interactiveRect:
+logicRect:
+selected rect:
+source canvas/root:
+source renderMode:
+source scaleFactor:
+source camera:
+destination overlay/root:
+destination renderMode:
+destination scaleFactor:
+destination camera:
+conversion method:
+converted min/max:
+converted center/size:
+final drawn object:
+final drawn position:
+final drawn size/bounds:
+fallback used:
+runtime writer checked:
+validation:
+```
+
+Values like `expected`, `likely`, `same helper`, `known from source`, `compile passed`, or `checker thinks OK` are not proof.
+
 ## Repeated Visible Failure Lock
 
 If the user says the result is still wrong, unchanged, in the wrong place, or provides a marked screenshot after a patch:
@@ -112,6 +148,9 @@ If the user says the result is still wrong, unchanged, in the wrong place, or pr
 3. Re-resolve the active runtime target and duplicate names.
 4. Re-classify `markerRect`, `visualRect`, `interactiveRect`, `logicRect`, and selected output rect.
 5. Re-check source canvas/root, destination canvas/root, camera, scale factor, layout timing, safe area, animation, pooling, and refresh writers.
-6. Patch only after the converted output rect is proven.
+6. Collect the Runtime Numeric Target Report.
+7. Patch only after the converted output rect and final drawn rect are proven with runtime values.
 
 Do not infer the fix from the previous patch, nearby object names, or a visually similar control.
+
+Checker rule: return FAIL when runtime numeric proof is absent for a repeated visible-output patch.

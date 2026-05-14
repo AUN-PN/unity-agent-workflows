@@ -1,6 +1,6 @@
 ---
 name: unity-agent-workflows
-description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, state-step guards, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, coordinate conversions, or repeated "fix still not visible" failures.
+description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, runtime numeric proof for repeated visible-output failures, state-step guards, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, coordinate conversions, focus/highlight/marker/HUD alignment, or repeated "fix still not visible" failures.
 license: MIT
 ---
 
@@ -20,6 +20,7 @@ Use this skill as the AI operating system for Unity work: read the live repo, de
 8. Classify the task before touching files:
    - Runtime/visible bug -> prove owner chain.
    - Runtime-visible output, target alignment, interactive/visual target focus, marker/overlay/input blocking, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible output hard stop.
+   - Repeated visible-output mismatch after a patch -> runtime numeric proof before another patch.
    - New or expanded C# responsibility -> project-derived routing.
    - UI layout/readability -> UI workflow.
    - Visual source asset -> visual asset gate.
@@ -87,6 +88,7 @@ Before editing, load the matching reference files below. This prevents the failu
 |---|---|
 | UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Repeated visible-output failure after a patch, wrong focus/highlight/marker/HUD/camera position, cross-root/cross-canvas mismatch | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
 | New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
 | New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
 | Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, or state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
@@ -103,6 +105,9 @@ Closeout must also include `Project maps loaded:` with the exact `UNITY_STRUCTUR
 ## Hard Rules
 
 - No proof, no edit. For visible/runtime changes, prove the owner chain first.
+- Runtime numeric proof is mandatory before patching a repeated visible-output failure. Static source inspection, sub-agent analysis, compile success, checker confidence, or screenshot estimation is not enough when the task involves focus rings, spotlight holes, highlights, blockers, markers, tooltip anchors, camera targets, safe-area offsets, world-to-UI labels, HUD markers, or cross-root/cross-canvas conversion.
+- After the user reports a visible fix is still wrong, unchanged, or in the wrong place, the next step must be runtime measurement or editor/runtime query. Do not patch the same coordinate, focus, layout, camera, or fallback owner again until numeric runtime proof explains the mismatch.
+- A checker must fail any coordinate/focus/layout/marker patch that lacks concrete runtime values for source bounds, destination bounds, converted rect, and final drawn rect.
 - No fixed structure. Derive module names, layers, folders, namespaces, assemblies, bootstraps, and scene/prefab ownership from the user's project before routing new work.
 - No guessed targeting. If the user asks to bind, focus, highlight, click, or align a visible object, resolve the real runtime object and coordinate space before editing.
 - Do not grow a hub when a focused collaborator, data object, contract, event, bridge, or service can own the new responsibility.
@@ -142,7 +147,7 @@ Add graph, God Node, edge count, over-500 status, and architecture-doc sync only
 ## Task Router
 
 - **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
-- **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`; search alternate owner paths before changing more values.
+- **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, and `references/unity-validation.md`; collect runtime numeric proof before changing more values.
 - **Runtime visible output**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` when the output depends on a live target, bounds choice, or coordinate conversion.
 - **New runtime/content feature or state transition**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
 - **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
@@ -160,6 +165,7 @@ Report compactly:
 - Changed files.
 - Non-requested systems touched: yes/no.
 - Runtime-owner or structural proof.
+- Runtime numeric proof for repeated visible-output fixes, or the probe plan if proof could not be captured.
 - Validation command and result.
 - References loaded/missing and project maps loaded/missing.
 - Residual risk.

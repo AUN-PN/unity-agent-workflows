@@ -43,7 +43,9 @@ If either source space or destination space is unknown, do not copy coordinates.
 
 For any output that crosses spaces or roots, do not edit coordinates, scale, anchors, offsets, padding, conversion code, fallback rectangles, or layout timing until the conversion proof is complete.
 
-Required proof:
+Static source inspection is not coordinate proof. Sub-agent reasoning is not coordinate proof. Compile success is not visual proof. Screenshot estimation is not coordinate proof. Checker confidence is not coordinate proof unless it cites concrete runtime values.
+
+Required runtime numeric proof:
 
 ```text
 source object:
@@ -60,12 +62,21 @@ destination canvas scaleFactor:
 destination camera:
 conversion API path:
 converted min/max:
-final output position/size:
+converted center/size:
+final output object:
+final output anchoredPosition/world position:
+final output sizeDelta/bounds:
 runtime writer checked:
 validation:
 ```
 
-If any field is unknown, stay read-only or inspect deeper. Do not patch from inference.
+Hard-stop pass criteria:
+
+- Every required field must contain concrete runtime values from Play Mode, Unity MCP/runtime hierarchy query, Device Simulator, Game view inspection, or temporary runtime logs.
+- Values such as `expected`, `likely`, `same helper`, `known from source`, `compile passed`, or `checker thinks OK` are not proof.
+- Missing `source bounds`, `converted min/max`, or `final output position/size` is a FAIL.
+- On FAIL, stay read-only and add a runtime probe plan only.
+- Do not patch from inference.
 
 ## UI Between Different Roots
 

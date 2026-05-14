@@ -106,6 +106,9 @@ require(frontmatter_values.get("license") == "MIT", "SKILL.md license must be MI
 if "TODO" in skill:
     raise SystemExit("SKILL.md still contains TODO")
 require("Use $unity-agent-workflows" in openai_yaml, "agents/openai.yaml default_prompt missing skill invocation")
+require("runtime numeric proof" in skill, "SKILL.md missing runtime numeric proof trigger")
+require("repeated visible-output" in skill, "SKILL.md missing repeated visible-output trigger")
+require("runtime numeric proof" in openai_yaml, "agents/openai.yaml missing runtime numeric proof invocation")
 require(package_json.get("name") == "unity-agent-workflows", "package.json name must be unity-agent-workflows")
 package_version = package_json.get("version")
 require(re.fullmatch(r"\d+\.\d+\.\d+", str(package_version or "")), "package.json version must be semver x.y.z")
@@ -136,6 +139,12 @@ for manifest_rel in (".codex-plugin/plugin.json", "plugins/unity-agent-workflows
     default_prompts = interface.get("defaultPrompt")
     require(isinstance(default_prompts, list) and 1 <= len(default_prompts) <= 3, f"{manifest_rel} defaultPrompt must contain 1-3 prompts")
     require(any("$unity-agent-workflows" in prompt for prompt in default_prompts), f"{manifest_rel} defaultPrompt must mention $unity-agent-workflows")
+    require(
+        "runtime numeric proof" in manifest.get("description", "")
+        or "runtime numeric proof" in interface.get("longDescription", "")
+        or any("runtime numeric proof" in prompt for prompt in default_prompts),
+        f"{manifest_rel} missing runtime numeric proof trigger copy",
+    )
     for prompt in default_prompts:
         require(isinstance(prompt, str) and len(prompt) <= 128, f"{manifest_rel} defaultPrompt entry too long")
     for asset_key in ("composerIcon", "logo"):
@@ -148,11 +157,21 @@ require(isinstance(cases, list) and len(cases) >= 6, "evals must include at leas
 require(any(case.get("expected_skill") is True for case in cases), "evals missing positive cases")
 require(any(case.get("expected_skill") is False for case in cases), "evals missing negative cases")
 seen_ids = set()
+required_eval_ids = {
+    "runtime-visible-output-conversion",
+    "repeated-visible-numeric-proof",
+    "checker-fails-missing-runtime-values",
+}
 for case in cases:
     for key in ("id", "prompt", "expected_skill", "expectation"):
         require(key in case, f"eval case missing {key}")
     require(case["id"] not in seen_ids, f"duplicate eval case id: {case['id']}")
     seen_ids.add(case["id"])
+missing_eval_ids = required_eval_ids - seen_ids
+require(not missing_eval_ids, f"evals missing numeric visible-output cases: {', '.join(sorted(missing_eval_ids))}")
+eval_text = json.dumps(evals, ensure_ascii=False)
+for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect"):
+    require(phrase in eval_text, f"evals missing trigger phrase: {phrase}")
 
 reference_files = sorted(root.joinpath("references").glob("*.md"))
 reference_names = {f.name for f in reference_files}
@@ -169,6 +188,18 @@ missing_from_skill = reference_names - skill_refs
 if missing_from_skill:
     missing = ", ".join(sorted(missing_from_skill))
     raise SystemExit(f"SKILL.md does not route references: {missing}")
+
+required_reference_phrases = {
+    "references/runtime-owner-proof.md": "Runtime Numeric Proof Gate",
+    "references/runtime-visible-targets.md": "Runtime Numeric Target Report",
+    "references/coordinate-space-conversion.md": "Required runtime numeric proof",
+    "references/unity-validation.md": "runtime numeric proof",
+    "references/ui-and-visual-assets.md": "runtime numeric proof",
+    "references/workflow-recipes.md": "WF-6R Repeated Visible Mismatch",
+}
+for rel, phrase in required_reference_phrases.items():
+    text = (root / rel).read_text(encoding="utf-8")
+    require(phrase in text, f"{rel} missing required phrase: {phrase}")
 
 print("skill validation ok")
 PY

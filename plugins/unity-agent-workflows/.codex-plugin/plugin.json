@@ -1,6 +1,6 @@
 {
   "name": "unity-agent-workflows",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Codex skill for safer Unity AI agent workflows, runtime-owner proof, and Unity game development automation.",
   "author": {
     "name": "AUN-PN"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Unity Workflows",
     "shortDescription": "Safer AI workflows for Unity 2D projects",
-    "longDescription": "Use Teach first. Teach creates or refreshes UNITY_STRUCTURE.md for the current Unity 2D project, then agents use disciplined repo discovery, runtime-owner proof, project-derived routing, UI and scene safety, validation, and cleanup proof before editing.",
+    "longDescription": "Use Teach first. Teach creates or refreshes UNITY_STRUCTURE.md for the current Unity 2D project, then agents use disciplined repo discovery, runtime-owner proof, runtime numeric proof for repeated visible-output failures, project-derived routing, UI and scene safety, validation, and cleanup proof before editing.",
     "developerName": "AUN-PN",
     "category": "Coding",
     "capabilities": ["Read", "Write"],
@@ -31,7 +31,7 @@
     "defaultPrompt": [
       "Use $unity-agent-workflows. Teach",
       "Use $unity-agent-workflows to prove and fix a Unity runtime-visible bug.",
-      "Use $unity-agent-workflows for Unity state-step gates and runtime UI output."
+      "Use $unity-agent-workflows to require runtime numeric proof before another visible-output patch."
     ],
     "composerIcon": "./assets/unity-workflows.png",
     "logo": "./assets/unity-workflows.png",

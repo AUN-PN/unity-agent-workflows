@@ -10,12 +10,12 @@ Codex plugin, Codex skill, and `npx` installer for AI-assisted Unity 2D game wor
 
 Use it when an agent needs to touch real Unity project files but must first prove the path that actually controls what the player sees: local rules, project structure, scene/prefab references, runtime owner, mutation path, and validation.
 
-| Surface | Name |
-|---|---|
-| npm package | `unity-agent-workflows` |
-| Codex plugin display name | `Unity Workflows` |
-| Skill name | `unity-agent-workflows` |
-| Skill title | `Unity Agent Workflows` |
+| Surface                   | Name                    |
+| ------------------------- | ----------------------- |
+| npm package               | `unity-agent-workflows` |
+| Codex plugin display name | `Unity Workflows`       |
+| Skill name                | `unity-agent-workflows` |
+| Skill title               | `Unity Agent Workflows` |
 
 The core rule:
 
@@ -150,13 +150,13 @@ Do not edit yet. Inspect the project structure and report the proposed UNITY_STR
 
 Later tasks should read only `UNITY_STRUCTURE.md` plus the focused map that matches the work.
 
-| Task | Read |
-|---|---|
-| UI, HUD, menu, safe area, TMP, visible target | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
-| Balance, localization, ScriptableObjects, config | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md` |
-| New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
-| Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
+| Task                                                                 | Read                                                  |
+| -------------------------------------------------------------------- | ----------------------------------------------------- |
+| UI, HUD, menu, safe area, TMP, visible target                        | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`         |
+| Runtime behavior, scene objects, interactions, abilities, objectives | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md`    |
+| Balance, localization, ScriptableObjects, config                     | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.content.md`    |
+| New files, refactor, asmdef, namespace, dependency                   | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
+| Deletion, cleanup, generated files, Resources/addressables           | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md`    |
 
 Example prompts:
 
@@ -201,36 +201,37 @@ If that chain is incomplete, the agent should inspect deeper or ask one focused 
 
 ## What It Covers
 
-| Area | What the skill enforces |
-|---|---|
-| Runtime-visible bugs | prove the object, owner, mutator, and override path |
-| UI/HUD | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP, and runtime builders |
-| Visible targets | resolve runtime bounds instead of guessing hardcoded coordinates |
-| Coordinate conversion | keep world, local, screen, viewport, canvas, camera, and safe-area spaces explicit |
-| C# routing | derive folders, namespaces, `.asmdef` files, dependency direction, and owner modules |
-| Content changes | prefer existing data/config surfaces when the project has them |
-| Validation | use the smallest useful check and report exact command output |
-| Cleanup | prove unused status through code refs, YAML/GUID refs, Resources/addressables paths, and runtime reachability |
+| Area                      | What the skill enforces                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Runtime-visible bugs      | prove the object, owner, mutator, and override path                                                           |
+| UI/HUD                    | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP, and runtime builders                              |
+| Visible targets           | resolve runtime bounds instead of guessing hardcoded coordinates                                              |
+| Repeated visible mismatch | require runtime numeric proof before another coordinate, focus, layout, marker, or fallback patch             |
+| Coordinate conversion     | keep world, local, screen, viewport, canvas, camera, and safe-area spaces explicit                            |
+| C# routing                | derive folders, namespaces, `.asmdef` files, dependency direction, and owner modules                          |
+| Content changes           | prefer existing data/config surfaces when the project has them                                                |
+| Validation                | use the smallest useful check and report exact command output                                                 |
+| Cleanup                   | prove unused status through code refs, YAML/GUID refs, Resources/addressables paths, and runtime reachability |
 
 ## Reference Files
 
 The main [SKILL.md](SKILL.md) stays short. Deeper workflow rules live in `references/` and are loaded only when the task needs them.
 
-| File | Purpose |
-|---|---|
-| [references/ai-workflows.md](references/ai-workflows.md) | universal workflow, Routing Card, closeout shape |
-| [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery and `UNITY_STRUCTURE.md` maps |
-| [references/runtime-owner-proof.md](references/runtime-owner-proof.md) | runtime-visible owner proof and repeated-fix diagnostics |
-| [references/runtime-visible-targets.md](references/runtime-visible-targets.md) | focus, highlight, click target, marker, and fallback rules |
-| [references/target-bounds-catalog.md](references/target-bounds-catalog.md) | UI, 2D world, VFX, safe-area, and TMP bounds choices |
+| File                                                                                   | Purpose                                                                      |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [references/ai-workflows.md](references/ai-workflows.md)                               | universal workflow, Routing Card, closeout shape                             |
+| [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery and `UNITY_STRUCTURE.md` maps                 |
+| [references/runtime-owner-proof.md](references/runtime-owner-proof.md)                 | runtime-visible owner proof and repeated-fix diagnostics                     |
+| [references/runtime-visible-targets.md](references/runtime-visible-targets.md)         | focus, highlight, click target, marker, and fallback rules                   |
+| [references/target-bounds-catalog.md](references/target-bounds-catalog.md)             | UI, 2D world, VFX, safe-area, and TMP bounds choices                         |
 | [references/coordinate-space-conversion.md](references/coordinate-space-conversion.md) | world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion |
-| [references/modular-architecture.md](references/modular-architecture.md) | project-derived module boundaries, asmdef safety, hub gates |
-| [references/unity-validation.md](references/unity-validation.md) | validation ladder, Unity/Bee/Roslyn notes, MCP checks |
-| [references/ui-and-visual-assets.md](references/ui-and-visual-assets.md) | UI layout, mobile readability, safe area, localization, visual asset gates |
-| [references/content-and-systems.md](references/content-and-systems.md) | data-first content and runtime system readiness |
-| [references/cleanup-and-git.md](references/cleanup-and-git.md) | deletion proof, generated files, commit/push hygiene |
-| [references/session-mining.md](references/session-mining.md) | turning old agent lessons into durable rules |
-| [references/workflow-recipes.md](references/workflow-recipes.md) | optional named recipes for common work patterns |
+| [references/modular-architecture.md](references/modular-architecture.md)               | project-derived module boundaries, asmdef safety, hub gates                  |
+| [references/unity-validation.md](references/unity-validation.md)                       | validation ladder, Unity/Bee/Roslyn notes, MCP checks                        |
+| [references/ui-and-visual-assets.md](references/ui-and-visual-assets.md)               | UI layout, mobile readability, safe area, localization, visual asset gates   |
+| [references/content-and-systems.md](references/content-and-systems.md)                 | data-first content and runtime system readiness                              |
+| [references/cleanup-and-git.md](references/cleanup-and-git.md)                         | deletion proof, generated files, commit/push hygiene                         |
+| [references/session-mining.md](references/session-mining.md)                           | turning old agent lessons into durable rules                                 |
+| [references/workflow-recipes.md](references/workflow-recipes.md)                       | optional named recipes for common work patterns                              |
 
 ## Validate This Package
 
@@ -242,7 +243,7 @@ npm run sync:mcpmarket
 npm run pack:dry-run
 ```
 
-`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, reference links, and JavaScript syntax.
+`npm run validate` checks package metadata, plugin manifests, mirrored skill payloads, reference links, JavaScript syntax, and the runtime numeric proof trigger coverage.
 
 `npm run sync:mcpmarket` mirrors `SKILL.md`, `references/`, and `agents/` into:
 
@@ -294,4 +295,4 @@ https://github.com/AUN-PN/unity-agent-workflows/issues
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License.

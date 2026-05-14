@@ -28,6 +28,18 @@
       "expectation": "Runs the Runtime Visible Output Hard Stop, proves source bounds, destination root, camera/canvas spaces, conversion path, and runtime writer before editing."
     },
     {
+      "id": "repeated-visible-numeric-proof",
+      "prompt": "Unity 2D: the focus ring is still in the wrong place after your previous patch. Before patching again, prove the runtime numeric source bounds, converted rect, and final drawn rect.",
+      "expected_skill": true,
+      "expectation": "Triggers the repeated visible-output gate and requires runtime numeric proof before another coordinate, focus, layout, or fallback patch."
+    },
+    {
+      "id": "checker-fails-missing-runtime-values",
+      "prompt": "Review this Unity UI highlight patch. Fail it if it only has source inspection and compile success but no runtime numeric values for source bounds, converted rect, and final drawn rect.",
+      "expected_skill": true,
+      "expectation": "Uses the checker rule for repeated visible-output work and rejects patches without concrete runtime numeric proof."
+    },
+    {
       "id": "state-step-transition-guard",
       "prompt": "Unity 2D: the tutorial says the reward was claimed after opening the shop, but old saves keep repeating the prompt.",
       "expected_skill": true,
