@@ -66,9 +66,9 @@ Use active renderer bounds, collider bounds for hitbox debug, and trail/line ren
 
 Use explicit center marker, `ParticleSystemRenderer.bounds`, then authored radius or gameplay area config. Do not use particle system root if renderer bounds or radius exists.
 
-## 3D Object / Mesh / Prop
+## 2D World Object / Sprite / Prop
 
-Use explicit marker transform, combined `Renderer.bounds`, then `Collider.bounds` if collision/hitbox target.
+Use explicit marker transform, `SpriteRenderer.bounds` or combined `Renderer.bounds`, then `Collider2D.bounds` if collision/hitbox target.
 
 ## Spawn Point / Path / Invisible Trigger
 

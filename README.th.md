@@ -1,18 +1,21 @@
 # Unity Game Agent Workflows
 
 [![Publish](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml/badge.svg)](https://github.com/AUN-PN/unity-agent-workflows/actions/workflows/publish.yml)
-[![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-unity--agent--workflows-10A37F)](#เพิ่มใน-codex-plugins-จาก-git)
-[![skills.sh](https://img.shields.io/badge/skills.sh-unity--agent--workflows-111111)](https://skills.sh/AUN-PN/unity-agent-workflows/unity-agent-workflows)
+[![npm](https://img.shields.io/npm/v/unity-agent-workflows.svg)](https://www.npmjs.com/package/unity-agent-workflows)
+[![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-Unity%20Workflows-10A37F)](#ติดตั้งเป็น-codex-plugin)
 
 [English](README.md)
 
-Codex skill และ `npx` installer สำหรับโปรเจ็ค Unity ที่ให้ AI agent แตะโค้ดจริง, scene, prefab, UI, asset และ runtime system
+Codex plugin, Codex skill และ `npx` installer สำหรับงาน AI-assisted Unity 2D game
 
-มันช่วยให้ Codex, Claude Code, Unity MCP Server และ workflow แบบ Unity AI Assistant เดินงาน Unity automation ได้ปลอดภัยขึ้น: อ่านโครงสร้างโปรเจ็คก่อน, พิสูจน์ runtime owner, แล้วค่อยแก้ path ที่ทำให้สิ่งบนจอเปลี่ยนจริง
+ใช้เมื่อ agent ต้องแตะไฟล์ Unity จริง แต่ต้องพิสูจน์ก่อนว่า path ไหนควบคุมสิ่งที่ผู้เล่นเห็นจริง: local rules, project structure, scene/prefab references, runtime owner, mutation path และ validation
 
-เหมาะกับงาน UI/HUD, 2D/3D object, physics/collider, animation, VFX, pooled object, runtime clone, scene/prefab reference และ AI-assisted Unity refactoring ที่แค่ compile ผ่านยังไม่พอ ต้องตรงกับสิ่งที่ผู้ใช้เห็นจริง
-
-ผมทำ skill นี้เพราะเจอปัญหาเดิมซ้ำๆ: agent เดา architecture, แก้ไฟล์ใกล้มือแทน runtime owner, เปลี่ยนค่าใน prefab/scene แล้วโดน override ตอน Play Mode, เพิ่ม logic เข้า controller ใหญ่ขึ้นเรื่อยๆ หรือบอกว่า validate แล้วทั้งที่ยังไม่ได้พิสูจน์ path ที่รันจริง
+| Surface | Name |
+|---|---|
+| npm package | `unity-agent-workflows` |
+| Codex plugin display name | `Unity Workflows` |
+| Skill name | `unity-agent-workflows` |
+| Skill title | `Unity Agent Workflows` |
 
 กฎหลัก:
 
@@ -20,137 +23,26 @@ Codex skill และ `npx` installer สำหรับโปรเจ็ค Un
 No proof, no edit.
 ```
 
-สำหรับ behavior ที่ผู้ใช้เห็น ต้องไล่ owner chain ให้ครบ:
+## ทำไมต้องใช้
 
-```text
-visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override
-```
+Unity agents มักพลาดแบบเดิม: แก้ script ใกล้มือ, เชื่อ scene YAML ที่โดน override ตอน Play Mode, จับ object ชื่อซ้ำผิดตัว, เพิ่ม logic เข้า controller ใหญ่ขึ้นเรื่อยๆ หรือบอกว่า validate แล้วทั้งที่ตรวจแค่ syntax
 
-ถ้า chain นี้ยังไม่ครบ agent ยังไม่ควร patch
+plugin นี้บังคับ workflow ที่เข้มขึ้นสำหรับ Unity 2D:
 
-## ช่วยเรื่องอะไร
+- อ่าน project-local instructions ก่อนแตะไฟล์
+- รักษา unrelated dirty work
+- derive folders, namespaces, assemblies, scenes, prefabs และ content paths จาก repo จริง
+- prove runtime-visible owner chain ก่อนแก้ UI, HUD, scene, prefab หรือ gameplay
+- route C# responsibility ใหม่ไปหา owner เดิมของโปรเจ็ค แทน broad folders
+- ผูกงาน UI/safe-area/TMP/coordinate-space กับ runtime hierarchy จริง
+- validate ด้วย check ที่เล็กแต่มีประโยชน์ และรายงาน residual risk ตรงๆ
+- ต้องมี reference proof ก่อน cleanup/deletion
 
-- bug ที่เห็นใน runtime แต่ค่าใน prefab/scene อาจถูก override ตอน Play mode
-- UI ที่ขึ้นกับ parent hierarchy, anchors, safe area, CanvasScaler, TMP refresh
-- focus ring, tutorial spotlight, modal dimming, visible target binding
-- object ชื่อซ้ำที่ `GameObject.Find(name)` หรือ first-match search อาจจับผิดตัว
-- การอ่าน project structure ก่อนให้ agent เพิ่ม script, namespace, assembly หรือ content path ใหม่
-- โปรเจ็ค Unity ที่มี sprite, mesh, pooled object, collider หรือ runtime clone ซ้ำชื่อกัน แต่ target จริงคนละตัว
-- prefab/scene wiring ที่ AI assistant ต้อง set reference, component, UI object และยังต้องมี runtime validation
-- compile/test/debug loop ที่แค่ C# compile ผ่านยังไม่พอ ต้องพิสูจน์ Play Mode behavior ว่าตรง request
-- งาน C# structural/refactor ที่ต้องใช้ folder, namespace, assembly, dependency direction ของ repo จริง
-- runtime/content ที่ควรผ่าน data/config แทน hardcoded branch
-- cleanup ที่ต้องพิสูจน์ reference ก่อนลบ
-- งานที่แก้ซ้ำแล้ว “ยังไม่เห็นผล” เพราะแก้ผิด runtime owner
+`runtime-owner proof` เป็น workflow heuristic ของโปรเจ็คนี้ ไม่ใช่ Unity API term โดยอิงจาก GameObject/Component model, serialized fields, prefab overrides และ runtime instantiation behavior ของ Unity
 
-## แนวคิดการทำงาน
+## ติดตั้งเป็น Codex Plugin
 
-```mermaid
-flowchart LR
-    UAW["Unity Agent Workflows"]
-
-    subgraph DISC["Discover first"]
-      SD["Structure discovery"]
-      SD1["Live folders"]
-      SD2["Namespaces"]
-      SD3["Assemblies"]
-      SD4["Scenes and prefabs"]
-      SD5["Content paths"]
-      SD --> SD1
-      SD --> SD2
-      SD --> SD3
-      SD --> SD4
-      SD --> SD5
-    end
-
-    subgraph PROOF["Prove ownership"]
-      RP["Runtime proof"]
-      RP1["Visible object"]
-      RP2["Scene or prefab reference"]
-      RP3["Script or component owner"]
-      RP4["Mutating method"]
-      RP5["Runtime override"]
-      RP --> RP1
-      RP --> RP2
-      RP --> RP3
-      RP --> RP4
-      RP --> RP5
-    end
-
-    subgraph ROUTE["Route and change"]
-      CR["Code routing"]
-      CR1["Project-derived layers"]
-      CR2["Existing owners"]
-      CR3["Contracts and gateways"]
-      CR4["Data first content"]
-      UI["UI and assets"]
-      UI1["Parent hierarchy"]
-      UI2["Anchors and safe area"]
-      UI3["CanvasScaler and TMP"]
-      UI4["Source asset gate"]
-      CR --> CR1
-      CR --> CR2
-      CR --> CR3
-      CR --> CR4
-      UI --> UI1
-      UI --> UI2
-      UI --> UI3
-      UI --> UI4
-    end
-
-    subgraph VERIFY["Validate and clean"]
-      VA["Validation"]
-      VA1["Smallest useful check"]
-      VA2["Exact command output"]
-      VA3["Residual risk"]
-      CL["Cleanup"]
-      CL1["Reference proof"]
-      CL2["Generated file safety"]
-      CL3["Git status clarity"]
-      VA --> VA1
-      VA --> VA2
-      VA --> VA3
-      CL --> CL1
-      CL --> CL2
-      CL --> CL3
-    end
-
-    UAW --> DISC
-    UAW --> PROOF
-    UAW --> ROUTE
-    UAW --> VERIFY
-```
-
-## Flow หลัก
-
-```text
-1. Read local rules
-2. Check repo state
-3. Derive project structure
-4. Classify the task
-5. Prove the owner
-6. Name file boundary
-7. Patch smallest file set
-8. Run useful validation
-9. Close out with proof
-```
-
-ตารางสั้น:
-
-| Branch | ใช้ตอนไหน | ต้องได้อะไรก่อนแก้ |
-|---|---|---|
-| Structure discovery | ก่อนงาน structural/refactor/new system | project-derived structure map |
-| Runtime proof | งาน visible/runtime bug | owner chain ที่ควบคุม behavior จริง |
-| Code routing | งานเพิ่ม/ย้าย responsibility | route ตาม folder/namespace/asmdef จริงของ repo |
-| UI and assets | งาน UI/visual/source asset | layout owner หรือ asset decision |
-| Validation | ก่อน closeout | command/result ที่ตรวจซ้ำได้ |
-| Cleanup | งานลบ/จัดระเบียบ | reference proof และขอบเขตที่ไม่แตะ |
-
-## ติดตั้ง
-
-### เพิ่มใน Codex Plugins จาก Git
-
-repo นี้เพิ่มใน Codex เป็น plugin marketplace ได้ ให้เปิด Codex Plugins แล้วเลือก Add marketplace จากนั้นใส่:
+ใน Codex เปิด Plugins, เลือก Add marketplace แล้วใส่:
 
 ```text
 Source:
@@ -162,9 +54,9 @@ main
 Sparse paths:
 ```
 
-ปล่อย `Sparse paths` ว่างไว้ ข้อความ `plugins/codex` เป็นแค่ placeholder ตัวอย่าง
+ปล่อย `Sparse paths` ว่างไว้
 
-ไฟล์ marketplace ที่ Codex ใช้คือ:
+Codex marketplace metadata อยู่ที่:
 
 ```text
 .agents/plugins/marketplace.json
@@ -172,17 +64,17 @@ plugins/unity-agent-workflows/.codex-plugin/plugin.json
 plugins/unity-agent-workflows/skills/unity-agent-workflows/SKILL.md
 ```
 
-หลัง add marketplace แล้ว ให้ install หรือ enable `Unity Workflows` ในหน้า Codex Plugins
+หลัง add marketplace แล้ว install หรือ enable `Unity Workflows` จาก Codex Plugins list
 
-### ติดตั้งเป็น local skill
+## ติดตั้งเป็น Local Skill
 
-ติดตั้งด้วย `npx`:
+ติดตั้ง skill payload ด้วย `npx`:
 
 ```bash
 npx unity-agent-workflows
 ```
 
-ติดตั้งลงทั้ง Codex และ Claude-style skill folders:
+ติดตั้งทั้ง Codex และ Claude-style skill folders:
 
 ```bash
 npx unity-agent-workflows --target both
@@ -200,23 +92,45 @@ npx unity-agent-workflows --dry-run
 ~/.codex/skills/unity-agent-workflows
 ```
 
-ถ้า folder นี้มีอยู่แล้ว installer จะ backup ด้วย timestamp ก่อน replace
+ถ้า target folder มีอยู่แล้ว installer จะ backup ด้วย timestamp ก่อน replace. `npx` installer ติดตั้งเฉพาะ local skill payload; ไม่ได้ add Codex plugin marketplace entry
 
-`npx` installer ติดตั้งเฉพาะ local skill payload ถ้าต้องการติดตั้ง Codex plugin marketplace entry ให้ใช้ flow เพิ่มใน Codex Plugins จาก Git ด้านบน
+ตัวเลือก installer:
 
-## วิธีใช้
+```text
+--target codex|claude|both
+--codex
+--claude
+--all, --both
+--dest <path>
+--dry-run
+--no-backup
+--help
+--version
+```
 
-ใช้เป็นรอบเล็กๆ: คำสั่ง Teach สั้นๆ จะสร้าง index และแยกเอกสารตามหมวดอัตโนมัติ จากนั้นงานจริงอ่านเฉพาะ map ที่ต้องใช้
+### Optional skills.sh Discovery
 
-### 1. Teach ครั้งเดียว
+ตรวจ public skill listing:
 
-รันใน Unity repo:
+```bash
+npx skills add AUN-PN/unity-agent-workflows --list
+```
+
+ติดตั้ง skill ผ่าน `skills` สำหรับ Codex:
+
+```bash
+npx skills add AUN-PN/unity-agent-workflows -a codex -y
+```
+
+## Quick Start
+
+ใน Unity 2D repo เรียก skill:
 
 ```text
 $unity-agent-workflows. Teach
 ```
 
-skill จะสร้าง/refresh `UNITY_STRUCTURE.md` เป็น index สั้นๆ และแยกรายละเอียดตามหมวดอัตโนมัติ:
+`Teach` เป็น Codex skill instruction ไม่ใช่ npm CLI command. เมื่อ agent ทำตาม skill จะสร้างหรือ refresh structure index และ focused maps เฉพาะส่วนที่มีประโยชน์:
 
 ```text
 UNITY_STRUCTURE.md
@@ -227,11 +141,14 @@ UNITY_STRUCTURE.assemblies.md
 UNITY_STRUCTURE.cleanup.md
 ```
 
-สร้างเฉพาะหมวดที่มีประโยชน์จริง ห้าม scan ระบบไม่เกี่ยวข้องเพื่อกรอก template ให้ครบ
+เพราะ `Teach` เขียนไฟล์ ถ้าต้องการวิเคราะห์ก่อนให้ขอ read-only pass:
 
-### 2. เลือกไฟล์อ่านอัตโนมัติ
+```text
+Use $unity-agent-workflows.
+Do not edit yet. Inspect the project structure and report the proposed UNITY_STRUCTURE map plan.
+```
 
-หลัง Teach แล้ว agent ควรอ่านเฉพาะ index + focused map ที่ตรงกับงาน:
+งานถัดไปควรอ่านแค่ `UNITY_STRUCTURE.md` บวก focused map ที่ตรงกับงาน
 
 | งาน | อ่าน |
 |---|---|
@@ -241,78 +158,140 @@ UNITY_STRUCTURE.cleanup.md
 | New files, refactor, asmdef, namespace, dependency | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md` |
 
-### 3. ใช้ Structure Map ทำงานจริง
+ตัวอย่าง prompt:
 
-ตัวอย่างคำสั่งสั้นจาก session โปรเจ็คเกมจริง:
+```text
+Use $unity-agent-workflows.
+Fix this HUD safe-area overlap. Prove the runtime owner before editing.
+```
 
-| Prompt | Route |
-|---|---|
-| `ย้าย quick-action bar ไปขวาล่าง มันทับ main viewport` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md` |
-| `ให้ runtime object บังหลัง foreground object ให้ชัด` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
-| `เช็คไฟล์ทุกอย่างที่เกี่ยวข้องกับ duplicated UI overlay แล้วแก้ไข` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.ui.md`, `UNITY_STRUCTURE.cleanup.md` |
-| `อย่าพึ่งแก้ ดูก่อนว่าทำไม moving object วิ่งแล้วหยุดเอง` | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.runtime.md` |
-
-### 4. Refresh เฉพาะส่วนที่ stale
-
-ถ้า focused map ไม่มีหรือ stale ให้ refresh เฉพาะไฟล์นั้น:
+```text
+Use $unity-agent-workflows.
+Do not fix yet. First find why this runtime object pauses mid-path.
+```
 
 ```text
 Use $unity-agent-workflows.
 Refresh only UNITY_STRUCTURE.ui.md, then fix this HUD issue.
 ```
 
-## ไฟล์ข้างใน
+## Workflow
+
+skill route งานตามลำดับนี้:
+
+```text
+1. Read local rules
+2. Check repo state
+3. Derive live project structure
+4. Classify the task
+5. Prove owner or route
+6. Name the file boundary
+7. Patch the smallest safe file set
+8. Run useful validation
+9. Close out with proof, validation, and residual risk
+```
+
+สำหรับ visible Unity behavior ต้องพิสูจน์ chain นี้:
+
+```text
+visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override
+```
+
+ถ้า chain ยังไม่ครบ agent ควร inspect ต่อ หรือถามคำถามเดียวที่ชัดก่อนแก้
+
+## ครอบคลุมอะไร
+
+| Area | สิ่งที่ skill บังคับ |
+|---|---|
+| Runtime-visible bugs | prove object, owner, mutator และ override path |
+| UI/HUD | inspect hierarchy, anchors, safe area, `CanvasScaler`, TMP และ runtime builders |
+| Visible targets | resolve runtime bounds แทนการเดา hardcoded coordinates |
+| Coordinate conversion | ระบุ world, local, screen, viewport, canvas, camera และ safe-area space ชัด |
+| C# routing | derive folders, namespaces, `.asmdef`, dependency direction และ owner modules |
+| Content changes | ใช้ data/config surface เดิมก่อน ถ้าโปรเจ็คมี |
+| Validation | ใช้ check ที่เล็กแต่มีประโยชน์ และรายงาน exact command output |
+| Cleanup | prove unused status ผ่าน code refs, YAML/GUID refs, Resources/addressables paths และ runtime reachability |
+
+## Reference Files
+
+[SKILL.md](SKILL.md) ตั้งใจให้สั้น ส่วน workflow ลึกอยู่ใน `references/` และโหลดเฉพาะเมื่องานต้องใช้
+
+| File | ใช้ทำอะไร |
+|---|---|
+| [references/ai-workflows.md](references/ai-workflows.md) | universal workflow, Routing Card, closeout shape |
+| [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery และ `UNITY_STRUCTURE.md` maps |
+| [references/runtime-owner-proof.md](references/runtime-owner-proof.md) | runtime-visible owner proof และ repeated-fix diagnostics |
+| [references/runtime-visible-targets.md](references/runtime-visible-targets.md) | focus, highlight, click target, marker และ fallback rules |
+| [references/target-bounds-catalog.md](references/target-bounds-catalog.md) | UI, 2D world, VFX, safe-area และ TMP bounds choices |
+| [references/coordinate-space-conversion.md](references/coordinate-space-conversion.md) | world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion |
+| [references/modular-architecture.md](references/modular-architecture.md) | project-derived module boundaries, asmdef safety, hub gates |
+| [references/unity-validation.md](references/unity-validation.md) | validation ladder, Unity/Bee/Roslyn notes, MCP checks |
+| [references/ui-and-visual-assets.md](references/ui-and-visual-assets.md) | UI layout, mobile readability, safe area, localization, visual asset gates |
+| [references/content-and-systems.md](references/content-and-systems.md) | data-first content และ runtime system readiness |
+| [references/cleanup-and-git.md](references/cleanup-and-git.md) | deletion proof, generated files, commit/push hygiene |
+| [references/session-mining.md](references/session-mining.md) | แปลง lesson จาก agent session เก่าเป็น durable rules |
+| [references/workflow-recipes.md](references/workflow-recipes.md) | optional recipes สำหรับ work patterns ที่พบบ่อย |
+
+## ตรวจ Package นี้
+
+สำหรับ repo นี้:
+
+```bash
+npm run validate
+npm run sync:mcpmarket
+npm run pack:dry-run
+```
+
+`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, reference links และ JavaScript syntax
+
+`npm run sync:mcpmarket` mirror `SKILL.md`, `references/` และ `agents/` ไปที่:
+
+```text
+.claude/skills/unity-agent-workflows/
+skills/unity-agent-workflows/
+plugins/unity-agent-workflows/skills/unity-agent-workflows/
+```
+
+สำหรับ Unity projects ที่ใช้ skill นี้ Unity Editor, Play Mode, Game view, device tests, batchmode builds และ project logs ยังเป็น validation path หลัก. Bee `.rsp` หรือ direct Unity-bundled Roslyn checks เป็น local compile smoke test แบบ best-effort และอาจ stale หลัง Unity regenerate project artifacts
+
+## Package Layout
 
 ```text
 unity-agent-workflows/
+├── .agents/plugins/marketplace.json
+├── .codex-plugin/plugin.json
+├── .claude/skills/unity-agent-workflows/
+├── plugins/unity-agent-workflows/
+├── skills/unity-agent-workflows/
 ├── SKILL.md
 ├── README.md
 ├── README.th.md
 ├── package.json
-├── agents/
-│   └── openai.yaml
-├── bin/
-│   └── unity-agent-workflows.js
+├── agents/openai.yaml
+├── assets/unity-workflows.png
+├── bin/unity-agent-workflows.js
+├── evals/skill-trigger-cases.json
 ├── references/
-│   ├── ai-workflows.md
-│   ├── cleanup-and-git.md
-│   ├── coordinate-space-conversion.md
-│   ├── content-and-systems.md
-│   ├── modular-architecture.md
-│   ├── project-structure-discovery.md
-│   ├── runtime-owner-proof.md
-│   ├── runtime-visible-targets.md
-│   ├── session-mining.md
-│   ├── target-bounds-catalog.md
-│   ├── ui-and-visual-assets.md
-│   ├── unity-validation.md
-│   └── workflow-recipes.md
 └── scripts/
-    └── validate_skill.sh
 ```
-
-## Reference Files
-
-- [ai-workflows.md](references/ai-workflows.md): workflow หลัก, Routing Card, closeout
-- [workflow-recipes.md](references/workflow-recipes.md): optional recipes `WF-0` ถึง `WF-11`
-- [project-structure-discovery.md](references/project-structure-discovery.md): อ่านโครงสร้างจริงของ Unity repo และ optional `UNITY_STRUCTURE.md`
-- [runtime-owner-proof.md](references/runtime-owner-proof.md): พิสูจน์ owner ของ visible/runtime behavior แล้ว route ไปไฟล์ลึกเมื่อจำเป็น
-- [runtime-visible-targets.md](references/runtime-visible-targets.md): rules สำหรับ focus/highlight/click target และ hardcoded fallback
-- [target-bounds-catalog.md](references/target-bounds-catalog.md): เลือก bounds ตามชนิด UI/world/VFX/text target
-- [coordinate-space-conversion.md](references/coordinate-space-conversion.md): world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion
-- [modular-architecture.md](references/modular-architecture.md): project-derived module boundaries, asmdef rules, hub gates
-- [unity-validation.md](references/unity-validation.md): compile checks, Roslyn/Bee, validation levels
-- [ui-and-visual-assets.md](references/ui-and-visual-assets.md): UI layout, mobile readability, safe area, localization, visual asset gates
-- [content-and-systems.md](references/content-and-systems.md): content data, progression, runtime config, system readiness
-- [cleanup-and-git.md](references/cleanup-and-git.md): safe deletion, generated files, commit hygiene
-- [session-mining.md](references/session-mining.md): แปลง lesson จาก session เก่าเป็น durable rules
 
 ## ข้อจำกัด
 
-ไม่แทน Unity Play Mode, device testing, code review, หรือ project-local `AGENTS.md`
+- สร้างสำหรับ Unity 2D game projects
+- ไม่แทน Unity Play Mode, device testing, build validation, code review หรือ project-local `AGENTS.md`
+- ไม่ assume project structure ตายตัว
+- ไม่ทำให้ `runtime-owner proof` เป็น official Unity concept; มันคือ guardrail workflow
+- `npx` ไม่ได้ติดตั้ง Codex plugin marketplace entry
+- public reuse และ external contribution ยังจำกัด เพราะ package เป็น `UNLICENSED` และยังไม่มี `LICENSE` file
 
-skill นี้ไม่ assume โครงสร้างโปรเจ็คของคุณ มันบังคับให้ agent อ่าน repo จริง, derive structure, prove owner chain, แล้วรายงานว่าแก้อะไรและตรวจอย่างไร
+## Support
+
+แจ้ง issue ได้ที่:
+
+```text
+https://github.com/AUN-PN/unity-agent-workflows/issues
+```
 
 ## License
 
-ยังไม่มี `LICENSE` file ควรเพิ่มก่อน public reuse หรือรับ contribution ภายนอก
+`UNLICENSED`
