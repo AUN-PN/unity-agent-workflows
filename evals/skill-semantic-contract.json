@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "skill": "unity-agent-workflows",
+  "purpose": "Semantic invariants for compressed AI-readable skill docs. This checks meaning and intent by concept coverage, not full text equality.",
+  "docs": {
+    "candidate": [
+      "SKILL.md",
+      "agents/openai.yaml",
+      "references/ai-workflows.md",
+      "references/project-structure-discovery.md",
+      "references/modular-architecture.md",
+      "references/runtime-owner-proof.md",
+      "references/runtime-visible-targets.md",
+      "references/target-bounds-catalog.md",
+      "references/coordinate-space-conversion.md",
+      "references/unity-validation.md",
+      "references/ui-and-visual-assets.md",
+      "references/content-and-systems.md",
+      "references/cleanup-and-git.md",
+      "references/session-mining.md",
+      "README.md",
+      "README.th.md"
+    ],
+    "baseline": [
+      "SKILL.md",
+      "agents/openai.yaml",
+      "references/ai-workflows.md",
+      "references/project-structure-discovery.md",
+      "references/modular-architecture.md",
+      "references/runtime-owner-proof.md",
+      "references/runtime-visible-targets.md",
+      "references/target-bounds-catalog.md",
+      "references/coordinate-space-conversion.md",
+      "references/unity-validation.md",
+      "references/ui-and-visual-assets.md",
+      "references/content-and-systems.md",
+      "references/cleanup-and-git.md",
+      "references/session-mining.md",
+      "README.md",
+      "README.th.md"
+    ]
+  },
+  "required_references": [
+    "references/ai-workflows.md",
+    "references/project-structure-discovery.md",
+    "references/modular-architecture.md",
+    "references/runtime-owner-proof.md",
+    "references/runtime-visible-targets.md",
+    "references/target-bounds-catalog.md",
+    "references/coordinate-space-conversion.md",
+    "references/unity-validation.md",
+    "references/ui-and-visual-assets.md",
+    "references/content-and-systems.md",
+    "references/cleanup-and-git.md",
+    "references/session-mining.md"
+  ],
+  "concepts": [
+    {
+      "id": "teach-behavior",
+      "label": "Teach behavior",
+      "groups": [
+        { "any": ["Teach Command", "$unity-agent-workflows. Teach"] },
+        { "any": ["UNITY_STRUCTURE.md"] },
+        { "any": ["focused maps", "UNITY_STRUCTURE.ui.md"] },
+        { "any": ["Do not make one huge all-project document", "Do not scan unrelated categories"] }
+      ]
+    },
+    {
+      "id": "live-project-instructions",
+      "label": "Live project instructions",
+      "groups": [
+        { "any": ["Read live project instructions", "Read the live project instructions first"] },
+        { "any": ["AGENTS.md"] },
+        { "any": ["repo-local agent files", "repo-local agent file"] }
+      ]
+    },
+    {
+      "id": "git-status-dirty-preservation",
+      "label": "git status and dirty preservation",
+      "groups": [
+        { "any": ["git status --short"] },
+        { "any": ["preserve unrelated dirty files", "Do not include unrelated dirty files"] }
+      ]
+    },
+    {
+      "id": "project-derived-routing",
+      "label": "project-derived routing",
+      "groups": [
+        { "any": ["project-derived routing", "project-derived layering"] },
+        { "any": ["Derive only relevant live structure", "Derive live project structure"] },
+        { "any": ["No fixed structure"] }
+      ]
+    },
+    {
+      "id": "required-references",
+      "label": "required references",
+      "groups": [
+        { "any": ["Required References", "Required Reference Gate"] },
+        { "any": ["load required references before edits", "Before editing, load the matching reference files"] },
+        { "any": ["References loaded", "References missing"] }
+      ]
+    },
+    {
+      "id": "runtime-owner-proof",
+      "label": "runtime-owner proof",
+      "groups": [
+        { "any": ["runtime-owner proof", "runtime ownership"] },
+        { "any": ["Visible object proof chain", "visible target -> runtime object"] },
+        { "any": ["No proof, no edit"] }
+      ]
+    },
+    {
+      "id": "runtime-visible-hard-stop",
+      "label": "runtime-visible hard stop",
+      "groups": [
+        { "any": ["runtime visible output hard stop", "Runtime Visible Output Hard Stop"] },
+        { "any": ["focus ring", "spotlight holes", "HUD markers"] },
+        { "any": ["Do not patch hardcoded coordinates", "Do not edit coordinates"] }
+      ]
+    },
+    {
+      "id": "runtime-numeric-proof",
+      "label": "runtime numeric proof",
+      "groups": [
+        { "any": ["runtime numeric proof"] },
+        { "any": ["source bounds"] },
+        { "any": ["converted rect"] },
+        { "any": ["final drawn rect"] }
+      ]
+    },
+    {
+      "id": "overlay-dim-source-bound",
+      "label": "overlay/dim source-bound",
+      "groups": [
+        { "any": ["overlay/dim source-bound", "overlay/dim/mask/blocker output rects as source bounds"] },
+        { "any": ["destination/output surfaces"] },
+        { "any": ["explicit marker proof", "explicit marker inside that surface"] }
+      ]
+    },
+    {
+      "id": "coordinate-conversion",
+      "label": "coordinate conversion",
+      "groups": [
+        { "any": ["coordinate conversions", "coordinate-space"] },
+        { "any": ["world/local/screen/viewport/canvas/camera/safe-area/RenderTexture"] },
+        { "any": ["destination overlay/root"] }
+      ]
+    },
+    {
+      "id": "state-step-guard",
+      "label": "state-step guard",
+      "groups": [
+        { "any": ["state-step guards", "Runtime State Step Guard"] },
+        { "any": ["shown, clicked, opened", "shown/clicked/opened"] },
+        { "any": ["selected, equipped", "claimed, completed, persisted"] }
+      ]
+    },
+    {
+      "id": "multi-agent-main-scope-lock",
+      "label": "multi-agent main-agent scope lock",
+      "groups": [
+        { "any": ["main-agent scope lock", "main agent owns the Routing Card"] },
+        { "any": ["allowed file set", "Files allowed to touch"] },
+        { "any": ["disjoint ownership", "disjoint worker write sets"] }
+      ]
+    },
+    {
+      "id": "no-hub-growth",
+      "label": "no hub growth",
+      "groups": [
+        { "any": ["Do not grow a hub", "No hub growth"] },
+        { "any": ["focused collaborator"] }
+      ]
+    },
+    {
+      "id": "no-sibling-imports",
+      "label": "no sibling imports",
+      "groups": [
+        { "any": ["Do not add direct sibling feature references", "No direct sibling feature imports"] },
+        { "any": ["contracts, events, gateways, or bridges", "contracts/events/gateways"] }
+      ]
+    },
+    {
+      "id": "visual-asset-gate",
+      "label": "visual asset gate",
+      "groups": [
+        { "any": ["visual asset gate", "Visual source asset"] },
+        { "any": ["before integration code"] },
+        { "any": ["if required tool is unavailable, stop and report", "If the required generator/tool is unavailable", "report the limitation"] }
+      ]
+    },
+    {
+      "id": "data-first-content",
+      "label": "data-first content",
+      "groups": [
+        { "any": ["data-first content", "data-first vs code-first"] },
+        { "any": ["Content/balance/progression data"] },
+        { "any": ["ScriptableObject", "content definition"] }
+      ]
+    },
+    {
+      "id": "validation",
+      "label": "validation",
+      "groups": [
+        { "any": ["validation workflow", "validation ladder"] },
+        { "any": ["git diff --check"] },
+        { "any": ["Unity/Bee/Roslyn", "Play Mode"] }
+      ]
+    },
+    {
+      "id": "cleanup-proof",
+      "label": "cleanup proof",
+      "groups": [
+        { "any": ["cleanup proof", "Cleanup/deletion"] },
+        { "any": ["code refs, YAML GUID refs", "YAML GUID refs"] },
+        { "any": ["runtime reachability", "deletion/git hygiene", "runtime reachability proof"] }
+      ]
+    },
+    {
+      "id": "session-mining",
+      "label": "session mining",
+      "groups": [
+        { "any": ["session-mining", "session mining"] },
+        { "any": ["durable rules"] },
+        { "any": ["Do not include private paths or session IDs", "without copying raw chat", "chat history"] }
+      ]
+    },
+    {
+      "id": "closeout-requirements",
+      "label": "closeout requirements",
+      "groups": [
+        { "any": ["Closeout", "Close out"] },
+        { "any": ["Changed files"] },
+        { "any": ["Residual risk"] },
+        { "any": ["References loaded", "References missing"] },
+        { "any": ["Project maps loaded", "Project maps missing"] }
+      ]
+    },
+    {
+      "id": "mirror-sync",
+      "label": "mirror sync",
+      "groups": [
+        { "any": ["mirror", "mirrors"] },
+        { "any": ["npm run sync:mcpmarket"] },
+        { "any": ["SKILL.md", "references/"] }
+      ]
+    }
+  ],
+  "required_eval_case_ids": [
+    "explicit-teach",
+    "runtime-visible-bug",
+    "ui-screenshot-safe-area",
+    "runtime-visible-output-conversion",
+    "repeated-visible-numeric-proof",
+    "checker-fails-missing-runtime-values",
+    "overlay-dim-source-bound-mistake",
+    "multi-agent-scope-before-patch",
+    "state-step-transition-guard",
+    "guided-equipment-state-flow",
+    "cleanup-delete-unused-prefab"
+  ],
+  "prompt_coverage": {
+    "explicit-teach": {
+      "eval_groups": [
+        { "any": ["Teach"] },
+        { "any": ["UNITY_STRUCTURE.md"] }
+      ],
+      "doc_groups": [
+        { "any": ["Teach Command"] },
+        { "any": ["UNITY_STRUCTURE.md"] }
+      ]
+    },
+    "runtime-visible-bug": {
+      "eval_groups": [
+        { "any": ["Unity"] },
+        { "any": ["runtime-owner proof", "real owner"] }
+      ],
+      "doc_groups": [
+        { "any": ["runtime-owner proof"] },
+        { "any": ["Runtime-visible bug"] }
+      ]
+    },
+    "ui-screenshot-safe-area": {
+      "eval_groups": [
+        { "any": ["Unity screenshot"] },
+        { "any": ["safe area"] }
+      ],
+      "doc_groups": [
+        { "any": ["UI, screenshot"] },
+        { "any": ["safe area"] }
+      ]
+    },
+    "runtime-visible-output-conversion": {
+      "eval_groups": [
+        { "any": ["objective arrow"] },
+        { "any": ["converting world position"] }
+      ],
+      "doc_groups": [
+        { "any": ["Runtime Visible Output Hard Stop"] },
+        { "any": ["world/local/screen/viewport/canvas/camera/safe-area/RenderTexture"] }
+      ]
+    },
+    "repeated-visible-numeric-proof": {
+      "eval_groups": [
+        { "any": ["still in the wrong place"] },
+        { "any": ["runtime numeric source bounds"] }
+      ],
+      "doc_groups": [
+        { "any": ["Repeated visible-output mismatch"] },
+        { "any": ["runtime numeric proof"] }
+      ]
+    },
+    "checker-fails-missing-runtime-values": {
+      "eval_groups": [
+        { "any": ["Fail it"] },
+        { "any": ["no runtime numeric values"] }
+      ],
+      "doc_groups": [
+        { "any": ["A checker must fail", "Checker fails"] },
+        { "any": ["source bounds, destination bounds", "source bounds, converted rect"] }
+      ]
+    },
+    "overlay-dim-source-bound-mistake": {
+      "eval_groups": [
+        { "any": ["tutorial dim hole"] },
+        { "any": ["overlay source bounds"] }
+      ],
+      "doc_groups": [
+        { "any": ["overlay/dim source-bound"] },
+        { "any": ["destination/output surfaces"] }
+      ]
+    },
+    "multi-agent-scope-before-patch": {
+      "eval_groups": [
+        { "any": ["main agent"] },
+        { "any": ["worker agents"] }
+      ],
+      "doc_groups": [
+        { "any": ["Multi-Agent Visible/State Guard", "Multi-agent guard", "WF-12 Multi-Agent Visible Or State Work"] },
+        { "any": ["main agent owns Routing Card", "main agent owns the Routing Card"] }
+      ]
+    },
+    "state-step-transition-guard": {
+      "eval_groups": [
+        { "any": ["tutorial"] },
+        { "any": ["reward was claimed"] }
+      ],
+      "doc_groups": [
+        { "any": ["Runtime State Step Guard"] },
+        { "any": ["shown, clicked, opened"] }
+      ]
+    },
+    "guided-equipment-state-flow": {
+      "eval_groups": [
+        { "any": ["guided equipment"] },
+        { "any": ["equipped"] }
+      ],
+      "doc_groups": [
+        { "any": ["guided equipment"] },
+        { "any": ["selected, equipped"] }
+      ]
+    },
+    "cleanup-delete-unused-prefab": {
+      "eval_groups": [
+        { "any": ["Unity cleanup"] },
+        { "any": ["unused prefab"] }
+      ],
+      "doc_groups": [
+        { "any": ["cleanup proof"] },
+        { "any": ["YAML GUID refs"] }
+      ]
+    }
+  },
+  "required_negative_eval_text": [
+    "expected_skill",
+    "false",
+    "generic non-Unity coding",
+    "Express route handler",
+    "generic writing",
+    "README paragraph"
+  ]
+}

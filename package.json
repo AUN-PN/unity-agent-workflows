@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "sync:mcpmarket": "bash scripts/sync_mcpmarket_skill.sh",
+    "check:semantics": "node scripts/check_skill_semantics.js",
     "validate": "bash scripts/validate_skill.sh",
     "pack:dry-run": "npm pack --dry-run"
   },

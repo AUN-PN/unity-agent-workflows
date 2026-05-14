@@ -52,6 +52,8 @@ for file in "${required[@]}"; do
 done
 
 node --check "$ROOT/bin/unity-agent-workflows.js" >/dev/null
+node --check "$ROOT/scripts/check_skill_semantics.js" >/dev/null
+node "$ROOT/scripts/check_skill_semantics.js" >/dev/null
 
 check_diff() {
   local left="$1"

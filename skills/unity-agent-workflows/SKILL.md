@@ -6,50 +6,65 @@ license: MIT
 
 # Unity Agent Workflows
 
-Use this skill as the AI operating system for Unity work: read the live repo, derive structure, prove runtime ownership, route to the existing owner/layer, avoid hub growth, validate the smallest useful surface, and publish rules only to the artifact that owns them.
+AI contract for Unity work. Keep answers compact, but never remove exact paths, object/class names, commands, errors, validation, rollback notes, or proof requirements.
 
-## Start Here
+## Core Loop
 
-1. Treat this injected `SKILL.md` body as authoritative. Do not search for this skill's own `SKILL.md` again unless the file body is missing or the user explicitly asks for path diagnostics.
-2. Read the live project instructions first: `AGENTS.md`, `README.md`, architecture docs, or any repo-local agent file.
-3. Check `git status --short` and preserve unrelated dirty files.
-4. If the user says `$unity-agent-workflows. Teach`, run the Teach command directly: create/refresh `UNITY_STRUCTURE.md` as a short index and split focused maps by category. Do not search for the skill path first. Do not make one huge all-project document.
-5. Derive only relevant live structure before architecture claims: folders, namespaces, `.asmdef` files, scenes/prefabs, bootstraps, graphs, and docs. Do not impose this skill's sample structure.
-6. Inspect relevant files before editing. Do not start from memory or nearest-name guessing.
-7. If a code graph exists, read it before architecture claims only when dependency/routing proof needs graph data: graph report, graph wiki, `graph.json`, or equivalent.
-8. Classify the task before touching files:
-   - Runtime/visible bug -> prove owner chain.
-   - Runtime-visible output, target alignment, interactive/visual target focus, marker/overlay/input blocking, modal dimming, duplicate names, hardcoded layout/position, or "do not guess" -> runtime visible output hard stop.
-   - Overlay/dim source-bound mismatch -> runtime visible output hard stop plus runtime target bounds proof.
-   - Repeated visible-output mismatch after a patch -> runtime numeric proof before another patch.
-   - Multi-agent visible-output or state work -> main-agent scope lock before worker patches.
-   - New or expanded C# responsibility -> project-derived routing.
-   - UI layout/readability -> UI workflow.
-   - Visual source asset -> visual asset gate.
-   - Gameplay tuning/content -> data-first content workflow.
-   - Compile/runtime doubt -> validation workflow.
-   - Cleanup/deletion -> cleanup proof.
-   - Rule/session mining -> durable-rule workflow.
-9. Before editing, load the task's required references, not only this `SKILL.md`. UI/screenshot/visible-target work must load `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md`.
-10. If a required reference is missing or inaccessible, stop broad edits, use only rules already visible in this `SKILL.md`, and report the missing reference in closeout.
-11. Edit the smallest safe file set.
-12. Close with changed files, validation, scope boundary, references loaded, and residual risk.
+0. No proof, no edit.
+1. Treat this injected `SKILL.md` as authoritative; do not search for its own path unless missing or asked for diagnostics.
+2. Read live project instructions: `AGENTS.md`, `README.md`, architecture docs, repo-local agent files.
+3. Run `git status --short`; preserve unrelated dirty files.
+4. If user says only `$unity-agent-workflows. Teach`, run Teach.
+5. Derive only relevant live structure before architecture claims: folders, namespaces, `.asmdef`, scenes/prefabs, bootstraps, graphs, docs, `UNITY_STRUCTURE*`.
+6. Classify task with `Task Gate`, then load required references before edits.
+7. Inspect real owner files; never start from memory, nearest-name guessing, semantic similarity, or screenshot proximity alone.
+8. Fill useful `Routing Card` fields for structure, visible output, state flow, multi-agent, or hub changes.
+9. Patch the smallest proven owner/artifact.
+10. Validate, sync mirrors if package skill files changed, then close out with proof.
 
-## Local Skill Path Rules
+## Task Gate
 
-For reference files, resolve paths relative to this skill directory:
+| Trigger | Required action |
+|---|---|
+| Runtime/visible bug | Prove owner chain before editing. |
+| Runtime-visible output, target alignment, focus/highlight/marker/HUD, overlay, input blocker, modal dimming, duplicate names, hardcoded layout, "do not guess" | Runtime Visible Output Hard Stop. |
+| Overlay/dim source-bound mistakes | Prove source target bounds; overlay/dim/mask/blocker rects are destination output unless explicit marker proof exists. |
+| Repeated visible-output mismatch after patch | Runtime numeric proof before another coordinate/layout/fallback patch. |
+| Multi-agent visible-output or state work | Main-agent scope lock before workers patch; checker must review. |
+| New/moved files, expanded C# responsibility, asmdef/module routing, hub deflation | Project-derived routing, no fixed structure, hub stop gate. |
+| UI, screenshot, HUD, menu, safe area, TMP, spotlight | UI workflow plus runtime-owner proof and validation. |
+| Visual source asset | Source asset/generator gate before Unity integration code. |
+| Content, progression, economy, levels, objectives, gameplay tuning | Data-first content workflow. |
+| Tutorial, onboarding, mission, unlock, equipment, reward, shop, navigation, state transition, guided equipment/shop flows | State-step guards. |
+| Compile/runtime doubt, stale Bee/Roslyn response files, Play Mode proof | Validation workflow. |
+| Cleanup/deletion/generated files/git hygiene | Cleanup proof. |
+| Rule/session mining/workflow update | Patch only the owning artifact. |
 
-```text
-references/runtime-owner-proof.md
-references/unity-validation.md
-references/ui-and-visual-assets.md
-```
+## Required References
 
-If a reference is missing, continue with this `SKILL.md` only and report it in closeout. Do not do broad path discovery unless debugging installation.
+Load only matching files; resolve relative to this skill directory. If a required reference is missing, stop broad edits, use only visible rules here, and report `References missing:`.
 
-## Teach Command
+| Task trigger | References before editing |
+|---|---|
+| UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Overlay/dim source-bound mismatch, wrong source bounds, focus hole follows wrong target | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
+| Repeated visible-output failure, wrong focus/highlight/marker/HUD/camera position, cross-root/cross-canvas mismatch | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
+| Multi-agent Unity visible-output/state-transition work, parallel workers, checker review | `references/ai-workflows.md`, `references/workflow-recipes.md`, `references/runtime-owner-proof.md`, `references/content-and-systems.md`, `references/unity-validation.md` |
+| New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
+| New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
+| Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
+| Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
+| Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
+| Rule/session mining/workflow update | `references/session-mining.md` |
 
-When the user writes only `$unity-agent-workflows. Teach`, create or refresh a short `UNITY_STRUCTURE.md` index plus focused maps only for categories that exist or are needed:
+Reference map: `references/ai-workflows.md` = Routing Card/workflow/closeout; `references/workflow-recipes.md` = named recipes; `references/project-structure-discovery.md` = Teach and `UNITY_STRUCTURE*`; `references/modular-architecture.md` = layering/asmdef/hub gates; `references/runtime-owner-proof.md` = owner chain/numeric gate; `references/runtime-visible-targets.md` = focus/click/overlay/fallback target rules; `references/target-bounds-catalog.md` = `markerRect`/`visualRect`/`interactiveRect` choices; `references/coordinate-space-conversion.md` = world/screen/canvas/camera/safe-area conversions; `references/unity-validation.md` = validation ladder/checker failures; `references/ui-and-visual-assets.md` = UI/safe area/visual asset gate; `references/content-and-systems.md` = data-first systems/state steps; `references/cleanup-and-git.md` = deletion/git hygiene; `references/session-mining.md` = durable rules.
+
+After loading a reference, follow its own `Read` / `Load Extra Detail` table instead of preloading every linked file.
+
+## Teach
+
+For only `$unity-agent-workflows. Teach`, create/refresh a short `UNITY_STRUCTURE.md` plus only focused maps that exist or are needed:
 
 ```text
 UNITY_STRUCTURE.ui.md
@@ -59,74 +74,70 @@ UNITY_STRUCTURE.assemblies.md
 UNITY_STRUCTURE.cleanup.md
 ```
 
-Read `references/project-structure-discovery.md` for the full Teach contract. Do not scan unrelated categories just to fill every file.
+Read `references/project-structure-discovery.md`. Do not make one huge all-project doc. Later tasks read `UNITY_STRUCTURE.md` plus only the matching focused map; refresh only missing needed maps.
 
-## Structure Map File Router
+## Proof Gates
 
-When a later task starts, read `UNITY_STRUCTURE.md` plus the matching focused map only. Load all focused maps only for broad all-project audits or explicit all-category requests. If the needed map is missing, refresh only that map; if refresh is not possible, use live inspection and report the gap.
+Owner chain before visible/runtime edits:
 
-## Reference Map
+```text
+visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override
+```
 
-Load only the reference needed for the current task.
+Runtime Visible Output Hard Stop before changing coordinates, anchors, offsets, padding, scale, layout timing, camera conversion, or fallback constants:
 
-- `references/ai-workflows.md`: Routing Card, universal workflow, closeout shape; loads `references/workflow-recipes.md` only when named recipes are needed.
-- `references/project-structure-discovery.md`: how to learn the user's actual Unity structure and create/read `UNITY_STRUCTURE.md` project context.
-- `references/modular-architecture.md`: project-derived layering, dependency rules, asmdef rules, hub gates; Core/Contracts/Systems/Features is only a fallback example.
-- `references/runtime-owner-proof.md`: Visible object proof chain, runtime visible target lock, repeated-fix diagnostics, and routing to deeper target files.
-- `references/runtime-visible-targets.md`: focus/highlight/click target rules, marker/visual/interactive rect choice, hardcoded fallback contract.
-- `references/target-bounds-catalog.md`: object-type bounds choices for UI controls, HUD, world units, projectiles, VFX, safe area, and TMP labels.
-- `references/coordinate-space-conversion.md`: world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion rules.
-- `references/unity-validation.md`: `git diff --check`, Unity/Bee/Roslyn checks, stale response files, validation ladder.
-- `references/ui-and-visual-assets.md`: UI, safe area, localized text, and project-approved source asset gates.
-- `references/content-and-systems.md`: data-first content, runtime systems, production-readiness system stack.
-- `references/cleanup-and-git.md`: source-vs-generated artifacts, deletion proof, commit/push hygiene.
-- `references/session-mining.md`: how to mine prior AI sessions into reusable rules without copying raw chat.
+```text
+user-visible output
+-> active source object
+-> selected source bounds: markerRect / visualRect / interactiveRect / logicRect
+-> source parent chain
+-> owner script/component
+-> runtime writer after creation/layout
+-> source space and camera/canvas
+-> destination root/canvas/space
+-> conversion API path
+-> converted output rect/position
+-> validation method
+```
 
-## Required Reference Gate
+Runtime numeric proof required after any visible patch is wrong/unchanged/challenged:
 
-Before editing, load the matching reference files below. This prevents the failure mode where the agent reads only `SKILL.md` and skips the detailed workflow.
+```text
+source object:
+source parent chain:
+source bounds: markerRect / visualRect / interactiveRect / logicRect
+source canvas/root/renderMode/scaleFactor/camera:
+destination object/root/canvas/renderMode/scaleFactor/camera:
+conversion API path:
+converted rect min/max:
+converted center/size:
+final drawn object:
+final drawn position:
+final drawn size/bounds:
+runtime writer checked:
+validation:
+```
 
-| Task trigger | Required references before editing |
-|---|---|
-| UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
-| Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
-| Overlay/dim source-bound mismatch, wrong source bounds, focus hole follows the wrong target | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
-| Repeated visible-output failure after a patch, wrong focus/highlight/marker/HUD/camera position, cross-root/cross-canvas mismatch | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
-| Multi-agent Unity visible-output or state-transition work, parallel workers, checker review | `references/ai-workflows.md`, `references/workflow-recipes.md`, `references/runtime-owner-proof.md`, `references/content-and-systems.md`, `references/unity-validation.md` |
-| New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
-| New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
-| Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, or state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
-| Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
-| Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
-| Rule/session mining/workflow update | `references/session-mining.md` |
+Missing source bounds, converted rect, or final drawn rect is FAIL; return a runtime probe plan only.
 
-After loading a required reference, follow its own `Read`/`Load Extra Detail` table instead of preloading every linked file.
+State-step proof: screen open, click, analytics, or prompt shown is not completion. Prove relevant steps separately: shown, clicked, opened, selected, equipped, claimed, completed, persisted, old-save path, reset path.
 
-Closeout must include `References loaded:` with the exact reference filenames, or `References missing:` with the filename and how the task was safely narrowed.
+Multi-agent guard: main agent owns Routing Card, scope, allowed files, and not-touched files before workers patch. Workers use disjoint ownership and stop if a different owner or out-of-scope file appears. Checker fails missing runtime numeric proof or state-step proof.
 
-Closeout must also include `Project maps loaded:` with the exact `UNITY_STRUCTURE*` filenames, or `Project maps missing:` with the filename and live-inspection fallback used.
+## Architecture Rules
 
-## Hard Rules
-
-- No proof, no edit. For visible/runtime changes, prove the owner chain first.
-- Runtime numeric proof is mandatory before patching a repeated visible-output failure. Static source inspection, sub-agent analysis, compile success, checker confidence, or screenshot estimation is not enough when the task involves focus rings, spotlight holes, highlights, blockers, markers, tooltip anchors, camera targets, safe-area offsets, world-to-UI labels, HUD markers, or cross-root/cross-canvas conversion.
-- After the user reports a visible fix is still wrong, unchanged, or in the wrong place, the next step must be runtime measurement or editor/runtime query. Do not patch the same coordinate, focus, layout, camera, or fallback owner again until numeric runtime proof explains the mismatch.
-- A checker must fail any coordinate/focus/layout/marker patch that lacks concrete runtime values for source bounds, destination bounds, converted rect, and final drawn rect.
-- Opening a screen, recording a click, logging analytics, or showing a prompt is not completion proof for guided equipment, shop, tutorial, reward, or navigation flows. Prove shown/clicked/opened/selected/equipped/claimed/completed/persisted as separate state steps.
-- For multi-agent visible-output or state-transition work, the main agent owns the Routing Card, scope, and allowed file set before workers patch. Workers must use disjoint ownership, and a checker must fail missing runtime numeric proof or missing state-step proof.
-- No fixed structure. Derive module names, layers, folders, namespaces, assemblies, bootstraps, and scene/prefab ownership from the user's project before routing new work.
-- No guessed targeting. If the user asks to bind, focus, highlight, click, or align a visible object, resolve the real runtime object and coordinate space before editing.
-- Do not grow a hub when a focused collaborator, data object, contract, event, bridge, or service can own the new responsibility.
-- Do not add direct sibling feature references. Route cross-feature facts through contracts, events, gateways, or bridges.
-- Do not add new scripts to broad folders when the repo already exposes a more specific owner, module, assembly, feature folder, scene owner, or content definition path.
-- Do not treat scene YAML, prefab scale, or a searched constant as runtime truth until startup/layout/animation writers are checked.
+- No fixed structure; derive module/layer/folder/namespace/assembly/scene/prefab ownership from the user project.
+- Core/Contracts/Systems/Features is fallback example only.
+- No guessed targeting: if asked to bind, focus, highlight, click, or align a visible object, resolve the real runtime object and coordinate space before editing.
+- Do not grow hubs when a focused collaborator, data object, contract, event, bridge, or service can own the work.
+- Do not add direct sibling feature references; use contracts/events/gateways/bridges.
+- Do not add new scripts to broad folders when a specific owner, module, assembly, feature folder, scene owner, or content definition path exists.
+- Do not treat scene YAML, prefab scale, or searched constants as runtime truth until startup/layout/animation writers are checked.
 - Do not mix source refactors with cache cleanup, generated build output, or unrelated scene/prefab churn.
-- Visual source asset creation/replacement happens before integration code. If the required generator/tool is unavailable, stop and report the limitation instead of silently substituting another generator.
-- Compact answers are fine, but never compress away exact paths, class names, object names, commands, errors, validation results, or rollback notes.
+- Visual source asset creation/replacement happens before integration code; if required tool is unavailable, stop and report.
+- Cleanup needs code refs, YAML GUID refs, Resources/addressables, scene/prefab refs, generated-vs-source status, and runtime reachability proof.
 
 ## Routing Card
-
-For new files, moved files, new classes, changed module placement, expanded responsibility, architecture updates, or hub deflation, fill the useful parts of this card before editing. If a field is unknown and relevant, inspect more.
 
 ```text
 Task type:
@@ -148,49 +159,19 @@ Files allowed to touch:
 Files explicitly not touched:
 ```
 
-Add graph, God Node, edge count, over-500 status, and architecture-doc sync only when architecture or C# responsibility changed and graph/source data exists.
+Add graph/God Node/edge count/over-500 status only when architecture or C# responsibility changed and graph/source data exists.
 
-## Multi-Agent Visible/State Guard
+## Closeout Schema
 
-Use this before parallel workers patch Unity visible-output or state-transition work.
-
-1. Main agent loads required references, fills the Routing Card, and defines `Files allowed to touch` plus `Files explicitly not touched`.
-2. Main agent assigns disjoint ownership for each worker by file set, runtime target, state step, or validation slice.
-3. Workers stop and report back when they need a file outside their assignment or find a different runtime owner.
-4. Checker fails missing runtime numeric proof for visible-output work: source bounds, destination bounds/root, converted rect, final drawn rect, and runtime writer.
-5. Checker fails missing state-step proof for guided flows: shown, clicked, opened, selected, equipped, claimed, completed, persisted.
-6. Main agent integrates, validates, and closes out; mirrors or public package copies are touched only when explicitly in scope.
-
-## Task Router
-
-- **Narrow bug fix**: read the call path, patch the true owner, validate, report owner chain.
-- **Repeated "still wrong" visible fix**: read `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, and `references/unity-validation.md`; collect runtime numeric proof before changing more values.
-- **Runtime visible output**: read `references/runtime-owner-proof.md`; then load `references/runtime-visible-targets.md`, `references/target-bounds-catalog.md`, or `references/coordinate-space-conversion.md` when the output depends on a live target, bounds choice, or coordinate conversion.
-- **New runtime/content feature or state transition**: read `references/project-structure-discovery.md`, then `references/modular-architecture.md` and `references/content-and-systems.md`; prefer the repo's existing owner/content path and focused collaborators.
-- **Multi-agent visible/state work**: read `references/ai-workflows.md`, `references/workflow-recipes.md`, `references/runtime-owner-proof.md`, `references/content-and-systems.md`, and `references/unity-validation.md`; main agent locks scope and allowed files before workers patch, then checker enforces runtime numeric proof and state-step proof.
-- **Cross-module communication**: use contracts/events/gateways. Do not import one feature module from another.
-- **Hub deflation/refactor**: read `references/modular-architecture.md`; prove a callsite, edge, responsibility, or asmdef boundary changed.
-- **UI or screenshot work**: read `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, and `references/unity-validation.md` before editing. Report those references as loaded in closeout.
-- **Visual asset work**: read `references/ui-and-visual-assets.md`; generate/approve the source asset before Unity integration.
-- **Compile or validation repair**: read `references/unity-validation.md`; capture exact errors and rerun the same check after fixing.
-- **Cleanup/deletion**: read `references/cleanup-and-git.md`; prove unused status through code refs, YAML GUID refs, resources paths, and runtime reachability.
-- **Rule or workflow update**: read `references/session-mining.md`; patch only the owning artifact.
-
-## Closeout
-
-Report compactly:
+Always report:
 
 - Changed files.
 - Non-requested systems touched: yes/no.
 - Runtime-owner or structural proof.
-- Runtime numeric proof for repeated visible-output fixes, or the probe plan if proof could not be captured.
+- Runtime numeric proof for repeated visible-output fixes, or probe plan if not captured.
 - Validation command and result.
-- References loaded/missing and project maps loaded/missing.
+- `References loaded:` or `References missing:`.
+- `Project maps loaded:` or `Project maps missing:`.
 - Residual risk.
 
-Add only when relevant:
-
-- Largest touched `.cs` files and over-500 status for C# responsibility changes.
-- Graph/God Node/edge-gate status for architecture changes when graph data exists.
-- Visual asset tool used plus reason for visual source asset work.
-- Play Mode, Game view, device, batchmode, or graph refresh gaps when those validations were needed but skipped.
+Add only when relevant: largest touched `.cs` files and over-500 status, graph/God Node/edge-gate status, visual asset tool used, Play Mode/Game view/device/batchmode/graph gaps.
