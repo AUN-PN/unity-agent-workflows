@@ -21,6 +21,20 @@ Read only what exists and only what the task needs:
 Do not invent folders or layer names that are not visible in the repo.
 Do not scan unrelated categories just to fill a template.
 
+## Serialized Wiring Scan
+
+Code search alone is insufficient for Unity serialized wiring. Before declaring a method, field, script, prefab, scene object, animation hook, or asset unused, scan the Unity serialized surfaces that can call or reference it without a normal C# callsite.
+
+Include these checks when the task involves refactor, deletion, rename, routing, dead-code claims, owner proof, button/menu actions, animation flow, or scene/prefab impact:
+
+- script `.meta` GUID -> `.unity`, `.prefab`, `.asset`, `.controller`, `.anim`, and relevant generated/imported asset references
+- `UnityEvent` persistent calls such as `Button.onClick`, `Toggle.onValueChanged`, timeline/signals, or custom serialized events
+- `AnimatorController` states, transitions, parameters, blend trees, and animation events that reference method names or state keys
+- prefab/scene back-references from serialized assets to MonoBehaviours, components, fields, and object references
+- `Resources.Load`, Addressables/resource keys, registry/factory paths, and ScriptableObject-driven bindings when present
+
+Treat `rg` over `.cs` as code evidence only. A dead-code, unused-asset, or safe-rename conclusion needs serialized wiring evidence too, or it must be reported as unproven.
+
 ## Teach Command Contract
 
 The short command is:

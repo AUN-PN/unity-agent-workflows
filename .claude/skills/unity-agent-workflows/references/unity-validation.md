@@ -26,6 +26,23 @@ Use the smallest useful check. Validation should match the edited surface and ri
    - State clearly when visual runtime validation was not run.
    - For repeated visible-output failures, include runtime numeric proof for source bounds, converted rect, and final drawn rect before another patch. `git diff --check`, C# compile, source inspection, and sub-agent review do not satisfy this proof.
 
+## AI-Generated Unity Code Gate
+
+Use this when reviewing or accepting Unity code written by an AI agent, especially new runtime behavior, generated helpers, lifecycle methods, input, physics, UI layout, scene loading, asset loading, or serialized fields.
+
+Before closeout, check the code against the live project instead of generic Unity examples:
+
+- Unity version and package APIs: avoid deprecated or version-mismatched APIs when a current API exists.
+- Project input stack: do not mix legacy `Input.*` with the New Input System unless the repo already does.
+- 2D vs 3D API: use `Rigidbody2D`, `Collider2D`, `Physics2D`, and 2D callbacks for 2D gameplay.
+- Lifecycle phase: place initialization, subscription, physics, camera follow, UI layout reads, and teardown in the correct project/runtime phase.
+- Runtime owner path: prefer the existing service, presenter, state owner, navigation owner, registry, or content definition over a new global lookup.
+- Serialized fields: preserve field names when possible; use `FormerlySerializedAs` for safe renames; check prefab/scene overrides that may beat code defaults.
+- Performance-sensitive loops: avoid repeated `Camera.main`, broad `Find*`, allocations, layout rebuild triggers, or Resources scans in hot paths unless the repo already proves it is acceptable.
+- Asset/loading pattern: do not introduce `Resources.Load`, direct scene loads, or hardcoded paths when the project uses Addressables, registries, ScriptableObjects, gateways, or navigation services.
+
+If the code compiles but any item above is unverified, report the missing proof instead of claiming the Unity behavior is validated.
+
 ## Common Commands
 
 ```bash
