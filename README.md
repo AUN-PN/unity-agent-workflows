@@ -202,21 +202,49 @@ Later tasks should read only `UNITY_STRUCTURE.md` plus the focused map that matc
 | New files, refactor, asmdef, namespace, dependency                   | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.assemblies.md` |
 | Deletion, cleanup, generated files, Resources/addressables           | `UNITY_STRUCTURE.md`, `UNITY_STRUCTURE.cleanup.md`    |
 
-Example prompts:
+### Example Case: FTUE Sentinel Install Focus
+
+The visible bug was a repeated FTUE Stage 5 Sentinel install focus mismatch. A normal non-plugin pass reached the install prompt, but the focus ring stayed on the ship area instead of the live `ADD` button. The `Unity Workflows` pass forced main-agent scope lock, read-only sub-agents, runtime numeric proof requirements, and checker criteria before patching.
+
+**Before using the plugin: the focus is still on the Sentinel menu button/prompt.**
+
+![Before command: Sentinel menu prompt](assets/case-ftue-sentinel-before-plugin.png)
+
+**Fix with `Unity Workflows`: the focus moves to the real Sentinel `ADD` button.**
+
+![After Unity Workflows: ADD button focus](assets/case-ftue-sentinel-after-plugin.png)
+
+**Fix without plugin rules: the install prompt appears, but the focus lands around the ship position instead of `ADD`.**
+
+![Without plugin rules: wrong ship-area focus](assets/case-ftue-sentinel-without-plugin.png)
+
+What the plugin changed:
+
+- Treat the issue as a repeated visible-output failure.
+- Keep sub-agents read-only until the main agent locks scope.
+- Require runtime numeric proof before another focus/position patch.
+- Check that the final focus target is the visible `ADD` button, not the ship area.
+- Keep unrelated systems out of scope.
+
+Main prompt:
 
 ```text
 Use $unity-agent-workflows.
-Fix this HUD safe-area overlap. Prove the runtime owner before editing.
+Fix the FTUE Stage 5 Sentinel ADD focus mismatch. Treat it as a repeated visible-output failure: spawn read-only sub-agents first, gather runtime numeric proof/checker requirements, lock scope before patching, and do not touch Earth/background/camera/unrelated systems.
+```
+
+Sub-agent prompts used:
+
+```text
+Read-only only. Follow project-local rules and Unity Workflows. Task: inspect the Sentinel ADD focus mismatch state/transition timing only. Find the owner chain from Sentinel menu click to install prompt and ADD focus target. Report state steps: shown/clicked/opened/install prompt/equipped/persisted. Do not edit. Do not include private paths or session IDs.
 ```
 
 ```text
-Use $unity-agent-workflows.
-Do not fix yet. First find why this runtime object pauses mid-path.
+Read-only only. Follow project-local rules and Unity Workflows. Task: inspect the visible focus coordinate path for the Sentinel install ADD target. Prove target object chain, source bounds selection, destination conversion, and final focus ring values. Do not edit. Report exact runtime numeric proof and checker requirements to compare ADD button and final ring. Do not include private paths or session IDs.
 ```
 
 ```text
-Use $unity-agent-workflows.
-Refresh only UNITY_STRUCTURE.ui.md, then fix this HUD issue.
+Read-only only. Follow project-local rules and Unity Workflows. Task: act as checker spec designer for this fix. Determine what a checker must verify after patch: source ADD bounds vs final focus ring bounds, state steps shown/clicked/opened/install/equipped/persisted, and no unrelated systems touched. Do not edit. Return PASS/FAIL criteria. Do not include private paths or session IDs.
 ```
 
 ## Workflow
