@@ -28,6 +28,8 @@ AI contract for Unity work. Keep answers compact, but never remove exact paths, 
 |---|---|
 | Runtime/visible bug | Prove owner chain before editing. |
 | Runtime-visible output, target alignment, focus/highlight/marker/HUD, overlay, input blocker, modal dimming, duplicate names, hardcoded layout, "do not guess" | Runtime Visible Output Hard Stop. |
+| Screenshot or visible UI text fix | Screenshot Text Owner Gate; search exact visible text/localization key and prove creator plus refresh writer before editing. |
+| Shared factory/helper/style candidate for visible UI | Treat as dependency only until the visible callsite proves it uses that helper. |
 | Overlay/dim source-bound mistakes | Prove source target bounds; overlay/dim/mask/blocker rects are destination output unless explicit marker proof exists. |
 | Repeated visible-output mismatch after patch | Runtime numeric proof before another coordinate/layout/fallback patch. |
 | Multi-agent visible-output or state work | Main-agent scope lock before workers patch; checker must review. |
@@ -47,6 +49,7 @@ Load only matching files; resolve relative to this skill directory. If a require
 | Task trigger | References before editing |
 |---|---|
 | UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, `references/unity-validation.md` |
+| Screenshot text, visible UI label, localized UI text, runtime text styling, shared factory/helper candidate | `references/runtime-owner-proof.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
 | Runtime-visible bug, repeated "still wrong", duplicate object names, real object/position request | `references/runtime-owner-proof.md`, `references/unity-validation.md` |
 | Overlay/dim source-bound mismatch, wrong source bounds, focus hole follows wrong target | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
 | Repeated visible-output failure, wrong focus/highlight/marker/HUD/camera position, cross-root/cross-canvas mismatch | `references/runtime-owner-proof.md`, `references/runtime-visible-targets.md`, `references/coordinate-space-conversion.md`, `references/unity-validation.md` |
@@ -123,6 +126,8 @@ Missing source bounds, converted rect, or final drawn rect is FAIL; return a run
 State-step proof: screen open, click, analytics, or prompt shown is not completion. Prove relevant steps separately: shown, clicked, opened, selected, equipped, claimed, completed, persisted, old-save path, reset path.
 
 Multi-agent guard: main agent owns Routing Card, scope, allowed files, and not-touched files before workers patch. Workers use disjoint ownership and stop if a different owner or out-of-scope file appears. Checker fails missing runtime numeric proof or state-step proof.
+
+For screenshot, visible UI, or runtime text fixes, the scope lock must include exact text/key searched, owner file, creator method, refresh/update writer, allowed files, explicitly not touched files, and nearby candidates rejected. Shared factories/helpers/styles are not owners unless the visible callsite proves their use.
 
 ## Architecture Rules
 

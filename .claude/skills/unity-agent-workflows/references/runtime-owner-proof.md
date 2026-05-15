@@ -36,6 +36,54 @@ user-visible target
 
 If proof is incomplete, do not patch coordinates. Inspect deeper or ask one concise question if two live owners are equally plausible.
 
+## Screenshot Text Owner Gate
+
+Use when a screenshot, user wording, OCR, visible UI label, HUD text, menu text, tutorial text, localized string, TMP text, or runtime text styling points to a visible text target.
+
+Do not patch by nearby class names, shared factories, style helpers, localization utilities, semantic UI guesses, or the first file that mentions a similar concept.
+
+Before editing, prove:
+
+```text
+visible screenshot/user text
+-> exact visible string / localization key / text setter searched
+-> active UI text object name
+-> scene/prefab/runtime source
+-> creator method
+-> refresh/update writer
+-> owning presenter/controller/component
+-> serialized/runtime override
+-> validation method
+```
+
+If the exact text/key is not searchable, inspect candidate UI builders and report candidates first. Missing creator or refresh/update writer is a FAIL for visible text edits.
+
+Closeout for visible text fixes must include:
+
+```text
+Why this owner is runtime-visible:
+Why nearby candidates are not owners:
+Exact text/key searched:
+Refresh writer checked:
+Factory/helper touched? yes/no, with proven callsite:
+```
+
+## Factory Is Not Owner Rule
+
+Factories, builders, layout helpers, font/style helpers, localization providers, theme utilities, and shared UI primitives are dependencies by default.
+
+Treat them as owners only after proving the visible runtime callsite uses them:
+
+```text
+visible target
+-> owner presenter/controller/component
+-> creator/update method
+-> helper/factory callsite
+-> helper output used by the visible object
+```
+
+If only the helper/factory is found, stay read-only or continue tracing callsites. Do not patch shared helpers to fix a single visible target until the target owner chain proves the helper participates in that runtime object.
+
 ## Runtime Visible Output Hard Stop
 
 Use for runtime-visible output drawn, positioned, blocked, aimed, anchored, masked, followed, measured, or converted from a live Unity target. Broader than tutorial focus UI.

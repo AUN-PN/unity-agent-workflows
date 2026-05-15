@@ -19,6 +19,7 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
 
 3. Prove the owner chain.
    - UI/visible bugs: visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override.
+   - Screenshot/visible text bugs: visible text -> exact string/localization key/text setter -> UI text object -> creator method -> refresh/update writer -> owner.
    - Gameplay bugs: entrypoint -> orchestrator -> collaborator -> data/config -> contracts/events.
    - Compile bugs: exact error -> file -> assembly -> dependency edge -> smallest fix.
 
@@ -37,6 +38,7 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
    - No direct sibling feature imports.
    - No system-to-feature dependency.
    - No hub growth when a collaborator can own the work.
+   - No shared factory/helper/style patch for a visible target until the target callsite proves it uses that dependency.
 
 6. Edit the smallest safe file set.
    - Preserve Unity serialized field names where possible.
@@ -59,3 +61,24 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
 ## Workflow Recipes
 
 Load `references/workflow-recipes.md` only when the task needs a named recipe (`WF-0` through `WF-11`) or when the universal workflow above is not specific enough.
+
+## Main-Agent Scope Lock Before Worker Patch
+
+Use this before sub-agents patch screenshot, visible UI, runtime text, state-step, or runtime-visible output tasks.
+
+Main agent must record:
+
+```text
+visible target:
+exact text/key searched:
+owner file:
+creator method:
+refresh/update writer:
+allowed files:
+explicitly not touched:
+nearby candidates rejected:
+```
+
+Workers must stop when they only find a candidate, helper, factory, style utility, localization provider, or shared primitive. They must ask for scope revision if the proven owner differs from the scope lock or requires a file outside `allowed files`.
+
+Checker must return FAIL when the patch lacks the visible target -> owner -> writer chain, when a shared helper is edited without a proven visible callsite, or when rejected nearby candidates are not explained for screenshot/visible text fixes.
