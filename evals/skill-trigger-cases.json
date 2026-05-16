@@ -52,6 +52,12 @@
       "expectation": "Requires main-agent scope ownership, disjoint worker write sets, allowed/not-touched files, checker review, runtime numeric proof for visible output, and state-step proof for the tutorial flow."
     },
     {
+      "id": "sub-agent-permission-before-spawn",
+      "prompt": "Unity 2D: the visible ship may be owned by either Home UI or Sentinel systems. If sub-agents would help, do not spawn them until you ask me first.",
+      "expected_skill": true,
+      "expectation": "Uses one main agent by default, explains why sub-agent discovery may help, states read-only/edit scope and allowed/forbidden surfaces, then waits for explicit user approval before spawning."
+    },
+    {
       "id": "state-step-transition-guard",
       "prompt": "Unity 2D: the tutorial says the reward was claimed after opening the shop, but old saves keep repeating the prompt.",
       "expected_skill": true,

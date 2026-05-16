@@ -61,7 +61,43 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
 
 ## Workflow Recipes
 
-Load `references/workflow-recipes.md` only when the task needs a named recipe (`WF-0` through `WF-11`) or when the universal workflow above is not specific enough.
+Load `references/workflow-recipes.md` only when the task needs a named recipe (`WF-0` through `WF-12`) or when the universal workflow above is not specific enough.
+
+## Sub-Agent Decision And Permission Gate
+
+Default: use one main agent only.
+
+Consider sub-agents only when at least one is true:
+
+- The task has 2+ independent proof tracks that can run read-only in parallel.
+- Runtime-visible owner is ambiguous across multiple surfaces, scenes, prefabs, factories, feature names, or source assets.
+- The user-visible target and semantic feature name disagree.
+- A large repo-wide audit, security scan, checker pass, or changed-plus-related-files review needs independent verification.
+- The user explicitly asks for sub-agent, multiple agents, parallel agents, checker, or independent review.
+
+Do not use sub-agents when:
+
+- The owner file and runtime writer are already proven.
+- The task is a simple one-file edit, command, explanation, or narrow validation.
+- The main agent has not read live project instructions.
+- The user says `อย่าพึ่งแก้`, unless the sub-agent plan is only being proposed or the user explicitly approves read-only discovery. Edit permission remains forbidden.
+- The sub-agent would edit files before the main agent locks scope.
+
+Before spawning any sub-agent, ask the user first.
+
+The approval request must include:
+
+```text
+why sub-agent is needed:
+sub-agent count:
+each sub-agent task:
+read-only or edit permission:
+files/surfaces allowed:
+files/surfaces forbidden:
+checker needed: yes/no
+```
+
+Do not spawn until the user explicitly approves in the same turn, except when the user already explicitly requested sub-agents in that turn.
 
 ## Main-Agent Scope Lock Before Worker Patch
 

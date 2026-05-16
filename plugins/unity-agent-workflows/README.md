@@ -22,6 +22,7 @@ Example request:
 Use $unity-agent-workflows.
 Fix the FTUE Stage 5 Sentinel ADD focus mismatch.
 Main: lock scope, patch only after proof.
+Use the sub-agents below because I am explicitly requesting them in this turn.
 Sub-agent A: read-only state flow proof.
 Sub-agent B: read-only ADD focus bounds proof.
 Checker: verify ADD focus, state steps, and PASS/FAIL criteria.
@@ -36,6 +37,7 @@ Do not include private paths or session IDs.
 - classify the task as visible output, state flow, content, architecture, cleanup, or validation
 - load only the needed workflow references
 - prove the real runtime owner chain before editing visible behavior
+- ask before spawning sub-agents unless the user already requested them in the same turn
 - lock main-agent scope and sub-agent ownership before worker patches
 - require runtime numeric proof for repeated focus, marker, overlay, or coordinate failures
 - validate with the smallest useful check and report residual risk
@@ -54,13 +56,14 @@ Detailed workflow references live in:
 skills/unity-agent-workflows/references/
 ```
 
-Key references include runtime-owner proof, visible targets, coordinate-space conversion, UI/visual assets, content/systems, validation, cleanup/git, session mining, and workflow recipes.
+Key references include runtime-owner proof, visible targets, coordinate-space conversion, UI/visual assets, content/systems, validation, cleanup/git, session mining, and workflow recipes. This is a catalog, not a preload list; the skill loads only the references needed for the current task.
 
 ## Package Validation
 
 From the source repository root:
 
 ```bash
+npm run sync:mcpmarket
 npm run validate
 npm run pack:dry-run
 ```

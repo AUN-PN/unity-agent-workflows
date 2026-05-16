@@ -3,10 +3,11 @@ set -euo pipefail
 
 ROOT="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 SKILL_NAME="unity-agent-workflows"
+PLUGIN_DIR="$ROOT/plugins/unity-agent-workflows"
 TARGETS=(
   "$ROOT/.claude/skills/$SKILL_NAME"
   "$ROOT/skills/$SKILL_NAME"
-  "$ROOT/plugins/unity-agent-workflows/skills/$SKILL_NAME"
+  "$PLUGIN_DIR/skills/$SKILL_NAME"
 )
 
 for target in "${TARGETS[@]}"; do
@@ -15,5 +16,9 @@ for target in "${TARGETS[@]}"; do
   cp -R "$ROOT/SKILL.md" "$ROOT/references" "$ROOT/agents" "$target/"
   echo "synced $target"
 done
+
+mkdir -p "$PLUGIN_DIR/.codex-plugin"
+cp "$ROOT/.codex-plugin/plugin.json" "$PLUGIN_DIR/.codex-plugin/plugin.json"
+echo "synced $PLUGIN_DIR/.codex-plugin/plugin.json"
 
 echo "synced skill mirrors"

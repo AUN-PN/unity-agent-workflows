@@ -227,7 +227,10 @@ required_eval_ids = {
     "checker-fails-missing-runtime-values",
     "overlay-dim-source-bound-mistake",
     "multi-agent-scope-before-patch",
+    "sub-agent-permission-before-spawn",
     "guided-equipment-state-flow",
+    "home-only-shared-factory-blast-radius",
+    "repeated-visible-asset-runtime-proof",
 }
 for case in cases:
     for key in ("id", "prompt", "expected_skill", "expectation"):
@@ -237,7 +240,7 @@ for case in cases:
 missing_eval_ids = required_eval_ids - seen_ids
 require(not missing_eval_ids, f"evals missing numeric visible-output cases: {', '.join(sorted(missing_eval_ids))}")
 eval_text = json.dumps(evals, ensure_ascii=False)
-for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect", "overlay", "multi-agent", "guided equipment"):
+for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect", "overlay", "multi-agent", "guided equipment", "ask me first", "Pixellab ID", "active sprite/model"):
     require(phrase in eval_text, f"evals missing trigger phrase: {phrase}")
 
 reference_files = sorted(root.joinpath("references").glob("*.md"))
@@ -257,7 +260,8 @@ if missing_from_skill:
     raise SystemExit(f"SKILL.md does not route references: {missing}")
 
 required_reference_phrases = {
-    "references/runtime-owner-proof.md": "Runtime Numeric Proof Gate",
+    "references/runtime-owner-proof.md": "Visible Object Identity Lock",
+    "references/ai-workflows.md": "Sub-Agent Decision And Permission Gate",
     "references/runtime-visible-targets.md": "Overlay/Dim/Mask/Blocker Source Bounds",
     "references/coordinate-space-conversion.md": "Cross-Canvas/Root Focus And Spotlight",
     "references/unity-validation.md": "runtime numeric proof",

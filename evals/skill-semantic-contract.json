@@ -165,6 +165,45 @@
       ]
     },
     {
+      "id": "sub-agent-permission-gate",
+      "label": "sub-agent permission gate",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Sub-Agent Decision And Permission Gate", "Sub-agent permission guard"] },
+        { "any": ["ask the user first", "ask the user"] },
+        { "any": ["Do not spawn until the user explicitly approves", "explicitly approves in the same turn"] }
+      ]
+    },
+    {
+      "id": "visible-object-identity-lock",
+      "label": "visible object identity lock",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Visible Object Identity Lock"] },
+        { "any": ["exact runtime GameObject name"] },
+        { "any": ["nearby semantic owner candidates", "rejected candidates and reason"] }
+      ]
+    },
+    {
+      "id": "single-agent-anti-anchoring",
+      "label": "single-agent anti-anchoring",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Single-Agent Anti-Anchoring Guard"] },
+        { "any": ["competing candidates"] },
+        { "any": ["why rejected candidates are not owners"] }
+      ]
+    },
+    {
+      "id": "shared-caller-blast-radius",
+      "label": "shared caller blast radius",
+      "groups": [
+        { "any": ["Shared Caller Blast Radius Gate"] },
+        { "any": ["serialized/resource callers checked"] },
+        { "any": ["callers outside target surface", "callers outside target"] }
+      ]
+    },
+    {
       "id": "no-hub-growth",
       "label": "no hub growth",
       "groups": [
@@ -255,9 +294,21 @@
     "checker-fails-missing-runtime-values",
     "overlay-dim-source-bound-mistake",
     "multi-agent-scope-before-patch",
+    "sub-agent-permission-before-spawn",
     "state-step-transition-guard",
     "guided-equipment-state-flow",
+    "home-only-shared-factory-blast-radius",
+    "repeated-visible-asset-runtime-proof",
     "cleanup-delete-unused-prefab"
+  ],
+  "forbidden_candidate_phrases": [
+    "spawn sub-agents automatically",
+    "spawn subagents automatically",
+    "do not ask the user first",
+    "workers may patch before scope lock",
+    "workers can patch before scope lock",
+    "shared helpers are owners by default",
+    "factories are owners by default"
   ],
   "prompt_coverage": {
     "explicit-teach": {
@@ -338,6 +389,17 @@
       "doc_groups": [
         { "any": ["Multi-Agent Visible/State Guard", "Multi-agent guard", "WF-12 Multi-Agent Visible Or State Work"] },
         { "any": ["main agent owns Routing Card", "main agent owns the Routing Card"] }
+      ]
+    },
+    "sub-agent-permission-before-spawn": {
+      "eval_groups": [
+        { "any": ["sub-agents"] },
+        { "any": ["ask me first"] }
+      ],
+      "doc_groups": [
+        { "any": ["Sub-Agent Decision And Permission Gate", "Sub-agent permission guard"] },
+        { "any": ["ask the user first"] },
+        { "any": ["Do not spawn until the user explicitly approves"] }
       ]
     },
     "state-step-transition-guard": {

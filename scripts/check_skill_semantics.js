@@ -127,8 +127,14 @@ for (const rel of contract.required_references || []) {
 for (const concept of contract.concepts || []) {
   const label = concept.id || concept.label || "unnamed concept";
   checkGroups(candidateCorpus, concept.groups, label, "candidate concept missing");
-  if (baselineCorpus) {
+  if (baselineCorpus && concept.baseline_required !== false) {
     checkGroups(baselineCorpus, concept.groups, label, "baseline concept missing");
+  }
+}
+
+for (const phrase of contract.forbidden_candidate_phrases || []) {
+  if (phraseHit(candidateCorpus, phrase)) {
+    fail(`forbidden candidate phrase present: ${phrase}`);
   }
 }
 
@@ -155,6 +161,13 @@ for (const item of cases || []) {
 }
 if (positiveCount === 0) fail("evals missing expected_skill true cases");
 if (negativeCount === 0) fail("evals missing expected_skill false cases");
+
+const evalCorpus = (cases || []).map((item) => JSON.stringify(item)).join("\n");
+for (const phrase of contract.forbidden_candidate_phrases || []) {
+  if (phraseHit(evalCorpus, phrase)) {
+    fail(`forbidden eval phrase present: ${phrase}`);
+  }
+}
 
 for (const requiredId of contract.required_eval_case_ids || []) {
   if (!caseIds.has(requiredId)) {

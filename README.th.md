@@ -35,6 +35,8 @@ plugin นี้บังคับ workflow ที่เข้มขึ้นส
 - prove runtime-visible owner chain ก่อนแก้ UI, HUD, scene, prefab หรือ gameplay
 - route C# responsibility ใหม่ไปหา owner เดิมของโปรเจ็ค แทน broad folders
 - ผูกงาน UI/safe-area/TMP/coordinate-space กับ runtime hierarchy จริง
+- โหลด deep reference files เฉพาะเมื่อ current task ต้องใช้
+- ขออนุมัติก่อน spawn sub-agent ยกเว้น user ขอใช้ใน turn เดียวกันแล้ว
 - validate ด้วย check ที่เล็กแต่มีประโยชน์ และรายงาน residual risk ตรงๆ
 - ต้องมี reference proof ก่อน cleanup/deletion
 
@@ -74,12 +76,12 @@ flowchart TD
 รายละเอียดแต่ละ step:
 
 1. **User input**: รับ Unity task, screenshot, stack trace, feature request, cleanup request หรือ validation request
-2. **Skill trigger**: เรียก skill จาก `$unity-agent-workflows` หรือ implicit Unity 2D workflow match
-3. **Read context**: อ่าน project rules, dirty state, structure maps และ docs ที่เกี่ยวข้อง
+2. **Skill trigger**: เรียก skill จาก `$unity-agent-workflows` หรือ implicit Unity 2D repo task ที่ต้อง edit, validation, routing, runtime proof, state proof, asmdef/module safety, cleanup หรือ multi-agent coordination
+3. **Read context**: อ่าน `AGENTS.md` ถ้ามี, `git status --short`, `UNITY_STRUCTURE.md` เดิมพร้อม focused map ที่ตรงงาน และ docs ที่เกี่ยวข้องเท่านั้น
 4. **Classify task**: แยกงานเป็น visible output, state flow, content, architecture, cleanup หรือ validation
-5. **Load references**: `SKILL.md` เลือก reference files ที่ต้องใช้ ไม่โหลดทุก rule
+5. **Load references**: `SKILL.md` เลือก reference files ที่ต้องใช้ ไม่โหลดทุก rule. `unity-validation.md` และ `workflow-recipes.md` defer จนกว่างานต้องใช้ validation/recipe context
 6. **Proof loop**: ถ้า owner chain, overlay/dim source-bound proof, runtime numeric proof หรือ guided state-flow proof ยังไม่ครบ ให้วนกลับไป inspect/probe runtime data
-7. **Lock scope**: main agent ระบุ `Files allowed to touch`, `Files explicitly not touched` และ multi-agent ownership ก่อน worker patch
+7. **Lock scope**: main agent ระบุ `Files allowed to touch`, `Files explicitly not touched` และ multi-agent ownership ก่อน worker patch. ห้าม spawn sub-agent จนกว่า user อนุมัติ ยกเว้น user ขอใช้ sub-agent ใน turn เดียวกันแล้ว
 8. **Patch**: แก้เฉพาะ smallest safe file set หลัง proof ครบ
 9. **Validation loop**: validation fail ให้วนกลับไป proof/patch; ถ้ายังขาด runtime proof ให้คืน probe plan แทนการเดา
 10. **Close out**: สรุป changed files, proof, validation และ residual risk
@@ -177,7 +179,7 @@ npx skills add AUN-PN/unity-agent-workflows -a codex -y
 $unity-agent-workflows. Teach
 ```
 
-`Teach` เป็น Codex skill instruction ไม่ใช่ npm CLI command. เมื่อ agent ทำตาม skill จะสร้างหรือ refresh structure index และ focused maps เฉพาะส่วนที่มีประโยชน์:
+`Teach` เป็น Codex skill instruction ไม่ใช่ npm CLI command. ใช้เมื่อ onboarding Unity project ใหม่, `UNITY_STRUCTURE*` maps หาย/stale, หรือ user ขอ refresh structure โดยตรง. เมื่อ agent ทำตาม skill จะสร้างหรือ refresh structure index และ focused maps เฉพาะส่วนที่มีประโยชน์:
 
 ```text
 UNITY_STRUCTURE.md
@@ -195,7 +197,7 @@ Use $unity-agent-workflows.
 Do not edit yet. Inspect the project structure and report the proposed UNITY_STRUCTURE map plan.
 ```
 
-งานถัดไปควรอ่านแค่ `UNITY_STRUCTURE.md` บวก focused map ที่ตรงกับงาน
+งานถัดไปควรอ่านแค่ `UNITY_STRUCTURE.md` บวก focused map ที่ตรงกับงาน และไม่ควร run `Teach` ซ้ำ เว้นแต่ map ที่จำเป็นหายหรือ stale
 
 | งาน                                                                  | อ่าน                                                  |
 | -------------------------------------------------------------------- | ----------------------------------------------------- |
@@ -224,6 +226,7 @@ Do not edit yet. Inspect the project structure and report the proposed UNITY_STR
 สิ่งที่ plugin เปลี่ยน:
 
 - มองเป็น repeated visible-output failure
+- ขออนุมัติก่อน spawn sub-agent ยกเว้น user ขอใช้ใน turn เดียวกันแล้ว
 - ให้ sub-agent เป็น read-only จนกว่า main agent จะ lock scope
 - ต้องมี runtime numeric proof ก่อน patch focus/position ซ้ำ
 - checker ต้องเทียบว่า final focus อยู่ที่ปุ่ม `ADD` จริง ไม่ใช่แถวยาน
@@ -275,7 +278,7 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 | Overlay/dim source bounds | reject overlay, mask, blocker หรือ spotlight surfaces เป็น source bounds ยกเว้น explicit marker prove target |
 | Coordinate conversion     | ระบุ world, local, screen, viewport, canvas, camera และ safe-area space ชัด                               |
 | Guided state flows        | แยก shown/clicked/opened/selected/equipped/claimed/completed/persisted ก่อน mark completion               |
-| Multi-agent work          | lock Routing Card, file ownership, runtime proof และ checker gates ก่อน parallel worker patches           |
+| Multi-agent work          | ขออนุมัติก่อน spawn แล้ว lock Routing Card, file ownership, runtime proof และ checker gates ก่อน patch   |
 | C# routing                | derive folders, namespaces, `.asmdef`, dependency direction และ owner modules                             |
 | Content changes           | ใช้ data/config surface เดิมก่อน ถ้าโปรเจ็คมี                                                             |
 | Validation                | ใช้ check ที่เล็กแต่มีประโยชน์ และรายงาน exact command output                                             |
@@ -283,7 +286,7 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 
 ## Reference Files
 
-[SKILL.md](SKILL.md) ตั้งใจให้สั้น ส่วน workflow ลึกอยู่ใน `references/` และโหลดเฉพาะเมื่องานต้องใช้
+[SKILL.md](SKILL.md) ตั้งใจให้สั้น ส่วน workflow ลึกอยู่ใน `references/` และโหลดเฉพาะเมื่องานต้องใช้ ตารางนี้เป็น catalog ไม่ใช่ preload list; agent ต้องตาม `SKILL.md` Required References และ `Read` / `Load Extra Detail` ของแต่ละ reference
 
 | File                                                                                   | ใช้ทำอะไร                                                                    |
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
@@ -306,12 +309,10 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 สำหรับ repo นี้:
 
 ```bash
-npm run validate
 npm run sync:mcpmarket
+npm run validate
 npm run pack:dry-run
 ```
-
-`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, README workflow coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates และ multi-agent scope triggers
 
 `npm run sync:mcpmarket` mirror `SKILL.md`, `references/` และ `agents/` ไปที่:
 
@@ -320,6 +321,8 @@ npm run pack:dry-run
 skills/unity-agent-workflows/
 plugins/unity-agent-workflows/skills/unity-agent-workflows/
 ```
+
+`npm run validate` ตรวจ package metadata, plugin manifests, mirrored skill payloads, README workflow coverage, reference links, JavaScript syntax, runtime numeric proof triggers, overlay/dim source-bound gates, guided state-flow gates และ multi-agent scope triggers
 
 สำหรับ Unity projects ที่ใช้ skill นี้ Unity Editor, Play Mode, Game view, device tests, batchmode builds และ project logs ยังเป็น validation path หลัก. Bee `.rsp` หรือ direct Unity-bundled Roslyn checks เป็น local compile smoke test แบบ best-effort และอาจ stale หลัง Unity regenerate project artifacts
 
