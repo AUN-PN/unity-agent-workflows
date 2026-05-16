@@ -64,6 +64,18 @@
       "expectation": "Runs the Runtime State Step Guard and treats shown, clicked, opened, selected, equipped, completed, and persisted as separate proof steps; screen open or click is not completion proof."
     },
     {
+      "id": "home-only-shared-factory-blast-radius",
+      "prompt": "Unity 2D Home only: make the orbit ship use Pixellab ID de93fe60-cab1-4c49-aa49-8213d2b3f364 and turn with the Home Battle orbit. Do not affect Playgame, Sentinel gameplay, Earth, background, or camera.",
+      "expected_skill": true,
+      "expectation": "Locks the requested Home surface and source ID, requires allowed runtime caller(s), searches all callers before editing shared factories/selectors, and rejects global behavior changes that affect non-target surfaces."
+    },
+    {
+      "id": "repeated-visible-asset-runtime-proof",
+      "prompt": "Unity 2D: I still do not see the new Home orbit ship animation. Before another patch, prove the runtime object name, active caller, active sprite/model asset name, and writer that overwrites it.",
+      "expected_skill": true,
+      "expectation": "Treats the challenge as a hard stop, requires runtime proof of active caller and active asset/sprite/model source before another factory, selector, visual-layer, or animation patch."
+    },
+    {
       "id": "cleanup-delete-unused-prefab",
       "prompt": "Unity cleanup: remove this unused prefab and any dead scripts around it.",
       "expected_skill": true,

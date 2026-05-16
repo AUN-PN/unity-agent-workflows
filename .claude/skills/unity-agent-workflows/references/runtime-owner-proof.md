@@ -70,7 +70,7 @@ Factory/helper touched? yes/no, with proven callsite:
 
 ## Factory Is Not Owner Rule
 
-Factories, builders, layout helpers, font/style helpers, localization providers, theme utilities, and shared UI primitives are dependencies by default.
+Factories, builders, layout helpers, font/style helpers, localization providers, theme utilities, shared gameplay factories, sprite/model factories, registries, bridges, and shared UI primitives are dependencies by default.
 
 Treat them as owners only after proving the visible runtime callsite uses them:
 
@@ -83,6 +83,47 @@ visible target
 ```
 
 If only the helper/factory is found, stay read-only or continue tracing callsites. Do not patch shared helpers to fix a single visible target until the target owner chain proves the helper participates in that runtime object.
+
+## Shared Caller Blast Radius Gate
+
+Use this before editing any shared factory, helper, registry, bridge, global method, sprite/model selector, theme/style utility, localization provider, or reusable presenter dependency for one requested surface.
+
+Required proof before editing:
+
+```text
+requested surface/object:
+allowed runtime caller(s):
+shared method/helper/factory:
+all direct callers:
+serialized/resource callers checked:
+callers outside target surface:
+existing behavior that would change:
+surface-local API/adapter/branch plan:
+validation:
+```
+
+If callers outside the requested surface exist, changing the shared method's existing behavior is a FAIL unless the user explicitly broadened scope. Prefer a surface-local API, adapter, option, or callsite patch that leaves existing callers unchanged.
+
+For Unity, caller search must include direct C# references plus likely serialized/resource paths when relevant: scene YAML, prefab YAML, ScriptableObject references, `Resources.Load`, Addressables keys, runtime registrations, service locators, animation events, and UnityEvent bindings.
+
+Closeout must state:
+
+```text
+Allowed runtime caller(s):
+Callers outside target:
+Shared behavior changed: yes/no
+Why non-target surfaces are unchanged:
+```
+
+## Source Asset / ID Lock
+
+When the user names a Pixellab ID, asset ID, sprite sheet, prefab, scene, screen, runtime object, or exact surface, that value is a hard scope lock.
+
+- Do not replace it with a nearby asset/source.
+- Do not generate from another source ID.
+- Do not apply the new asset path to global gameplay/runtime factories unless the requested surface is proven as the only caller.
+- If the source is missing, inaccessible, or incompatible, stop and ask before substituting.
+- Closeout must include the exact source ID/path/name used and where it is called at runtime.
 
 ## Runtime Visible Output Hard Stop
 

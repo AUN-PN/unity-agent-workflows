@@ -38,7 +38,8 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
    - No direct sibling feature imports.
    - No system-to-feature dependency.
    - No hub growth when a collaborator can own the work.
-   - No shared factory/helper/style patch for a visible target until the target callsite proves it uses that dependency.
+   - No shared factory/helper/style/global method patch for a scoped visible target until caller search proves all runtime callers and non-target surfaces stay unchanged.
+   - No asset/source substitution when the user provided an exact ID/path/name/surface.
 
 6. Edit the smallest safe file set.
    - Preserve Unity serialized field names where possible.
@@ -71,14 +72,18 @@ Main agent must record:
 ```text
 visible target:
 exact text/key searched:
+exact object/surface/source ID:
 owner file:
 creator method:
 refresh/update writer:
+allowed runtime caller(s):
+forbidden callers/surfaces:
+shared helper/factory/global method candidates:
 allowed files:
 explicitly not touched:
 nearby candidates rejected:
 ```
 
-Workers must stop when they only find a candidate, helper, factory, style utility, localization provider, or shared primitive. They must ask for scope revision if the proven owner differs from the scope lock or requires a file outside `allowed files`.
+Workers must stop when they only find a candidate, helper, factory, style utility, localization provider, global method, registry, bridge, or shared primitive. They must ask for scope revision if the proven owner differs from the scope lock, requires a file outside `allowed files`, touches a forbidden caller/surface, or changes existing behavior for callers outside the allowed runtime caller list.
 
-Checker must return FAIL when the patch lacks the visible target -> owner -> writer chain, when a shared helper is edited without a proven visible callsite, or when rejected nearby candidates are not explained for screenshot/visible text fixes.
+Checker must return FAIL when the patch lacks the visible target -> owner -> writer chain, when a shared helper/global method is edited without caller blast-radius proof, when an exact asset/source ID was substituted, or when rejected nearby candidates are not explained for screenshot/visible text fixes.

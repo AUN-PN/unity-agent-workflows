@@ -360,6 +360,29 @@
         { "any": ["selected, equipped"] }
       ]
     },
+    "home-only-shared-factory-blast-radius": {
+      "eval_groups": [
+        { "any": ["Home only"] },
+        { "any": ["Pixellab ID"] },
+        { "any": ["Do not affect Playgame", "Do not affect"] }
+      ],
+      "doc_groups": [
+        { "any": ["Shared Caller Blast Radius Gate"] },
+        { "any": ["allowed runtime caller"] },
+        { "any": ["Asset/source ID lock", "Source Asset / ID Lock"] }
+      ]
+    },
+    "repeated-visible-asset-runtime-proof": {
+      "eval_groups": [
+        { "any": ["still do not see"] },
+        { "any": ["active sprite/model asset name"] }
+      ],
+      "doc_groups": [
+        { "any": ["After a visible patch is challenged", "Repeated Visible Failure Lock"] },
+        { "any": ["active runtime caller"] },
+        { "any": ["active asset/sprite/model name", "runtime object/asset/sprite name"] }
+      ]
+    },
     "cleanup-delete-unused-prefab": {
       "eval_groups": [
         { "any": ["Unity cleanup"] },
