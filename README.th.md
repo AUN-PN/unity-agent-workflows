@@ -292,7 +292,15 @@ visible object -> scene/prefab/reference -> script/component -> mutating method 
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | [references/ai-workflows.md](references/ai-workflows.md)                               | universal workflow, Routing Card, closeout shape                             |
 | [references/project-structure-discovery.md](references/project-structure-discovery.md) | live Unity structure discovery และ `UNITY_STRUCTURE.md` maps                 |
-| [references/runtime-owner-proof.md](references/runtime-owner-proof.md)                 | runtime-visible owner proof และ repeated-fix diagnostics                     |
+| [references/runtime-owner-proof.md](references/runtime-owner-proof.md)                 | core runtime-visible owner chain และ lazy proof router                       |
+| [references/visible-object-identity.md](references/visible-object-identity.md)         | competing visible owners และ anti-anchoring checks                           |
+| [references/multi-surface-visible.md](references/multi-surface-visible.md)             | menu/gameplay/preview/runtime surface proof                                  |
+| [references/asset-source-lock.md](references/asset-source-lock.md)                     | asset variants, source IDs และ fallback locks                                |
+| [references/screenshot-text-owner.md](references/screenshot-text-owner.md)             | visible text, TMP และ localization owner proof                               |
+| [references/shared-caller-blast-radius.md](references/shared-caller-blast-radius.md)   | shared helper/factory caller blast-radius proof                              |
+| [references/runtime-visible-output.md](references/runtime-visible-output.md)           | output hard stops และ hardcoded layout guard                                 |
+| [references/runtime-numeric-proof.md](references/runtime-numeric-proof.md)             | repeated visible mismatch numeric proof                                      |
+| [references/serialized-persistence.md](references/serialized-persistence.md)           | scene/prefab serialized persistence proof                                    |
 | [references/runtime-visible-targets.md](references/runtime-visible-targets.md)         | focus, highlight, click target, marker และ fallback rules                    |
 | [references/target-bounds-catalog.md](references/target-bounds-catalog.md)             | UI, 2D world, VFX, safe-area และ TMP bounds choices                          |
 | [references/coordinate-space-conversion.md](references/coordinate-space-conversion.md) | world/local/screen/viewport/canvas/camera/safe-area/RenderTexture conversion |

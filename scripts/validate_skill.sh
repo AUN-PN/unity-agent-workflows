@@ -20,6 +20,14 @@ required=(
   "references/workflow-recipes.md"
   "references/modular-architecture.md"
   "references/runtime-owner-proof.md"
+  "references/visible-object-identity.md"
+  "references/multi-surface-visible.md"
+  "references/asset-source-lock.md"
+  "references/screenshot-text-owner.md"
+  "references/shared-caller-blast-radius.md"
+  "references/runtime-visible-output.md"
+  "references/runtime-numeric-proof.md"
+  "references/serialized-persistence.md"
   "references/runtime-visible-targets.md"
   "references/target-bounds-catalog.md"
   "references/coordinate-space-conversion.md"
@@ -267,7 +275,15 @@ if missing_from_skill:
     raise SystemExit(f"SKILL.md does not route references: {missing}")
 
 required_reference_phrases = {
-    "references/runtime-owner-proof.md": "Visible Object Identity Lock",
+    "references/runtime-owner-proof.md": "Runtime Visible Target Lock",
+    "references/visible-object-identity.md": "Visible Object Identity Lock",
+    "references/multi-surface-visible.md": "Multi-Surface Visible Behavior Lock",
+    "references/asset-source-lock.md": "Asset Variant Availability Gate",
+    "references/screenshot-text-owner.md": "Screenshot Text Owner Gate",
+    "references/shared-caller-blast-radius.md": "Shared Caller Blast Radius Gate",
+    "references/runtime-visible-output.md": "Runtime Visible Output Hard Stop",
+    "references/runtime-numeric-proof.md": "Runtime Numeric Proof Gate",
+    "references/serialized-persistence.md": "Serialized Scene And Prefab Persistence",
     "references/ai-workflows.md": "Sub-Agent Decision And Permission Gate",
     "references/runtime-visible-targets.md": "Overlay/Dim/Mask/Blocker Source Bounds",
     "references/coordinate-space-conversion.md": "Cross-Canvas/Root Focus And Spotlight",
