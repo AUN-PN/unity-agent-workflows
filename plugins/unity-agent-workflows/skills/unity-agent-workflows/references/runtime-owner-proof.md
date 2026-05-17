@@ -59,6 +59,37 @@ If the user-visible target and semantic feature name disagree, stop before patch
 
 Example failure mode: the request mentions Sentinel, but the visible object is a Home UI orbit object. Do not patch Sentinel factories or contracts until the Home scene/runtime object, creator, writer, and factory dependency chain are proven.
 
+## Multi-Surface Visible Behavior Lock
+
+Use when the same visible behavior must work across multiple scenes, UI previews, transitions, gameplay runtime, prefabs, or surfaces.
+
+Trigger examples:
+
+- "also make it happen after the battle transition"
+- "Home and Playgame should both turn the ship"
+- "preview works but gameplay does not"
+- "same model/animation/sprite behavior across menu and runtime"
+
+Before editing any surface, prove all requested surfaces:
+
+```text
+requested visible behavior:
+surface list:
+surface:
+visible object:
+runtime GameObject/component:
+owner controller/presenter:
+active caller:
+writer/update method:
+asset/sprite/model/factory dependency:
+active asset/sprite/model name:
+variant paths/names checked:
+fallback behavior if variant missing:
+validation method:
+```
+
+Do not patch only the first proven surface when another requested surface remains unproven. If one surface is only a preview/transition and another is gameplay/runtime, prove both or return the missing proof plan.
+
 ## Single-Agent Anti-Anchoring Guard
 
 Use before patching a visible/runtime Unity target when naming is ambiguous.
@@ -81,6 +112,25 @@ proof still missing:
 ```
 
 If competing candidates cannot be rejected with file-backed proof, do not patch. Ask to continue single-agent investigation or to use read-only sub-agent discovery.
+
+## Asset Variant Availability Gate
+
+Use before changing directional sprites, model poses, animation frames, sprite/model selectors, visual factories, or fallback visuals.
+
+Before editing, prove:
+
+```text
+requested visual state:
+expected variants:
+actual asset paths/names found:
+factory/selector lookup path:
+active runtime asset/sprite/model name:
+fallback when variant missing:
+callers using the selector/factory:
+surface-local fallback possible: yes/no
+```
+
+If variants are missing, do not assume a code patch will make a visible change. Add a surface-local fallback only after caller blast-radius proof, generate/obtain the missing asset through the approved asset workflow, or stop and ask.
 
 ## Screenshot Text Owner Gate
 
@@ -222,11 +272,15 @@ converted center/size:
 final drawn object:
 final drawn position:
 final drawn size/bounds:
+active caller:
+active asset/sprite/model name:
+selector/factory result:
+fallback path/value used:
 runtime writer checked:
 validation:
 ```
 
-Missing source bounds, converted rect, or final drawn rect is a FAIL. On FAIL, stay read-only and return a runtime probe plan only.
+Missing source bounds, converted rect, final drawn rect, active caller, or active asset/sprite/model name is a FAIL when those values are relevant to the challenged visible behavior. On FAIL, stay read-only and return a runtime probe plan only.
 
 ## Load Extra Detail Only When Needed
 

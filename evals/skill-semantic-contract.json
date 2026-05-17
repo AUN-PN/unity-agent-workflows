@@ -204,6 +204,26 @@
       ]
     },
     {
+      "id": "multi-surface-visible-behavior-lock",
+      "label": "multi-surface visible behavior lock",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Multi-Surface Visible Behavior Lock"] },
+        { "any": ["surface list"] },
+        { "any": ["preview/transition surface", "preview/transition proof"] }
+      ]
+    },
+    {
+      "id": "asset-variant-availability-gate",
+      "label": "asset variant availability gate",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Asset Variant Availability Gate", "Sprite/Model Variant Availability"] },
+        { "any": ["active asset/sprite/model name"] },
+        { "any": ["fallback behavior", "fallback path"] }
+      ]
+    },
+    {
       "id": "no-hub-growth",
       "label": "no hub growth",
       "groups": [
@@ -299,6 +319,8 @@
     "guided-equipment-state-flow",
     "home-only-shared-factory-blast-radius",
     "repeated-visible-asset-runtime-proof",
+    "multi-surface-directional-variant-proof",
+    "checker-fails-preview-only-runtime-proof",
     "cleanup-delete-unused-prefab"
   ],
   "forbidden_candidate_phrases": [
@@ -443,6 +465,30 @@
         { "any": ["After a visible patch is challenged", "Repeated Visible Failure Lock"] },
         { "any": ["active runtime caller"] },
         { "any": ["active asset/sprite/model name", "runtime object/asset/sprite name"] }
+      ]
+    },
+    "multi-surface-directional-variant-proof": {
+      "eval_groups": [
+        { "any": ["after the battle transition"] },
+        { "any": ["Playgame"] },
+        { "any": ["directional sprite/model variants", "active fallback"] }
+      ],
+      "doc_groups": [
+        { "any": ["Multi-Surface Visible Behavior Lock"] },
+        { "any": ["Asset Variant Availability Gate", "Sprite/Model Variant Availability"] },
+        { "any": ["fallback behavior", "fallback path"] }
+      ]
+    },
+    "checker-fails-preview-only-runtime-proof": {
+      "eval_groups": [
+        { "any": ["battle launch preview animator"] },
+        { "any": ["gameplay owner"] },
+        { "any": ["fallback path"] }
+      ],
+      "doc_groups": [
+        { "any": ["preview/transition proof does not validate gameplay/runtime", "preview/transition patch is presented as gameplay proof"] },
+        { "any": ["Checker must also return FAIL"] },
+        { "any": ["active asset/sprite/model name"] }
       ]
     },
     "cleanup-delete-unused-prefab": {

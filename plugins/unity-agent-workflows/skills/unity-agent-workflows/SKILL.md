@@ -29,7 +29,8 @@ AI contract for Unity work. Keep answers compact, but never remove exact paths, 
 | Runtime/visible bug | Prove owner chain before editing. |
 | Runtime-visible output, target alignment, focus/highlight/marker/HUD, overlay, input blocker, modal dimming, duplicate names, hardcoded layout, "do not guess" | Runtime Visible Output Hard Stop. |
 | Screenshot or visible UI text fix | Screenshot Text Owner Gate; search exact visible text/localization key and prove creator plus refresh writer before editing. |
-| Visual/model/sprite/asset integration where feature name, source asset, factory, or visible surface may disagree | Visible Object Identity Lock and Single-Agent Anti-Anchoring Guard before editing. |
+| Visual/model/sprite/asset integration where feature name, source asset, factory, or visible surface may disagree | Visible Object Identity Lock, Multi-Surface Visible Behavior Lock, and Single-Agent Anti-Anchoring Guard before editing. |
+| Same visible behavior requested across multiple scenes/surfaces, or words like "also", "after transition", "battle then gameplay", "Home and Play", "preview and runtime" | Multi-Surface Visible Behavior Lock; prove each surface owner, active caller, asset/factory dependency, and fallback behavior before editing any surface. |
 | Shared factory/helper/style/global method candidate for a scoped visible surface | Shared Caller Blast Radius Gate: prove allowed runtime caller(s), all other callers, and whether the patch is surface-local before editing. |
 | Overlay/dim source-bound mistakes | Prove source target bounds; overlay/dim/mask/blocker rects are destination output unless explicit marker proof exists. |
 | Repeated visible-output mismatch after patch | Runtime numeric proof before another coordinate/layout/fallback patch. |
@@ -126,6 +127,27 @@ validation:
 
 Missing source bounds, converted rect, or final drawn rect is FAIL; return a runtime probe plan only.
 
+Multi-Surface Visible Behavior Lock for the same visual behavior across scenes/surfaces:
+
+```text
+requested behavior:
+surface list:
+surface 1 visible object:
+surface 1 owner/caller/writer:
+surface 1 asset/factory dependency:
+surface 1 fallback behavior:
+surface 2 visible object:
+surface 2 owner/caller/writer:
+surface 2 asset/factory dependency:
+surface 2 fallback behavior:
+shared helper/factory/global selector:
+callers outside requested surfaces:
+patch order:
+validation per surface:
+```
+
+If any requested surface lacks owner/caller/writer or asset/fallback proof, stay read-only for patches and return the missing proof plan. Do not patch only a preview/transition surface when the user also requested gameplay/runtime behavior.
+
 State-step proof: screen open, click, analytics, or prompt shown is not completion. Prove relevant steps separately: shown, clicked, opened, selected, equipped, claimed, completed, persisted, old-save path, reset path.
 
 Sub-agent permission guard: default to one main agent. Before spawning any sub-agent, decide that the work needs independent proof tracks, explain why, list each sub-agent task, state read-only vs edit permission, allowed files/surfaces, forbidden files/surfaces, and checker need, then ask the user. Do not spawn until the user explicitly approves in the same turn, except when the user already explicitly requested sub-agents in that turn.
@@ -137,6 +159,8 @@ For screenshot, visible UI, runtime text, or single-surface fixes, the scope loc
 For Unity visual/model/sprite/asset integration, the visible runtime object identity must be proven before editing. If the user-visible target and semantic feature name disagree, or if the first owner candidate is a factory/helper/registry/bridge/global selector, list competing owners and reject them with file-backed proof. If competing owners cannot be rejected, stay read-only and ask whether to continue single-agent investigation or use read-only sub-agent discovery.
 
 Asset/source ID lock: when the user provides a generator ID, asset ID, sprite sheet, prefab, scene, surface, or object name, use only that source and surface. Do not substitute another asset/source or broaden to gameplay/global behavior without asking first.
+
+Asset Variant Availability Gate: before changing directional sprites, model poses, animation frames, sprite selectors, model factories, or fallback visuals, prove the requested variants exist and identify the runtime fallback when they do not. Missing variants are not a license to patch unrelated surfaces or shared factories; either add a surface-local fallback with caller proof, generate/obtain the missing source asset through the approved asset workflow, or stop and ask.
 
 Shared Caller Blast Radius Gate:
 
@@ -180,6 +204,9 @@ Placement layer/category from repo:
 Module/system name:
 Data/definition source:
 Runtime source-of-truth values:
+Active asset/sprite/model name:
+Asset variants checked: yes/no + exact paths/names
+Fallback behavior checked: yes/no + exact method/value
 Allowed runtime caller(s):
 Forbidden callers/surfaces:
 Coordinate/rendering space checked: yes/no

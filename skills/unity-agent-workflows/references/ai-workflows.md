@@ -20,6 +20,8 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
 3. Prove the owner chain.
    - UI/visible bugs: visible object -> scene/prefab/reference -> script/component -> mutating method -> serialized/runtime override.
    - Screenshot/visible text bugs: visible text -> exact string/localization key/text setter -> UI text object -> creator method -> refresh/update writer -> owner.
+   - Multi-surface visible behavior: prove each requested surface separately before editing any one surface.
+   - Sprite/model/animation state bugs: prove active asset/sprite/model name, selector/factory result, and fallback path.
    - Gameplay bugs: entrypoint -> orchestrator -> collaborator -> data/config -> contracts/events.
    - Compile bugs: exact error -> file -> assembly -> dependency edge -> smallest fix.
 
@@ -40,6 +42,8 @@ Use this when a Unity task needs a repeatable process before and after edits. Th
    - No hub growth when a collaborator can own the work.
    - No shared factory/helper/style/global method patch for a scoped visible target until caller search proves all runtime callers and non-target surfaces stay unchanged.
    - No asset/source substitution when the user provided an exact ID/path/name/surface.
+   - No preview-only or transition-only patch when the user also requested gameplay/runtime behavior.
+   - No directional sprite/model/animation patch until variant availability and fallback behavior are proven.
 
 6. Edit the smallest safe file set.
    - Preserve Unity serialized field names where possible.
@@ -123,3 +127,5 @@ nearby candidates rejected:
 Workers must stop when they only find a candidate, helper, factory, style utility, localization provider, global method, registry, bridge, or shared primitive. They must ask for scope revision if the proven owner differs from the scope lock, requires a file outside `allowed files`, touches a forbidden caller/surface, or changes existing behavior for callers outside the allowed runtime caller list.
 
 Checker must return FAIL when the patch lacks the visible target -> owner -> writer chain, when a shared helper/global method is edited without caller blast-radius proof, when an exact asset/source ID was substituted, or when rejected nearby candidates are not explained for screenshot/visible text fixes.
+
+Checker must also return FAIL when a requested multi-surface behavior proves only one surface, when a preview/transition patch is presented as gameplay proof, or when a directional sprite/model/animation change lacks active asset/factory/fallback proof.

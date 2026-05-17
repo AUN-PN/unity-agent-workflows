@@ -8,6 +8,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 - Readability/polish -> inspect typography, contrast, density, touch targets, icon/value alignment, localized text growth.
 - Focus/highlight/spotlight/modal dimming for any visible UI target -> resolve the real runtime target first, then draw from converted runtime bounds, not hardcoded layout.
 - New/replaced UI art, icon art, panel art, sprite, model, VFX source -> run visual asset workflow before code integration.
+- Same sprite/model/animation behavior across preview, transition, menu, and gameplay -> prove every requested surface owner plus active asset/factory/fallback path before editing.
 
 ## Mobile UI Rules
 
@@ -31,6 +32,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 7. Do not use hardcoded focus anchors, sizes, or expected menu positions as the primary target path.
 8. Validate with screenshot, hierarchy, or runtime proof.
 9. If a visible patch already failed or the user says it is still wrong, stop editing and collect runtime numeric proof before another patch.
+10. If the visible change depends on sprite/model/animation state, also capture the active asset/sprite/model name, active caller, selector/factory result, and fallback path.
 
 ## Spotlight And Modal Highlight
 
@@ -93,6 +95,18 @@ Do not use the gate for:
 7. Integrate actual source output, not a mood-board reference.
 8. Before wiring the asset into code, prove the requested surface callsite and avoid changing shared selectors/factories used by non-target surfaces.
 9. Pause before broader C# integration and rerun architecture routing.
+
+## Sprite/Model Variant Availability
+
+Before code edits that should change direction, pose, animation frame, or visible model state:
+
+- List expected variant paths/names.
+- Prove which variants exist in `Assets/`, `Resources`, Addressables, or the repo's asset catalog.
+- Prove the selector/factory lookup path and all runtime callers.
+- Prove the fallback sprite/model/pose used when variants are missing.
+- If the fallback is visually indistinguishable, report that before patching more code.
+
+Missing variants require either source asset generation/replacement, a proven surface-local fallback, or user approval to broaden scope.
 
 ## Diegetic Screen Pattern
 

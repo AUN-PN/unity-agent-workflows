@@ -82,6 +82,18 @@
       "expectation": "Treats the challenge as a hard stop, requires runtime proof of active caller and active asset/sprite/model source before another factory, selector, visual-layer, or animation patch."
     },
     {
+      "id": "multi-surface-directional-variant-proof",
+      "prompt": "Unity 2D: make the ship face along the orbit after the battle transition and in Playgame too. The menu preview changed, but Playgame still looks unchanged. Do not guess the owner.",
+      "expected_skill": true,
+      "expectation": "Requires Multi-Surface Visible Behavior Lock for transition and gameplay surfaces, proves each owner/caller/writer, checks directional sprite/model variants, reports the active fallback when variants are missing, and fails preview-only proof."
+    },
+    {
+      "id": "checker-fails-preview-only-runtime-proof",
+      "prompt": "Review this Unity patch: it changes the battle launch preview animator, but the requested behavior also had to work in gameplay. Fail it if gameplay owner, active sprite/model, selector result, and fallback path were not proven.",
+      "expected_skill": true,
+      "expectation": "Checker rejects a preview-only or transition-only patch for a multi-surface request and requires active gameplay asset/factory/fallback proof."
+    },
+    {
       "id": "cleanup-delete-unused-prefab",
       "prompt": "Unity cleanup: remove this unused prefab and any dead scripts around it.",
       "expected_skill": true,

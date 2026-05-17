@@ -25,6 +25,8 @@ Use the smallest useful check. Validation should match the edited surface and ri
    - Use Game view, Device Simulator, Play mode, captured visual output, or device build only when the task/risk justifies it.
    - State clearly when visual runtime validation was not run.
    - For repeated visible-output failures, include runtime numeric proof for source bounds, converted rect, and final drawn rect before another patch. `git diff --check`, C# compile, source inspection, and sub-agent review do not satisfy this proof.
+   - For multi-surface visible behavior, validate every requested surface separately; preview/transition proof does not validate gameplay/runtime.
+   - For sprite/model/animation state fixes, validate active asset/sprite/model name, selector/factory result, and fallback path.
 
 ## AI-Generated Unity Code Gate
 
@@ -93,6 +95,8 @@ Checkers must return FAIL for repeated visible-output patches when any of these 
 - runtime numeric values for source bounds, converted min/max, and final drawn rect are missing
 - cross-canvas or cross-root output lacks source canvas/root/camera/scaleFactor and destination canvas/root/camera/scaleFactor
 - overlay/dim/mask/blocker output rects are used as source bounds without an explicit marker proof
+- a multi-surface request proves only one surface or treats preview/transition proof as gameplay/runtime proof
+- a sprite/model/animation change lacks active asset/sprite/model name, selector/factory result, or fallback proof
 
 ## Final Validation Report
 
@@ -104,3 +108,5 @@ Include:
 - Whether failures are related to touched files.
 - Residual risk if Play mode/Game view/device was skipped.
 - For repeated visible-output fixes: whether runtime numeric proof was captured, and which values were missing if not.
+- For multi-surface fixes: each requested surface and its validation result.
+- For sprite/model/animation fixes: active asset/sprite/model name and fallback path.
