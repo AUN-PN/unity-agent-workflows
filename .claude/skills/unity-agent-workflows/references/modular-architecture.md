@@ -50,7 +50,7 @@ Translate this matrix into the repo's own names. For example, "feature" may be `
 | Cross-feature interface/event/DTO | Repo-local contract/event/gateway boundary | Feature/module implementation folders |
 | Generic primitive/utility | `Core` | Feature/system folders with runtime/content knowledge |
 | Content/balance/progression data | ScriptableObject, content definition, config | Hardcoded branches inside hubs |
-| Home/menu UI construction | Owning UI feature | Gameplay systems |
+| Menu/lobby UI construction | Owning UI feature | Gameplay systems |
 | Runtime UI/display | Owner feature/system that owns the runtime facts | Unrelated menu feature |
 | App/screen/session state | State contracts plus thin owner publisher | Global polling manager |
 | Analytics/telemetry | Analytics contracts/service plus shared storage | Feature-local file writer |

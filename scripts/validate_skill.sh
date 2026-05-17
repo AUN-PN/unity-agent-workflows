@@ -133,7 +133,7 @@ for phrase in (
     "state-step guards",
     "multi-agent scope ownership",
     "overlay/dim source-bound mistakes",
-    "guided equipment/shop flows",
+    "guided selection/action flows",
 ):
     require(phrase in skill, f"SKILL.md missing trigger phrase: {phrase}")
 for readme_rel in ("README.md", "README.th.md"):
@@ -222,15 +222,22 @@ require(any(case.get("expected_skill") is True for case in cases), "evals missin
 require(any(case.get("expected_skill") is False for case in cases), "evals missing negative cases")
 seen_ids = set()
 required_eval_ids = {
+    "explicit-teach",
+    "runtime-visible-bug",
+    "ui-screenshot-safe-area",
     "runtime-visible-output-conversion",
     "repeated-visible-numeric-proof",
     "checker-fails-missing-runtime-values",
     "overlay-dim-source-bound-mistake",
     "multi-agent-scope-before-patch",
     "sub-agent-permission-before-spawn",
-    "guided-equipment-state-flow",
-    "home-only-shared-factory-blast-radius",
+    "state-step-transition-guard",
+    "guided-selection-state-flow",
+    "scoped-surface-shared-factory-blast-radius",
     "repeated-visible-asset-runtime-proof",
+    "multi-surface-directional-variant-proof",
+    "checker-fails-preview-only-runtime-proof",
+    "cleanup-delete-unused-prefab",
 }
 for case in cases:
     for key in ("id", "prompt", "expected_skill", "expectation"):
@@ -238,9 +245,9 @@ for case in cases:
     require(case["id"] not in seen_ids, f"duplicate eval case id: {case['id']}")
     seen_ids.add(case["id"])
 missing_eval_ids = required_eval_ids - seen_ids
-require(not missing_eval_ids, f"evals missing numeric visible-output cases: {', '.join(sorted(missing_eval_ids))}")
+require(not missing_eval_ids, f"evals missing required cases: {', '.join(sorted(missing_eval_ids))}")
 eval_text = json.dumps(evals, ensure_ascii=False)
-for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect", "overlay", "multi-agent", "guided equipment", "ask me first", "Pixellab ID", "active sprite/model"):
+for phrase in ("runtime numeric", "still in the wrong place", "source bounds", "converted rect", "final drawn rect", "overlay", "multi-agent", "guided selection", "ask me first", "asset ID", "active sprite/model"):
     require(phrase in eval_text, f"evals missing trigger phrase: {phrase}")
 
 reference_files = sorted(root.joinpath("references").glob("*.md"))

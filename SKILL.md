@@ -1,6 +1,6 @@
 ---
 name: unity-agent-workflows
-description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, runtime numeric proof for repeated visible-output failures, state-step guards, multi-agent scope ownership, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, guided equipment/shop flows, overlay/dim source-bound mistakes, coordinate conversions, focus/highlight/marker/HUD alignment, or repeated "fix still not visible" failures.
+description: Use for AI-assisted Unity work that needs live repo discovery, project-derived routing, runtime-owner proof, runtime-visible output hard stops, runtime numeric proof for repeated visible-output failures, state-step guards, multi-agent scope ownership, modular C#/asmdef safety, UI/scene/visual asset gates, data-first content changes, validation, cleanup proof, or durable workflow rules. Best when agents must prove the actual folder/module/scene/prefab/runtime owner before editing, especially runtime UI, generated assets, code graphs, tutorial/state flows, guided selection/action flows, overlay/dim source-bound mistakes, coordinate conversions, focus/highlight/marker/HUD alignment, or repeated "fix still not visible" failures.
 license: MIT
 ---
 
@@ -30,7 +30,7 @@ AI contract for Unity work. Keep answers compact, but never remove exact paths, 
 | Runtime-visible output, target alignment, focus/highlight/marker/HUD, overlay, input blocker, modal dimming, duplicate names, hardcoded layout, "do not guess" | Runtime Visible Output Hard Stop. |
 | Screenshot or visible UI text fix | Screenshot Text Owner Gate; search exact visible text/localization key and prove creator plus refresh writer before editing. |
 | Visual/model/sprite/asset integration where feature name, source asset, factory, or visible surface may disagree | Visible Object Identity Lock, Multi-Surface Visible Behavior Lock, and Single-Agent Anti-Anchoring Guard before editing. |
-| Same visible behavior requested across multiple scenes/surfaces, or words like "also", "after transition", "battle then gameplay", "Home and Play", "preview and runtime" | Multi-Surface Visible Behavior Lock; prove each surface owner, active caller, asset/factory dependency, and fallback behavior before editing any surface. |
+| Same visible behavior requested across multiple scenes/surfaces, or words like "also", "after transition", "menu and gameplay", "preview and runtime", "scene A and scene B" | Multi-Surface Visible Behavior Lock; prove each surface owner, active caller, asset/factory dependency, and fallback behavior before editing any surface. |
 | Shared factory/helper/style/global method candidate for a scoped visible surface | Shared Caller Blast Radius Gate: prove allowed runtime caller(s), all other callers, and whether the patch is surface-local before editing. |
 | Overlay/dim source-bound mistakes | Prove source target bounds; overlay/dim/mask/blocker rects are destination output unless explicit marker proof exists. |
 | Repeated visible-output mismatch after patch | Runtime numeric proof before another coordinate/layout/fallback patch. |
@@ -39,7 +39,7 @@ AI contract for Unity work. Keep answers compact, but never remove exact paths, 
 | UI, screenshot, HUD, menu, safe area, TMP, spotlight | UI workflow plus runtime-owner proof and validation. |
 | Visual source asset | Source asset/generator gate before Unity integration code. |
 | Content, progression, economy, levels, objectives, gameplay tuning | Data-first content workflow. |
-| Tutorial, onboarding, mission, unlock, equipment, reward, shop, navigation, state transition, guided equipment/shop flows | State-step guards. |
+| Tutorial, onboarding, objective, unlock, selection, action, navigation, state transition, guided selection/action flows | State-step guards. |
 | Compile/runtime doubt, stale Bee/Roslyn response files, Play Mode proof | Validation workflow. |
 | Cleanup/deletion/generated files/git hygiene | Cleanup proof. |
 | Rule/session mining/workflow update | Patch only the owning artifact. |
@@ -60,7 +60,7 @@ Load only matching files; resolve relative to this skill directory. If a require
 | Multi-agent Unity visible-output/state-transition work, parallel workers, checker review | `references/ai-workflows.md` plus only the references for the actual visible surface or state flow |
 | New files/classes, moved scripts, asmdef/module routing, dependency direction, hub deflation/refactor | `references/project-structure-discovery.md`, `references/modular-architecture.md`, `references/ai-workflows.md` |
 | New runtime feature, content, progression, levels, economy, objective/data-first work | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md` |
-| Tutorial, onboarding, mission step, unlock, equipment, reward, shop, navigation gate, state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
+| Tutorial, onboarding, objective step, unlock, selection/action step, navigation gate, state transition | `references/project-structure-discovery.md`, `references/content-and-systems.md`, `references/ai-workflows.md`, `references/unity-validation.md` |
 | Compile error, validation repair, stale Bee/Roslyn response files, Play Mode proof | `references/unity-validation.md` |
 | Cleanup/deletion/generated files/git hygiene | `references/cleanup-and-git.md` |
 | Rule/session mining/workflow update | `references/session-mining.md` |
@@ -148,7 +148,7 @@ validation per surface:
 
 If any requested surface lacks owner/caller/writer or asset/fallback proof, stay read-only for patches and return the missing proof plan. Do not patch only a preview/transition surface when the user also requested gameplay/runtime behavior.
 
-State-step proof: screen open, click, analytics, or prompt shown is not completion. Prove relevant steps separately: shown, clicked, opened, selected, equipped, claimed, completed, persisted, old-save path, reset path.
+State-step proof: screen open, click, analytics, or prompt shown is not completion. Prove relevant steps separately: shown, clicked, opened, selected, applied, completed, persisted, old-save path, reset path.
 
 Sub-agent permission guard: default to one main agent. Before spawning any sub-agent, decide that the work needs independent proof tracks, explain why, list each sub-agent task, state read-only vs edit permission, allowed files/surfaces, forbidden files/surfaces, and checker need, then ask the user. Do not spawn until the user explicitly approves in the same turn, except when the user already explicitly requested sub-agents in that turn.
 

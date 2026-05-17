@@ -49,47 +49,47 @@
       "id": "multi-agent-scope-before-patch",
       "prompt": "Unity 2D: use a main agent and worker agents to fix a visible HUD marker and a tutorial state bug. Do not let workers patch until the main agent defines the Routing Card and allowed files.",
       "expected_skill": true,
-      "expectation": "Requires main-agent scope ownership, disjoint worker write sets, allowed/not-touched files, checker review, runtime numeric proof for visible output, and state-step proof for the tutorial flow."
+      "expectation": "Requires main-agent scope ownership, disjoint worker write sets, allowed/not-touched files, checker review, runtime numeric proof for visible output, and state-step proof for the onboarding flow."
     },
     {
       "id": "sub-agent-permission-before-spawn",
-      "prompt": "Unity 2D: the visible ship may be owned by either Home UI or Sentinel systems. If sub-agents would help, do not spawn them until you ask me first.",
+      "prompt": "Unity 2D: the visible character may be owned by either the menu preview UI or the gameplay controller. If sub-agents would help, do not spawn them until you ask me first.",
       "expected_skill": true,
       "expectation": "Uses one main agent by default, explains why sub-agent discovery may help, states read-only/edit scope and allowed/forbidden surfaces, then waits for explicit user approval before spawning."
     },
     {
       "id": "state-step-transition-guard",
-      "prompt": "Unity 2D: the tutorial says the reward was claimed after opening the shop, but old saves keep repeating the prompt.",
+      "prompt": "Unity 2D: the onboarding step says the item action was completed after opening a panel, but old saves keep repeating the prompt.",
       "expected_skill": true,
-      "expectation": "Runs the Runtime State Step Guard and separates shown, clicked, opened, claimed, completed, persisted, old-save, and reset paths."
+      "expectation": "Runs the Runtime State Step Guard and separates shown, clicked, opened, selected, completed, persisted, old-save, and reset paths."
     },
     {
-      "id": "guided-equipment-state-flow",
-      "prompt": "Unity 2D: the guided equipment flow marks the sword as equipped after opening the equipment shop, but no item is selected, equipped, or persisted.",
+      "id": "guided-selection-state-flow",
+      "prompt": "Unity 2D: the guided selection flow marks an item as applied after opening the selection panel, but no item is selected, applied, or persisted.",
       "expected_skill": true,
-      "expectation": "Runs the Runtime State Step Guard and treats shown, clicked, opened, selected, equipped, completed, and persisted as separate proof steps; screen open or click is not completion proof."
+      "expectation": "Runs the Runtime State Step Guard and treats shown, clicked, opened, selected, applied, completed, and persisted as separate proof steps; screen open or click is not completion proof."
     },
     {
-      "id": "home-only-shared-factory-blast-radius",
-      "prompt": "Unity 2D Home only: make the orbit ship use Pixellab ID de93fe60-cab1-4c49-aa49-8213d2b3f364 and turn with the Home Battle orbit. Do not affect Playgame, Sentinel gameplay, Earth, background, or camera.",
+      "id": "scoped-surface-shared-factory-blast-radius",
+      "prompt": "Unity 2D menu preview only: make the preview unit use asset ID unit-preview-a and turn with the preview motion path. Do not affect gameplay runtime, level scene objects, background, or camera.",
       "expected_skill": true,
-      "expectation": "Locks the requested Home surface and source ID, requires allowed runtime caller(s), searches all callers before editing shared factories/selectors, and rejects global behavior changes that affect non-target surfaces."
+      "expectation": "Locks the requested menu preview surface and source ID, requires allowed runtime caller(s), searches all callers before editing shared factories/selectors, and rejects global behavior changes that affect non-target surfaces."
     },
     {
       "id": "repeated-visible-asset-runtime-proof",
-      "prompt": "Unity 2D: I still do not see the new Home orbit ship animation. Before another patch, prove the runtime object name, active caller, active sprite/model asset name, and writer that overwrites it.",
+      "prompt": "Unity 2D: I still do not see the new menu preview unit animation. Before another patch, prove the runtime object name, active caller, active sprite/model asset name, and writer that overwrites it.",
       "expected_skill": true,
       "expectation": "Treats the challenge as a hard stop, requires runtime proof of active caller and active asset/sprite/model source before another factory, selector, visual-layer, or animation patch."
     },
     {
       "id": "multi-surface-directional-variant-proof",
-      "prompt": "Unity 2D: make the ship face along the orbit after the battle transition and in Playgame too. The menu preview changed, but Playgame still looks unchanged. Do not guess the owner.",
+      "prompt": "Unity 2D: make the unit face along its path in both the scene transition and the gameplay scene. The menu preview changed, but gameplay still looks unchanged. Do not guess the owner.",
       "expected_skill": true,
       "expectation": "Requires Multi-Surface Visible Behavior Lock for transition and gameplay surfaces, proves each owner/caller/writer, checks directional sprite/model variants, reports the active fallback when variants are missing, and fails preview-only proof."
     },
     {
       "id": "checker-fails-preview-only-runtime-proof",
-      "prompt": "Review this Unity patch: it changes the battle launch preview animator, but the requested behavior also had to work in gameplay. Fail it if gameplay owner, active sprite/model, selector result, and fallback path were not proven.",
+      "prompt": "Review this Unity patch: it changes the menu preview animator, but the requested behavior also had to work in gameplay. Fail it if gameplay owner, active sprite/model, selector result, and fallback path were not proven.",
       "expected_skill": true,
       "expectation": "Checker rejects a preview-only or transition-only patch for a multi-surface request and requires active gameplay asset/factory/fallback proof."
     },

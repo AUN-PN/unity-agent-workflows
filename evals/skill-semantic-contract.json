@@ -149,10 +149,11 @@
     {
       "id": "state-step-guard",
       "label": "state-step guard",
+      "baseline_required": false,
       "groups": [
         { "any": ["state-step guards", "Runtime State Step Guard"] },
         { "any": ["shown, clicked, opened", "shown/clicked/opened"] },
-        { "any": ["selected, equipped", "claimed, completed, persisted"] }
+        { "any": ["selected, applied", "applied, completed, persisted"] }
       ]
     },
     {
@@ -316,8 +317,8 @@
     "multi-agent-scope-before-patch",
     "sub-agent-permission-before-spawn",
     "state-step-transition-guard",
-    "guided-equipment-state-flow",
-    "home-only-shared-factory-blast-radius",
+    "guided-selection-state-flow",
+    "scoped-surface-shared-factory-blast-radius",
     "repeated-visible-asset-runtime-proof",
     "multi-surface-directional-variant-proof",
     "checker-fails-preview-only-runtime-proof",
@@ -426,29 +427,29 @@
     },
     "state-step-transition-guard": {
       "eval_groups": [
-        { "any": ["tutorial"] },
-        { "any": ["reward was claimed"] }
+        { "any": ["onboarding"] },
+        { "any": ["item action was completed"] }
       ],
       "doc_groups": [
         { "any": ["Runtime State Step Guard"] },
         { "any": ["shown, clicked, opened"] }
       ]
     },
-    "guided-equipment-state-flow": {
+    "guided-selection-state-flow": {
       "eval_groups": [
-        { "any": ["guided equipment"] },
-        { "any": ["equipped"] }
+        { "any": ["guided selection"] },
+        { "any": ["applied"] }
       ],
       "doc_groups": [
-        { "any": ["guided equipment"] },
-        { "any": ["selected, equipped"] }
+        { "any": ["state-step guards", "Runtime State Step Guard"] },
+        { "any": ["selected, applied"] }
       ]
     },
-    "home-only-shared-factory-blast-radius": {
+    "scoped-surface-shared-factory-blast-radius": {
       "eval_groups": [
-        { "any": ["Home only"] },
-        { "any": ["Pixellab ID"] },
-        { "any": ["Do not affect Playgame", "Do not affect"] }
+        { "any": ["menu preview only"] },
+        { "any": ["asset ID"] },
+        { "any": ["Do not affect gameplay runtime", "Do not affect"] }
       ],
       "doc_groups": [
         { "any": ["Shared Caller Blast Radius Gate"] },
@@ -469,8 +470,8 @@
     },
     "multi-surface-directional-variant-proof": {
       "eval_groups": [
-        { "any": ["after the battle transition"] },
-        { "any": ["Playgame"] },
+        { "any": ["scene transition"] },
+        { "any": ["gameplay"] },
         { "any": ["directional sprite/model variants", "active fallback"] }
       ],
       "doc_groups": [
@@ -481,7 +482,7 @@
     },
     "checker-fails-preview-only-runtime-proof": {
       "eval_groups": [
-        { "any": ["battle launch preview animator"] },
+        { "any": ["menu preview animator"] },
         { "any": ["gameplay owner"] },
         { "any": ["fallback path"] }
       ],

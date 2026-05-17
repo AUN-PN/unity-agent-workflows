@@ -57,7 +57,7 @@ validation:
 
 If the user-visible target and semantic feature name disagree, stop before patching. Continue single-agent investigation only if you can reject competing owners with file-backed proof, or ask the user to approve read-only sub-agent discovery.
 
-Example failure mode: the request mentions Sentinel, but the visible object is a Home UI orbit object. Do not patch Sentinel factories or contracts until the Home scene/runtime object, creator, writer, and factory dependency chain are proven.
+Example failure mode: the request mentions a gameplay unit, but the visible object is a menu preview object. Do not patch gameplay factories or contracts until the menu/runtime object, creator, writer, and factory dependency chain are proven.
 
 ## Multi-Surface Visible Behavior Lock
 
@@ -65,9 +65,9 @@ Use when the same visible behavior must work across multiple scenes, UI previews
 
 Trigger examples:
 
-- "also make it happen after the battle transition"
-- "Home and Playgame should both turn the ship"
-- "preview works but gameplay does not"
+- "also make it happen after the scene transition"
+- "menu and gameplay should both show the same pose"
+- "preview works but runtime does not"
 - "same model/animation/sprite behavior across menu and runtime"
 
 Before editing any surface, prove all requested surfaces:
@@ -213,7 +213,7 @@ Why non-target surfaces are unchanged:
 
 ## Source Asset / ID Lock
 
-When the user names a Pixellab ID, asset ID, sprite sheet, prefab, scene, screen, runtime object, or exact surface, that value is a hard scope lock.
+When the user names a generator ID, asset ID, sprite sheet, prefab, scene, screen, runtime object, or exact surface, that value is a hard scope lock.
 
 - Do not replace it with a nearby asset/source.
 - Do not generate from another source ID.

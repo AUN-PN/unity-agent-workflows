@@ -25,7 +25,7 @@ Add C# only when:
 When asked for broad "what is missing" or "finish the game systems" passes, verify live code first. High-value foundations often include:
 
 - Analytics/telemetry.
-- FTUE/onboarding.
+- First-run/onboarding.
 - Adaptive difficulty/relief.
 - Missions/objectives.
 - Status effects/resistance.
@@ -61,28 +61,27 @@ The planner should feed existing seams instead of growing the main manager, cont
 
 ## Runtime State Step Guard
 
-Use this for tutorials, onboarding, missions, unlocks, quests, shop flows, equipment flows, rewards, navigation gates, and any user-visible state machine.
+Use this for tutorials, onboarding, objectives, unlocks, quests, guided selection/action flows, navigation gates, and any user-visible state machine.
 
 Never collapse these states into one boolean unless the live design already proves they are identical:
 
 ```text
-shown != clicked != opened != selected != equipped != claimed != completed != persisted
+shown != clicked != opened != selected != applied != completed != persisted
 ```
 
 ### Guided Flow State Proof
 
-For guided equipment, shop, tutorial, onboarding, reward, or navigation flows, treat every state-step as separately provable:
+For guided selection/action, tutorial, onboarding, objective, or navigation flows, treat every state-step as separately provable:
 
 - `shown`: prompt, overlay, marker, or instruction is visible.
 - `clicked`: user clicked/tapped the prompt, target, or navigation control.
-- `opened`: screen, panel, shop, inventory, or section became active.
+- `opened`: screen, panel, inventory, selection view, or section became active.
 - `selected`: a domain item/option/card/loadout entry is selected.
-- `equipped`: selection was applied to the active loadout/runtime owner.
-- `claimed`: reward/currency/item was granted by the domain owner.
+- `applied`: selected action/value was applied to the active runtime owner.
 - `completed`: the guided objective/step is marked done by the flow owner.
 - `persisted`: completion or domain state is written to the save/progression store.
 
-Opening a screen, recording a click, logging analytics, or showing the next prompt is interaction/navigation proof only. It is not proof that an item was selected, equipment was equipped, a reward was claimed, a tutorial step was completed, or the result was persisted.
+Opening a screen, recording a click, logging analytics, or showing the next prompt is interaction/navigation proof only. It is not proof that an item was selected, an action was applied, a tutorial/objective step was completed, or the result was persisted.
 
 Before editing a state transition, prove:
 
