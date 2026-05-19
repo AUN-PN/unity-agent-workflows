@@ -143,6 +143,28 @@
       ]
     },
     {
+      "id": "extracted-ui-item-assembly",
+      "label": "extracted UI item assembly",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Extracted UI Item Assembly Gate"] },
+        { "any": ["manifest item bounds", "extracted item bounds"] },
+        { "any": ["item-based UI assembly", "picked UI parts", "UI slices", "extracted UI parts"] },
+        { "any": ["RectTransform anchors, pivot", "anchor/pivot policy"] },
+        { "any": ["Icon-only, textless", "icon-only/textless label policy"] }
+      ]
+    },
+    {
+      "id": "user-position-assembled-ui-escalation",
+      "label": "user-marked position on assembled UI escalates",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["user-specified position", "user-marked position"] },
+        { "any": ["do not move it with this gate alone"] },
+        { "any": ["escalate to Extracted UI Item Assembly Gate"] }
+      ]
+    },
+    {
       "id": "runtime-numeric-proof",
       "label": "runtime numeric proof",
       "groups": [
@@ -334,6 +356,8 @@
     "explicit-teach",
     "runtime-visible-bug",
     "ui-screenshot-safe-area",
+    "extracted-ui-item-overlay-bounds",
+    "user-position-on-assembled-ui",
     "runtime-visible-output-conversion",
     "repeated-visible-numeric-proof",
     "checker-fails-missing-runtime-values",
@@ -386,6 +410,32 @@
       "doc_groups": [
         { "any": ["UI, screenshot"] },
         { "any": ["safe area"] }
+      ]
+    },
+    "extracted-ui-item-overlay-bounds": {
+      "eval_groups": [
+        { "any": ["picking and assembling UI parts"] },
+        { "any": ["design manifest"] },
+        { "any": ["old manual padding"] }
+      ],
+      "doc_groups": [
+        { "any": ["Extracted UI Item Assembly Gate"] },
+        { "any": ["extracted item bounds", "manifest item bounds"] },
+        { "any": ["item-based UI assembly", "picked UI parts", "UI slices", "extracted UI parts"] },
+        { "any": ["RectTransform anchors, pivot", "anchor/pivot policy"] },
+        { "any": ["Icon-only, textless", "icon-only/textless label policy"] }
+      ]
+    },
+    "user-position-on-assembled-ui": {
+      "eval_groups": [
+        { "any": ["move this label"] },
+        { "any": ["position I marked"] },
+        { "any": ["assembled from picked UI parts", "design slices"] }
+      ],
+      "doc_groups": [
+        { "any": ["user-specified position", "user-marked position"] },
+        { "any": ["do not move it with this gate alone"] },
+        { "any": ["escalate to Extracted UI Item Assembly Gate"] }
       ]
     },
     "runtime-visible-output-conversion": {

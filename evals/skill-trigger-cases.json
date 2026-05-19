@@ -22,6 +22,18 @@
       "expectation": "Loads UI, runtime-owner, and validation references; checks hierarchy, RectTransform, CanvasScaler, and safe area."
     },
     {
+      "id": "extracted-ui-item-overlay-bounds",
+      "prompt": "Unity UI: rebuild this menu by picking and assembling UI parts from a design manifest. The sprites are placed, but the runtime labels and button text are offset. Do not use old manual padding.",
+      "expected_skill": true,
+      "expectation": "Runs the Extracted UI Item Assembly Gate, treats manifest item bounds as the layout source of truth, checks RectTransform anchor/pivot semantics, maps every overlay label/button to extracted bounds, and suppresses icon-only button labels unless requested."
+    },
+    {
+      "id": "user-position-on-assembled-ui",
+      "prompt": "Unity screenshot: move this label to the position I marked. This screen is assembled from picked UI parts and design slices.",
+      "expected_skill": true,
+      "expectation": "Routes through UI screenshot proof, then escalates to the Extracted UI Item Assembly Gate because the user-marked position belongs to assembled UI parts; it must not be moved by child offsets alone."
+    },
+    {
       "id": "runtime-visible-output-conversion",
       "prompt": "Unity 2D: the objective arrow follows the wrong enemy after converting world position into HUD space. Do not guess coordinates.",
       "expected_skill": true,

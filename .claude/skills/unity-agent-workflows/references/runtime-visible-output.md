@@ -4,6 +4,8 @@ Use for runtime-visible output drawn, positioned, blocked, aimed, anchored, mask
 
 Examples include UI overlays, selection outlines, input blockers, drag targets, HUD markers, objective arrows, world-to-UI labels, damage numbers, nameplates, health bars, safe-area-dependent UI, camera targets, RenderTexture-driven UI, world-space canvases, and hardcoded layout used as a substitute for a live target.
 
+For extracted UI items, textless UI sprites, generated slices, or design manifests, the visible source can be the extracted item bounds rather than a live scene object. In that case, load `references/ui-and-visual-assets.md` and use the Extracted UI Item Assembly Gate before overlay text/button placement.
+
 ## Runtime Visible Output Hard Stop
 
 Do not edit coordinates, anchors, offsets, padding, scale, layout timing, camera conversion, or fallback constants until this proof exists:

@@ -36,7 +36,7 @@ AI contract for Unity work. Keep answers compact, but never remove exact paths, 
 | Repeated visible-output mismatch after patch | Runtime numeric proof before another coordinate/layout/fallback patch. |
 | Multi-agent visible-output or state work | Sub-agent decision and permission gate first; main-agent scope lock before workers patch; checker must review. |
 | New/moved files, expanded C# responsibility, asmdef/module routing, hub deflation | Project-derived routing, no fixed structure, hub stop gate. |
-| UI, screenshot, HUD, menu, safe area, TMP, spotlight | UI workflow plus runtime-owner proof and validation. |
+| UI, screenshot, HUD, menu, safe area, TMP, spotlight, item-based UI assembly, picked UI parts, UI slices, extracted UI parts, textless UI sprites, design manifests | UI workflow plus runtime-owner proof, extracted item assembly proof, and validation. |
 | Visual source asset | Source asset/generator gate before Unity integration code. |
 | Content, progression, economy, levels, objectives, gameplay tuning | Data-first content workflow. |
 | Tutorial, onboarding, objective, unlock, selection, action, navigation, state transition, guided selection/action flows | State-step guards. |
@@ -50,7 +50,7 @@ Load only matching files; resolve relative to this skill directory. If a require
 
 | Task trigger | References before editing |
 |---|---|
-| UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, then only needed visible/text/output details |
+| UI, screenshot, HUD, menu, safe area, TMP, visible target, focus, highlight, spotlight, modal dimming, item-based UI assembly, picked UI parts, UI slices, extracted UI parts, textless UI sprites, design manifests | `references/ui-and-visual-assets.md`, `references/runtime-owner-proof.md`, then only needed visible/text/output details |
 | Screenshot text, visible UI label, localized UI text, runtime text styling, shared factory/helper candidate | `references/runtime-owner-proof.md`, `references/screenshot-text-owner.md`, `references/ai-workflows.md` |
 | Visual/model/sprite/asset integration where feature name, source asset, factory, or visible surface may disagree | `references/runtime-owner-proof.md`, `references/visible-object-identity.md`, `references/asset-source-lock.md`, `references/ui-and-visual-assets.md` |
 | Shared factory/helper/style/global method candidate for a scoped visible surface | `references/runtime-owner-proof.md`, `references/shared-caller-blast-radius.md`, `references/ai-workflows.md` |

@@ -9,6 +9,7 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 - Focus/highlight/spotlight/modal dimming for any visible UI target -> resolve the real runtime target first, then draw from converted runtime bounds, not hardcoded layout.
 - New/replaced UI art, icon art, panel art, sprite, model, VFX source -> run visual asset workflow before code integration.
 - Same sprite/model/animation behavior across preview, transition, menu, and gameplay -> prove every requested surface owner plus active asset/factory/fallback path before editing.
+- Item-based UI assembly, picked UI parts, UI slices, extracted UI parts, textless UI sprites, `manifest.json`, or web-design-to-Unity assembly -> run Extracted UI Item Assembly Gate before placing runtime text, buttons, values, or icons over the art.
 
 ## Mobile UI Rules
 
@@ -33,6 +34,35 @@ Use this when the task touches HUD, menus, overlays, mobile layout, safe areas, 
 8. Validate with screenshot, hierarchy, or runtime proof.
 9. If a visible patch already failed or the user says it is still wrong, stop editing and collect runtime numeric proof before another patch.
 10. If the visible change depends on sprite/model/animation state, also capture the active asset/sprite/model name, active caller, selector/factory result, and fallback path.
+11. If the user-specified position belongs to UI assembled from picked parts, slices, extracted parts, or a design manifest, do not move it with this gate alone; escalate to Extracted UI Item Assembly Gate and align the sprite plus overlay from the same bounds source.
+
+## Extracted UI Item Assembly Gate
+
+Use this when a UI is rebuilt by picking, slicing, assembling, or managing separate UI parts from textless screenshots, design manifests, generated UI slices, exported blocks, or browser-captured assets.
+
+- Treat the extracted item bounds as the layout source of truth for matching overlays.
+- For every runtime text, value, button label, icon, badge, counter, and hit target placed over extracted art, map it to the parent item `rawBounds`, `image.bounds`, `textImage.bounds`, or equivalent manifest field before editing.
+- Do not reuse old manual offsets, padding constants, or centered positions unless they are explicitly converted from the same extracted bounds.
+- Check `RectTransform` anchors, pivot, parent size, scale, `CanvasScaler`, safe area, and any helper that rewrites pivot/anchors before interpreting `x/y` as left/top padding.
+- If a helper forces centered pivot or center-based coordinates, convert left/top bounds into center position or add a bounds-based helper instead of nudging text by eye.
+- Icon-only, textless, or already-painted design buttons should not keep runtime text labels unless the user asks for accessible/visible text.
+- Runtime overlay refresh writers must use the same coordinate source as creation; patch both paths if refresh can overwrite creation layout.
+- Validate by listing the item sprite rect, parent rect, overlay rect, pivot/anchor policy, and coordinate source. If these disagree, stay read-only or fix the coordinate source before visual tuning.
+
+Checklist:
+
+```text
+extracted source:
+manifest/image bounds field:
+parent item rect:
+overlay text/value/button:
+overlay rect source:
+anchor/pivot policy:
+helper rewrites anchor/pivot:
+runtime refresh writer:
+icon-only/textless label policy:
+validation:
+```
 
 ## Spotlight And Modal Highlight
 
