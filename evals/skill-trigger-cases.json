@@ -112,6 +112,66 @@
       "expectation": "Requires code refs, YAML GUID refs, Resources/addressables, scene/prefab refs, and runtime reachability proof before deletion."
     },
     {
+      "id": "predictive-lead-aim-physics",
+      "prompt": "Unity 2D/3D: the turret laser misses moving targets when distance changes. Implement closed-form predictive lead aiming using the 2nd-order quadratic intercept formula instead of linear nudging.",
+      "expected_skill": true,
+      "expectation": "Uses closed-form kinematic predictive intercept quadratic formula (|v_t|^2 - v_p^2)t^2 + 2(r·v_t)t + |r|^2 = 0 to solve exact intercept time and unit aim vector without guessing."
+    },
+    {
+      "id": "perspective-camera-clip-singularity",
+      "prompt": "Unity: the offscreen objective arrow flips 180 degrees backward when the target is behind the player camera. Fix the near-clip plane perspective projection singularity without guessing.",
+      "expected_skill": true,
+      "expectation": "Applies projective geometry frustum near-plane w <= 0 detection and screen-edge ray-box clamping to ensure offscreen indicator points correctly towards behind-camera targets."
+    },
+    {
+      "id": "iou-overlay-spatial-accuracy",
+      "prompt": "Unity UI: verify the focus ring alignment on this button using Intersection over Union (IoU) and pixel center tolerance. Reject any patch that does not reach IoU >= 0.95.",
+      "expected_skill": true,
+      "expectation": "Applies quantitative spatial accuracy metric requiring IoU >= 0.95 and sub-pixel center distance tolerance <= 1.0px for pixel-perfect UI overlay validation."
+    },
+    {
+      "id": "quaternion-antipodal-slerp",
+      "prompt": "Unity 3D: character rotation violently snaps 360 degrees when interpolating between angles. Fix the quaternion antipodal flip and handle small angles with Nlerp.",
+      "expected_skill": true,
+      "expectation": "Applies quaternion antipodal shortest-path condition (q1·q2 < 0) and small-angle Nlerp fallback to guarantee smooth non-flipping rotation."
+    },
+    {
+      "id": "ballistics-aerodynamic-drag",
+      "prompt": "Unity: artillery shells undershoot distant targets by 40% because Rigidbody linearDamping/drag is ignored. Implement analytical ballistics with linear drag and check the finite range limit.",
+      "expected_skill": true,
+      "expectation": "Applies Stokes aerodynamic drag trajectory equations and checks horizontal range limit x_max = v0x / k before attempting firing solution."
+    },
+    {
+      "id": "symplectic-euler-physics-stability",
+      "prompt": "Unity: custom physics simulation in FixedUpdate blows up and orbits spiral out of control. Replace explicit Euler with Symplectic (Semi-Implicit) Euler to conserve energy.",
+      "expected_skill": true,
+      "expectation": "Applies Symplectic Euler v_{t+dt} = v_t + a dt, x_{t+dt} = x_t + v_{t+dt} dt preserving the symplectic form and bounding Hamiltonian energy drift."
+    },
+    {
+      "id": "unity-2d-platformer-jump-kinematics",
+      "prompt": "Unity 2D: tuning platformer jump height and gravity in code. The character overshoots or floats unpredictably. Calculate exact gravity and jump velocity from desired jump height h and time to apex t_apex.",
+      "expected_skill": true,
+      "expectation": "Applies closed-form 2D parabolic jump kinematics g = 2h / t_apex^2 and v_y0 = 2h / t_apex to calculate exact apex height and landing timing without empirical trial and error."
+    },
+    {
+      "id": "unity-2d-orthographic-screen-to-world",
+      "prompt": "Unity 2D: Camera.main.ScreenToWorldPoint(Input.mousePosition) places sprites at z = -10 instead of z = 0, causing 2D raycasts and triggers to miss. Enforce the 2D z-distance plane invariant.",
+      "expected_skill": true,
+      "expectation": "Enforces 2D orthographic camera projection invariant setting mousePosition.z = targetPlaneZ - cameraZ (or -Camera.main.transform.position.z) so unprojected world coordinates land on the z = 0 gameplay plane."
+    },
+    {
+      "id": "unity-2d-rigidbody2d-drag-and-ccd",
+      "prompt": "Unity 2D: top-down spaceship slides uncontrollably and fast bullets tunnel through thin tile colliders. Fix Rigidbody2D linearDrag damping and apply 2D continuous collision sweep bounds.",
+      "expected_skill": true,
+      "expectation": "Applies Box2D discrete linear damping velocity dissipation v_{t+dt} = v_t * max(0, 1 - dt * drag) with finite range limit v0 / drag and enforces Raycast2D / CCD sweep bounds to prevent bullet tunneling."
+    },
+    {
+      "id": "unity-2d-canvas-recttransform-world-space",
+      "prompt": "Unity 2D: attaching a 2D sprite overhead health bar using RectTransform in Canvas 2D. The health bar blows up to 100x screen size or has wrong offsets when converted from world coordinates. Apply Overlay camera null and 1/PPU scale invariants.",
+      "expected_skill": true,
+      "expectation": "Enforces 2D RectTransform in Canvas rules: requires camera = null in ScreenPointToLocalPointInRectangle for Screen Space - Overlay, and enforces 1/PPU scale invariant (localScale = 1/PPU) for World Space Canvases to prevent 100x layout blowout."
+    },
+    {
       "id": "negative-generic-js",
       "prompt": "Refactor this Express route handler to use async/await.",
       "expected_skill": false,

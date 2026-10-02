@@ -334,6 +334,73 @@ plugins/unity-agent-workflows/skills/unity-agent-workflows/
 
 สำหรับ Unity projects ที่ใช้ skill นี้ Unity Editor, Play Mode, Game view, device tests, batchmode builds และ project logs ยังเป็น validation path หลัก. Bee `.rsp` หรือ direct Unity-bundled Roslyn checks เป็น local compile smoke test แบบ best-effort และอาจ stale หลัง Unity regenerate project artifacts
 
+## กฎความแม่นยำทางฟิสิกส์และคณิตศาสตร์ระดับสากล (Mathematical & Physics Invariants)
+
+การเดาตัวเลขแบบ heuristic ทำให้ AI agent พลาดในการเล็งเป้าและจัดตำแหน่ง UI ปลั๊กอินนี้จึงบรรจุสูตรคำนวณทางคณิตศาสตร์และแบบจำลองฟิสิกส์แบบ Closed-form อิงตามมาตรฐานสากลระดับโลก (ISO/IEC 25010, IEEE 29119, IEEE 754, Pascal VOC/COCO, ACM SIGGRAPH, AIAA):
+
+1. **Projective Geometry & Near-Clip Singularity ($w \le 0$)**:
+   - ปัญหา: วัตถุที่อยู่หลังกล้อง ($z_{\text{view}} \le 0$) จะทำให้พิกัดกลับหัว $180^\circ$ เมื่อใช้ `WorldToScreenPoint` แบบธรรมดา
+   - วิธีแก้: ตรวจจับ $z_{\text{view}} \le 0$ แล้วกลับทิศทางเรย์และใช้ Screen-Edge Ray-Box Clamping คำนวณขอบจอที่ถูกต้อง
+2. **Optical Axis Singularity Degeneracy Guard**:
+   - ปัญหา: เมื่อเป้าหมายอยู่ตรงแนวแกนกลางของกล้องด้านหลังพอดี ($x_v = 0, y_v = 0, z_v \le 0$) ขนาดเวกเตอร์จะเป็นศูนย์ ก่อให้เกิดข้อผิดพลาด `NaN` จากการหารด้วย 0
+   - วิธีแก้: วางระบบ Degeneracy Guard กำหนดเวกเตอร์ตั้งต้นเป็นเวกเตอร์ชี้ขึ้นด้านบน $\mathbf{d} = (0, 1)^T$ และหนีบขอบจอด้านบนโดยไม่เกิด `NaN`
+3. **Frustum Near-Plane 3D Bounding Box Parametric Clipping**:
+   - ปัญหา: เมื่อตัดกรอบ 3D Bounding Box ของวัตถุที่มีมุมบางส่วนอยู่หลัง Near-clip plane การฉายมุมทั้งหมดไปยังหน้าจอจะเกิดพิกัดติดลบ ทำให้กรอบ UI ขยายกินทั้งหน้าจอ
+   - วิธีแก้: ตัดส่วนขอบ 3D ตามแนวระนาบ Near-plane แบบ Parametric ($t_{\text{clip}} = \frac{z_{\text{near}} - A_z}{B_z - A_z}$) ก่อนฉายลง 2D (Blinn & Newell, Sutherland-Hodgman)
+4. **CanvasScaler Logarithmic Match Formula**:
+   - ใช้สูตร Exponential/Logarithmic Scale Factor: $\text{scaleFactor} = (W_{\text{actual}} / W_{\text{ref}})^{1-m} \cdot (H_{\text{actual}} / H_{\text{ref}})^m$
+   - ป้องกัน Layout เคลื่อน 5%–15% บนจอมือถือและจอ Ultrawide เมื่อเทียบกับการประมาณแบบเชิงเส้น
+5. **RectTransform Anchor Span Invariants**:
+   - เมื่อยืด Anchor ($\text{anchorMin} \neq \text{anchorMax}$) ต้องใช้สูตร $\text{sizeDelta} = \text{targetSize} - \text{parentSpan}$ เพื่อป้องกัน UI ขยายใหญ่จนล้นจอ
+6. **Kinematic Predictive Lead Interception (สมการกำลังสองอันดับสอง)**:
+   - แก้สมการ $(|\mathbf{v}_t|^2 - v_p^2) t^2 + 2(\mathbf{r} \cdot \mathbf{v}_t) t + |\mathbf{r}|^2 = 0$ เพื่อหาเวลาตกกระทบ $t^*$ และเวกเตอร์เล็งเป้าของป้อมปืน/กระสุนดักหน้าเป้าหมายที่กำลังเคลื่อนที่ได้อย่างแม่นยำ 100%
+7. **Intercept Degeneracy Fallback & Closest Point of Approach (CPA)**:
+   - กรณีเป้าหมายหนีเร็วกว่าความเร็วโปรเจกไทล์ ($\Delta < 0$) คำนวณเวลาเข้าใกล้สุด $t_{\text{cpa}} = \max(0, -\frac{\mathbf{r} \cdot \mathbf{v}_{\text{rel}}}{\|\mathbf{v}_{\text{rel}}\|^2})$ เพื่อยิงไปยังจุดเฉียดใกล้สุด
+8. **True Proportional Navigation (TPN Guidance Law)**:
+   - คำนวณเวกเตอร์ความเร่งนำวิถี $\mathbf{a}_{\text{cmd}} = N \cdot V_c \cdot \boldsymbol{\omega}_{\text{LOS}}$ ($N \in [3, 5]$) สำหรับเป้าหมายที่มีความเร่งหรือเปลี่ยนทิศทาง (Zarchan, AIAA)
+9. **Ballistic Trajectories Under Gravity**:
+   - สูตรคำนวณมุมยิงวิถีโค้ง $\tan \theta = \frac{v_0^2 \pm \sqrt{v_0^4 - g(g x^2 + 2 y v_0^2)}}{g x}$ ทั้งวิถีราบและวิถีโด่ง
+10. **Ballistic Trajectories with Aerodynamic Linear Drag (Unity Rigidbody Damping)**:
+    - วิถีโค้งกระสุนที่มีแรงต้านอากาศ $\frac{d\mathbf{v}}{dt} = \mathbf{g} - k\mathbf{v}$ พร้อมเช็กขอบเขตระยะยิงสูงสุดในแนวราบ $x_{\max} = \frac{v_{0x}}{k}$ ป้องกันปัญหายิงไม่ถึงเป้า
+11. **Continuous Collision Detection (CCD) & Tunneling Bound**:
+    - เกณฑ์การทะลุผ่านของกระสุน $\|\mathbf{v}\| \cdot \Delta t > D_{\min}$ และการตรวจจับด้วย Swept Raycast/CircleCast
+12. **Quaternion Antipodal Shortest-Path Slerp (Anti-Flip Guarantee)**:
+    - ตรวจสอบ $\mathbf{q}_1 \cdot \mathbf{q}_2 < 0 \implies \mathbf{q}_2 \gets -\mathbf{q}_2$ ก่อนหมุน เพื่อป้องกันอาการกระตุกหมุนอ้อม $360^\circ$ (Shoemake, SIGGRAPH 1985)
+13. **Quaternion Small-Angle Nlerp Stability Threshold**:
+    - สลับจากการใช้ Slerp ไปเป็น Normalized Lerp (Nlerp) เมื่อมุมหมุนแคบมาก ($\cos\Omega > 0.9995$) เพื่อหลีกเลี่ยงการหารด้วยศูนย์
+14. **Symplectic Euler Energy Conservation vs Explicit Euler Divergence**:
+    - ใช้ Symplectic Euler ($\mathbf{v}_{t+\Delta t} = \mathbf{v}_t + \mathbf{a}_t\Delta t, \mathbf{x}_{t+\Delta t} = \mathbf{x}_t + \mathbf{v}_{t+\Delta t}\Delta t$) ซึ่งอนุรักษ์พลังงานในระบบฟิสิกส์ PhysX ของ Unity แทน Explicit Euler ที่ทำให้แรงสั่นและวงโคจรระเบิด
+15. **Quantitative Spatial Verification (Intersection over Union / IoU)**:
+    - ประเมินความแม่นยำของ UI Overlay และ Focus Ring ตามมาตรฐานสากล (Pascal VOC / COCO / ISO/IEC 25010): ต้องได้ $\text{IoU} \ge 0.95$ และ Center Offset $\le 1.0\text{ px}$
+16. **Unity 2D Orthographic Camera Viewport & World Projection Bounds**:
+    - การแปลงพิกัดมุมมองกล้อง 2D แบบ Orthographic เส้นขนาน ($w = 1$) โดยมีครึ่งความสูง $S = \text{orthographicSize}$ และครึ่งความกว้าง $S \times \text{aspect}$ คำนวณพิกัด Screen สู่ World ได้อย่างแม่นยำปราศจากความคลาดเคลื่อนจาก Perspective
+17. **Camera.main.ScreenToWorldPoint 2D z-Distance Plane Invariant**:
+    - กฎความแปรเปลี่ยนระนาบ 2D: $\text{screenPoint.z} = z_{\text{target\_plane}} - z_{\text{camera}}$ แก้ปัญหาคลาสสิกที่ใส่ $z = 0$ แล้วพิกัดโลกหลุดไปอยู่ที่ระนาบกล้อง $z = -10$ ทำให้ Raycast 2D และ Trigger วืดไม่โดนวัตถุบนระนาบ $z = 0$
+18. **2D Pixel-Perfect PPU Snapping & Sub-Pixel Shimmering Elimination**:
+    - การสแนปกริด Texel: $x_{\text{snap}} = \text{round}(x \times \text{PPU}) / \text{PPU}$ ขจัดอาการภาพกระตุก สั่น หรือขอบ Sprite ฉีกขาดในเกม Pixel Art จากเศษตำแหน่งทศนิยม Sub-pixel
+19. **Box2D & Rigidbody2D Linear & Angular Drag Damping Dynamics**:
+    - การสูญเสียความเร็วเชิงเส้นและเชิงมุมตามกลไก Discrete Damping ของ Box2D ภายใต้ Symplectic Euler integration: $v_{t+\Delta t} = v_t \times \max(0, 1 - \Delta t \cdot d_{\text{linear}})$ พร้อมคำนวณระยะหยุดจำกัด $S_{\text{stop}} = \frac{v_0 (1 - \Delta t \cdot d_{\text{linear}})}{d_{\text{linear}}}$ และตรวจจับกำแพงระยะยิงที่ไม่สามารถไปถึงได้
+20. **2D Kinematic Predictive Lead Intercept in XY Plane**:
+    - แก้สมการพหุนามกำลังสองสำหรับเล็งดักเป้าหมายเคลื่อนที่ในเกมมุมมอง 2D Top-Down / Space Shooter พร้อม Linear Degeneracy Guard ($A \approx 0$ เมื่อความเร็วกระสุนเท่ากับความเร็วเป้าหมาย) โดยคำนวณเวลาตกกระทบ $t^*$ และมุมยิงได้แม่นยำ
+21. **2D Continuous Collision Detection (CCD) & Raycast2D Tunneling Bound**:
+    - ป้องกันปัญหากระสุนทะลุกำแพงบาง (Bullet-Through-Paper) เมื่อ $\|\mathbf{v}\|\Delta t > T_{\text{col}}$ ด้วยการคำนวณ Swept Raycast พารามิเตอร์ $t_{\text{hit}} \le \Delta t$
+22. **2D Platformer Parabolic Jump Kinematic Apex and Landing Timing**:
+    - คำนวณค่าแรงโน้มถ่วง $g = \frac{2h}{t_{\text{apex}}^2}$ และความเร็วต้นกระโดด $v_{y0} = \frac{2h}{t_{\text{apex}}}$ แบบ Closed-Form จากความสูงที่ต้องการ $h$ และเวลาสู่จุดสูงสุด $t_{\text{apex}}$ การันตีการควบคุมกระโดดในเกม Platformer ที่แม่นยำ ไม่ลอย และไม่เดาสุ่ม
+23. **2D Steering & True Proportional Navigation (TPN) in XY Plane**:
+    - คำนวณเวกเตอร์ความเร่งตั้งฉากกับแนวสายตา $\mathbf{a}_{\text{cmd}} = N \cdot V_c \cdot \dot{\lambda} \cdot (-\sin\lambda, \cos\lambda)^T$ พร้อมรักษาสัญญาณเครื่องหมาย Signed $\dot{\lambda}$ เพื่อให้แรงเลี้ยวต้านการหมุนทั้งทิศทวนเข็มและตามเข็มนาฬิกาอย่างเสถียร
+24. **2D Tilemap Grid-to-World Center Pivot Offset Invariant**:
+    - การแปลงพิกัด World-to-Cell ด้วยฟังก์ชัน Floor และบวกค่าชดเชยจุดกึ่งกลาง $+0.5$ Half-Tile Pivot ป้องกันปัญหาพิกัดเคลื่อน 1 ช่อง และการติดขอบ Collider ในระบบค้นหาเส้นทาง A* และ Tilemap
+25. **2D Separating Axis Theorem (SAT) Minimum Translation Vector (MTV)**:
+    - คำนวณแกนที่มีการซ้อนทับน้อยที่สุด $\hat{\mathbf{n}}_{\text{mtv}}$ และความลึก $\delta_{\min}$ บนทุกแกนปกติสำหรับ 2D OBB / Polygon ที่หมุนเอียง เพื่อดันวัตถุหลุดจากการชนด้วยทิศทาง MTV ที่ถูกต้องและไม่สะดุดขอบรอยต่อ
+26. **Unity 2D RectTransform in Canvas: Screen Space - Overlay vs World Space PPU Scale Invariant**:
+    - บังคับใช้ `camera = null` ใน `ScreenPointToLocalPointInRectangle` สำหรับ Screen Space - Overlay Canvas เพื่อป้องกันข้อผิดพลาดการแปลง Projection และบังคับใช้ $\text{localScale} = (1/\text{PPU}, 1/\text{PPU}, 1)$ สำหรับ World Space Canvas เพื่อป้องกัน UI ขยายขนาดผิดพลาด 100 เท่า (Layout Blowout) บังตัวละครและกล้อง 2D
+
+รันการทดสอบ Benchmark ทางฟิสิกส์และคณิตศาสตร์:
+```bash
+npm run benchmark:physics
+```
+
+
 ## Repository Layout
 
 ```text

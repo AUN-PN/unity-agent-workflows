@@ -350,6 +350,88 @@
         { "any": ["npm run sync:mcpmarket"] },
         { "any": ["SKILL.md", "references/"] }
       ]
+    },
+    {
+      "id": "spatial-physics-formulas",
+      "label": "Spatial and physics formulas",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Projective Geometry", "Near-Clip Plane Singularity", "CanvasScaler Logarithmic Match Formula"] },
+        { "any": ["scaleFactor", "w <= 0", "RectTransform Invariant Equations"] },
+        { "any": ["Continuous Collision Detection", "CCD", "Critically Damped Harmonic Motion"] }
+      ]
+    },
+    {
+      "id": "iou-accuracy-metric",
+      "label": "Intersection over Union spatial accuracy metric",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Intersection over Union", "IoU"] },
+        { "any": ["0.95", "IoU >= 0.95", "Center Offset"] },
+        { "any": ["Pascal VOC", "COCO", "spatial accuracy"] }
+      ]
+    },
+    {
+      "id": "predictive-lead-kinematics",
+      "label": "Kinematic predictive lead interception",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Kinematic Closed-Form Predictive Lead Interception", "predictive lead aiming", "predictive intercept"] },
+        { "any": ["quadratic equation", "Delta = B^2 - 4AC", "2nd-order quadratic"] },
+        { "any": ["Ballistic Trajectories Under Gravity", "launch angle"] }
+      ]
+    },
+    {
+      "id": "quaternion-rotational-kinematics",
+      "label": "Quaternion rotational kinematics and antipodal slerp",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Rotational Kinematics", "Quaternion Antipodal Slerp", "Anti-Flip Guarantee"] },
+        { "any": ["q1 · q2", "cos Omega < 0", "antipodal inversion", "Nlerp"] },
+        { "any": ["Shoemake", "Euler snap", "gimbal lock"] }
+      ]
+    },
+    {
+      "id": "symplectic-numerical-integration",
+      "label": "Symplectic Euler numerical integration and energy conservation",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Symplectic Euler", "Semi-Implicit Euler", "Numerical Energy Conservation"] },
+        { "any": ["FixedUpdate", "Explicit Euler Explosion", "PhysX"] },
+        { "any": ["linearDamping", "Stokes drag", "drag miss trap"] }
+      ]
+    },
+    {
+      "id": "unity-2d-physics-and-kinematics",
+      "label": "Unity 2D Physics and Kinematics Invariants",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Unity 2D Platformer Parabolic Jump Kinematics", "parabolic jump kinematics"] },
+        { "any": ["2h / t_apex^2", "g = 2h / t_apex^2", "v_y0 = 2h / t_apex"] },
+        { "any": ["Box2D & Rigidbody2D Linear and Angular Drag", "discrete numerical velocity damping", "linearDrag"] },
+        { "any": ["2D Continuous Collision Detection", "Raycast2D Tunneling Bound", "collider thickness"] }
+      ]
+    },
+    {
+      "id": "unity-2d-orthographic-and-tilemap-geometry",
+      "label": "Unity 2D Orthographic and Tilemap Coordinate Invariants",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Unity 2D Orthographic Camera Projection", "orthographicSize"] },
+        { "any": ["Camera.main.ScreenToWorldPoint 2D z-Distance Plane Invariant", "z_target_plane - z_camera", "-Camera.main.transform.position.z"] },
+        { "any": ["2D Pixel-Perfect PPU Snapping", "PPU", "Texel Grid Snapping Invariant"] },
+        { "any": ["2D Tilemap Grid-to-World Center Pivot Offset Invariant", "half-tile offset", "c_x + 0.5"] }
+      ]
+    },
+    {
+      "id": "unity-2d-canvas-recttransform",
+      "label": "Unity 2D Canvas RectTransform and World-to-UI Invariants",
+      "baseline_required": false,
+      "groups": [
+        { "any": ["Unity 2D RectTransform in Canvas", "RectTransform in Canvas 2D"] },
+        { "any": ["Screen Space - Overlay Canvas", "camera = null", "Overlay Camera Invariant"] },
+        { "any": ["World Space Canvas in 2D", "1/PPU", "1 / PPU", "PPU Scale Invariant"] }
+      ]
     }
   ],
   "required_eval_case_ids": [
@@ -370,7 +452,17 @@
     "repeated-visible-asset-runtime-proof",
     "multi-surface-directional-variant-proof",
     "checker-fails-preview-only-runtime-proof",
-    "cleanup-delete-unused-prefab"
+    "cleanup-delete-unused-prefab",
+    "predictive-lead-aim-physics",
+    "perspective-camera-clip-singularity",
+    "iou-overlay-spatial-accuracy",
+    "quaternion-antipodal-slerp",
+    "ballistics-aerodynamic-drag",
+    "symplectic-euler-physics-stability",
+    "unity-2d-platformer-jump-kinematics",
+    "unity-2d-orthographic-screen-to-world",
+    "unity-2d-rigidbody2d-drag-and-ccd",
+    "unity-2d-canvas-recttransform-world-space"
   ],
   "forbidden_candidate_phrases": [
     "spawn sub-agents automatically",
@@ -574,6 +666,107 @@
       "doc_groups": [
         { "any": ["cleanup proof"] },
         { "any": ["YAML GUID refs"] }
+      ]
+    },
+    "predictive-lead-aim-physics": {
+      "eval_groups": [
+        { "any": ["turret laser", "predictive lead aiming"] },
+        { "any": ["quadratic intercept formula", "2nd-order quadratic"] }
+      ],
+      "doc_groups": [
+        { "any": ["Kinematic Closed-Form Predictive Lead Interception", "predictive lead aiming"] },
+        { "any": ["Delta = B^2 - 4AC", "2nd-order quadratic"] }
+      ]
+    },
+    "perspective-camera-clip-singularity": {
+      "eval_groups": [
+        { "any": ["offscreen objective arrow", "behind the player camera"] },
+        { "any": ["near-clip plane perspective projection singularity", "w <= 0"] }
+      ],
+      "doc_groups": [
+        { "any": ["Projective Geometry & Near-Clip Plane Singularity", "near-clip singularity"] },
+        { "any": ["Closed-Form Screen-Edge Border Clamping", "w <= 0"] }
+      ]
+    },
+    "iou-overlay-spatial-accuracy": {
+      "eval_groups": [
+        { "any": ["focus ring alignment", "Intersection over Union"] },
+        { "any": ["IoU >= 0.95", "pixel center tolerance"] }
+      ],
+      "doc_groups": [
+        { "any": ["Intersection over Union", "IoU"] },
+        { "any": ["IoU >= 0.95", "0.95"] }
+      ]
+    },
+    "quaternion-antipodal-slerp": {
+      "eval_groups": [
+        { "any": ["character rotation violently snaps", "quaternion antipodal flip"] },
+        { "any": ["Nlerp", "small angles"] }
+      ],
+      "doc_groups": [
+        { "any": ["Rotational Kinematics & Quaternion Antipodal Slerp", "Anti-Flip Guarantee"] },
+        { "any": ["q1 · q2", "cos Omega < 0", "Nlerp"] }
+      ]
+    },
+    "ballistics-aerodynamic-drag": {
+      "eval_groups": [
+        { "any": ["artillery shells undershoot", "linearDamping"] },
+        { "any": ["Stokes aerodynamic drag", "finite range limit"] }
+      ],
+      "doc_groups": [
+        { "any": ["Ballistic Trajectories With Aerodynamic Linear Drag", "drag miss trap"] },
+        { "any": ["finite range limit", "x_max = v0x / k", "v0 / k"] }
+      ]
+    },
+    "symplectic-euler-physics-stability": {
+      "eval_groups": [
+        { "any": ["physics simulation in FixedUpdate", "orbits spiral out"] },
+        { "any": ["Symplectic", "Semi-Implicit Euler", "conserve energy"] }
+      ],
+      "doc_groups": [
+        { "any": ["Symplectic Euler vs Explicit Euler Numerical Energy Conservation", "Symplectic Euler"] },
+        { "any": ["FixedUpdate", "Explicit Euler Explosion"] }
+      ]
+    },
+    "unity-2d-platformer-jump-kinematics": {
+      "eval_groups": [
+        { "any": ["platformer jump height and gravity", "parabolic jump kinematics"] },
+        { "any": ["g = 2h / t_apex^2", "v_y0 = 2h / t_apex"] }
+      ],
+      "doc_groups": [
+        { "any": ["Unity 2D Platformer Parabolic Jump Kinematics", "parabolic jump kinematics"] },
+        { "any": ["2h / t_apex^2", "v_y0 = 2h / t_apex"] }
+      ]
+    },
+    "unity-2d-orthographic-screen-to-world": {
+      "eval_groups": [
+        { "any": ["Camera.main.ScreenToWorldPoint", "mousePosition"] },
+        { "any": ["2D z-distance plane invariant", "targetPlaneZ - cameraZ"] }
+      ],
+      "doc_groups": [
+        { "any": ["Camera.main.ScreenToWorldPoint 2D z-Distance Plane Invariant", "2D Plane Trap"] },
+        { "any": ["screenPoint.z = z_target_plane - z_camera", "-Camera.main.transform.position.z"] }
+      ]
+    },
+    "unity-2d-rigidbody2d-drag-and-ccd": {
+      "eval_groups": [
+        { "any": ["spaceship slides", "bullets tunnel through thin tile colliders"] },
+        { "any": ["Rigidbody2D linearDrag", "Raycast2D / CCD sweep bounds"] }
+      ],
+      "doc_groups": [
+        { "any": ["Box2D & Rigidbody2D Linear and Angular Drag Damping Dynamics", "linearDrag"] },
+        { "any": ["2D Continuous Collision Detection (CCD) & Raycast2D Tunneling Bound", "tunneling bound"] }
+      ]
+    },
+    "unity-2d-canvas-recttransform-world-space": {
+      "eval_groups": [
+        { "any": ["2D sprite overhead health bar", "World Space Canvas", "RectTransform in Canvas 2D"] },
+        { "any": ["1/PPU scale invariant", "100x layout blowout", "Overlay camera null"] }
+      ],
+      "doc_groups": [
+        { "any": ["Unity 2D RectTransform in Canvas: Screen Space - Overlay vs World Space Invariants", "RectTransform in Canvas 2D"] },
+        { "any": ["Overlay Camera Invariant", "camera = null"] },
+        { "any": ["1/PPU", "PPU Scale Invariant", "100x Layout Blowout Trap"] }
       ]
     }
   },
